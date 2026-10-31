@@ -85,20 +85,31 @@ Both events remain customizable via `WEDDING_EVENTS` in `app.js`. Unconfirmed lo
 
 Preview: `http://localhost:4173/index.html?heroPreview=1#details`.
 
-## One-screen mobile layout for Sections 2 and 3
+## Continuous scrolling — Sections 1, 2 and 3 (latest repair)
 
-The first three illustrated scenes now each occupy **one viewport** on ordinary phone and desktop previews. Section 1 already used a viewport-height hero. Section 2 and Section 3 are constrained by the new `screen-fit.css`, loaded after all earlier styling.
+The November 1 mobile screenshots exposed a major layout regression: Section 2 was fixed to `100svh`, leaving a **large empty peach band** before Section 3. Scroll gestures could also get captured by nested parchment/event scroll containers.
 
-- Section 2 keeps the same approved nine-slice gold/floral master; the parchment adjusts to a single screen without cropping the original arch or corners.
-- Section 3 shows both gold-framed event panels within a single **uncropped** 1086:1448 illustration. Its display width is reduced when needed so the full image can fit above the demo disclaimer.
-- Guests still scroll normally from Section 1 to Section 2 to Section 3. There is **no scroll snapping, parallax or stretching of the entire picture**.
-- Extremely short phone screens, longer verified names, large accessibility text, or unusually long venue details may need **scrolling within the card's text area**. We protect legibility and complete content rather than cutting words off or shrinking type to unreadable sizes.
+The corrective **`flow-quality.css`** stylesheet is deliberately loaded **last**, after `screen-fit.css` and `hero-quality.css`. It restores natural vertical document flow.
 
-Review these page anchors in your local V4 clone:
-- `http://localhost:4173/index.html?heroPreview=1#invitation`
-- `http://localhost:4173/index.html?heroPreview=1#details`
+- **Section 1** remains a single-viewport gateway scene. Its complete static painting and live HTML names remain unchanged. The visible scroll cue stays above the transition.
+- **Section 2** now grows to fit its actual bilingual family-invitation content. No fixed section height, no filler band, no extra inner scroll. The approved one-piece nine-slice gold floral artwork is unchanged.
+- **Section 3** begins immediately after Section 2, sized at the artwork's native 1086:1448 aspect ratio. Its two event panels remain editable live HTML; the complete illustration is unchanged.
+- On browsers supporting CSS masking, **small 18–28px feathered overlaps** soften the Section 1 → 2 and Section 2 → 3 handoffs. This helps but does **not** guarantee pixel-perfect seams between separately painted images. On browsers without mask support, the sections still join directly with no empty spacer.
+- Normal **touch swipes scroll the whole page**, with no scroll snapping, parallax, fixed-height image sections or nested scrolling traps.
 
-Run `node tests/smoke.cjs` after each pull and visually test at 320×568, 390×844, and 430×932. Browser checks still need to be performed locally.
+**Trade-off:** Section 2 is no longer guaranteed to fit in exactly one screen on short phones. Showing all real names, Burmese wording and dates without clipping is more important. The website scrolls naturally like a long invitation.
+
+The top banner still identifies the site as a local demo with sample details. The redundant long section disclaimers remain in accessible markup but no longer take up extra visual strips between the illustrations.
+
+To test:
+```powershell
+git pull --ff-only origin feat/hires-garden-preview-20261101
+node tests/smoke.cjs
+node tests/hero-interaction.cjs
+node server.js
+```
+
+Preview: `http://localhost:4173/index.html?heroPreview=1#home`. Swipe from the garden path through the family invitation into the ceremony without being stopped by empty colored space. Review at 320×568, 390×844, and 430×932.
 
 ## Section 4 — Love Story & Countdown
 
