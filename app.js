@@ -26,7 +26,12 @@ function makeLeaf(ambient = false, index = 0) {
   const leaf = document.createElement('img');
   leaf.alt = '';
   leaf.className = `falling-leaf ${ambient ? 'is-ambient' : 'is-gust'}`;
-  leaf.src = `assets/leaf-${(index % 6) + 1}.svg`;
+  // Reuse six original transparent PNG leaf variations for both gusts and drifting leaves.
+  const leafAssets = [
+    '23_leaf_golden_teak.png', '24_leaf_copper_teak.png', '25_leaf_burgundy_teak.png',
+    '26_leaf_golden_bodhi.png', '27_leaf_orange_bodhi.png', '28_leaf_small_russet.png'
+  ];
+  leaf.src = leafAssets[index % leafAssets.length];
   const vw = document.documentElement.clientWidth;
   leaf.style.left = (ambient ? 5 + Math.random() * 90 : 12 + Math.random() * 75) + '%';
   leaf.style.top = ambient ? '-45px' : 27 + Math.random() * 55 + '%';
