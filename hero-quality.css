@@ -1,0 +1,212 @@
+/* Golden Autumn Heritage — Section 1 production review.
+   Scope: opening cover + first garden hero only. Sections 2–6 are untouched.
+   The approved gateway remains ONE uncropped illustration, without parallax.
+*/
+.hero {
+  --art-width: min(100vw, calc((100svh - 34px) * 0.46258));
+  position: relative;
+  box-sizing: border-box;
+  height: calc(100vh - 34px);
+  height: calc(100svh - 34px);
+  min-height: 0;
+  max-height: none;
+  margin-top: 34px;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    linear-gradient(180deg, #e3a99d 0%, #f2c1a2 37%, #d9a07f 68%, #ab745b 100%);
+}
+.hero-scene {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  left: 0;
+  transform: none;
+  overflow: hidden;
+  background: transparent;
+  box-shadow: none;
+}
+.hero-master {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  object-position: center center;
+  transform: none;
+  filter: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.hero-topline {
+  position: absolute;
+  top: clamp(13px, 4svh, 32px);
+  left: 50%;
+  width: min(85vw, 420px);
+  transform: translateX(-50%);
+  z-index: 10;
+  color: #613b3b;
+  font-size: clamp(8px, 2.1vw, 11px);
+  letter-spacing: .16em;
+  line-height: 1.5;
+  text-shadow: 0 1px 8px #ffeedae0;
+}
+.hero-topline span {color: #8d5844;margin: 0 5px;}
+/* Center words inside the *painted opening*, not across the carved columns. */
+.hero .hero-words {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  width: min(52vw, calc(var(--art-width) * .56));
+  max-width: 270px;
+  min-width: 0;
+  margin: 0;
+  padding: clamp(4px, 1.8vh, 12px) 2px;
+  background: radial-gradient(ellipse at center, #fff0dbb8 0%, #fff0db78 48%, transparent 85%);
+  border-radius: 46%;
+  color: #633b42;
+  text-align: center;
+  transform: translate(-50%, -50%) translateY(15px);
+  opacity: 0;
+  transition: opacity .75s ease, transform .75s ease;
+  text-shadow: 0 1px 7px #fff6e7d9;
+}
+.has-opened .hero .hero-words {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+  transition-delay: .16s;
+}
+.hero .hero-eyebrow {
+  font-size: clamp(7px, 1.75vw, 9px);
+  letter-spacing: .06em;
+  line-height: 1.35;
+  color: #7c584b;
+  margin: 0 auto 4px;
+}
+.hero .hero-smalltitle {
+  font-size: clamp(11px, 2.8vw, 15px);
+  letter-spacing: .09em;
+  line-height: 1.23;
+  margin: 0 auto 3px;
+  color: #76524a;
+}
+.hero .hero-words h2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 0;
+  margin: 0;
+  font-family: var(--display);
+  font-weight: normal;
+  font-size: clamp(21px, min(6.8vw, 3.6svh), 39px);
+  line-height: 1.02;
+  letter-spacing: -.025em;
+  color: #603b47;
+}
+.hero .hero-words h2 span:not(.ampersand) {
+  display:block;
+  max-width:100%;
+  overflow-wrap:anywhere;
+}
+.hero .hero-words .ampersand {font-size:.66em;color:#9c7451;line-height:.95;}
+.hero .hero-words .divider-art {
+  display:block;
+  width: 63%;
+  max-height: 20px;
+  object-fit: contain;
+  margin: clamp(3px, .8vh, 8px) auto;
+}
+.hero .hero-date {
+  font-size: clamp(10px, 2.65vw, 15px);
+  letter-spacing: .06em;
+  line-height: 1.32;
+  margin: 0 auto;
+  color: #78504b;
+}
+.hero .hero-subtitle {
+  font-size: clamp(10px, 2.48vw, 13px);
+  line-height: 1.27;
+  max-width: 100%;
+  margin: 5px auto 0;
+  color: #78574b;
+}
+.hero .scroll-cue {
+  bottom: max(13px, calc(env(safe-area-inset-bottom) + 9px));
+  gap: 6px;
+  padding: 9px 14px;
+  min-height: 44px;
+  width: auto;
+  max-width: 90%;
+  color: #fff1d6;
+  text-shadow: 0 2px 7px #452e2d, 0 0 2px #452e2d;
+}
+.hero .scroll-cue > span:first-child {
+  font-size: clamp(9px, 2vw, 11px);
+  letter-spacing: .15em;
+}
+.hero .scroll-line {height:24px;animation:scroll-pulse 2.5s ease-in-out infinite;}
+.hero .scroll-cue:focus-visible {
+  outline: 3px solid #4d2938;
+  outline-offset: 3px;
+  border-radius: 10px;
+  background: #fff2deb0;
+  color:#4d2938;
+  text-shadow:none;
+}
+.cover .envelope {
+  display:block;
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:inherit;
+  cursor:pointer;
+  touch-action:manipulation;
+}
+.cover .envelope:focus-visible {
+  outline: 3px solid #ffe6b5;
+  outline-offset: 9px;
+  border-radius: 5px;
+}
+.cover .skip-button {
+  color:#fff1db;
+  font-size:12px;
+  letter-spacing:.02em;
+  min-height:44px;
+  opacity:1;
+}
+.cover .cover-hint {color:#ffe3bf;}
+/* Remove accidental horizontal drag and provide adequate cover room. */
+.cover {padding-bottom:env(safe-area-inset-bottom);}
+@media (max-height: 680px) {
+  .hero .hero-words {top:42%;padding:3px 1px;}
+  .hero .hero-eyebrow, .hero .hero-subtitle {display:none;}
+  .hero .hero-words .divider-art {margin:2px auto;}
+  .hero .hero-words h2 {font-size:clamp(19px, min(6.5vw, 4svh), 27px);}
+  .cover .cover-copy {margin-top:12px;}
+  .cover .cover-hint {font-size:10px;}
+}
+@media (min-width:680px) {
+  .hero {height:calc(100svh - 34px);min-height:0;max-height:none;}
+  .hero-scene {width:100%;max-width:none;left:0;transform:none;box-shadow:none;}
+  .hero .hero-words {width:min(29vw,calc(var(--art-width) * .56),270px);}
+}
+@media (prefers-reduced-motion:reduce) {
+  .hero .hero-words {
+    transition:none;
+    transform:translate(-50%,-50%);
+  }
+  .hero .scroll-line {animation:none;}
+  .cover .envelope,
+  .cover .butterfly .wing,
+  .cover .cover-leaf {animation:none!important;}
+}
