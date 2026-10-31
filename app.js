@@ -76,8 +76,12 @@ document.querySelector('.envelope').addEventListener('click', () => openInvitati
 // Art direction review only. The ?artReview=1 route opens the hero without a cover,
 // strips UI overlays via CSS and freezes motion for master-scene comparisons.
 // The normal guest experience is unchanged.
-if (new URLSearchParams(window.location.search).get('artReview') === '1') {
+const previewParams = new URLSearchParams(window.location.search);
+if (previewParams.get('artReview') === '1') {
   document.body.classList.add('art-review-mode');
+  openInvitation(true);
+} else if (previewParams.get('heroPreview') === '1') {
+  // Design-review route: inspect the normal hero text without redoing the cover.
   openInvitation(true);
 }
 
