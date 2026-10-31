@@ -59,5 +59,24 @@ const closing = html.split('<section class="content-section closing-section"')[1
 assert(closing.includes('data-name="first"') && closing.includes('data-name="second"'), 'Closing names are not linked to DEMO');
 assert.equal((html.match(/class="content-section invitation-section"/g) || []).length, 1, 'Duplicate invitation section');
 
-console.log('PASS: V4 single-image garden, family invitation layout, dynamic name fields, sample date, and review page verified.');
+/* Section 3: independently editable ceremony and reception with gated directions. */
+assert(html.includes('href="events.css"'), 'Missing ceremony/reception stylesheet');
+const eventsSection = html.split('<section class="content-section details-section"')[1]?.split('<section class="content-section countdown-section"')[0] || '';
+assert(eventsSection.includes('data-event="ceremony"'), 'Ceremony card missing');
+assert(eventsSection.includes('data-event="reception"'), 'Reception card missing');
+assert.equal((eventsSection.match(/data-event-link hidden/g) || []).length, 2, 'Directions should start hidden');
+assert.equal((eventsSection.match(/data-event-pending/g) || []).length, 2, 'Missing unconfirmed-venue notices');
+assert.equal((eventsSection.match(/data-event-field="venue"/g) || []).length, 2, 'Venue editing fields missing');
+assert.equal((eventsSection.match(/data-event-field="date"/g) || []).length, 2, 'Date editing fields missing');
+assert.equal((eventsSection.match(/data-event-field="time"/g) || []).length, 2, 'Time editing fields missing');
+assert(!eventsSection.includes('href="https://www.google.com/maps/search/?api=1&amp;query=Yangon'), 'Generic Yangon directions must not be offered');
+assert(js.includes('const WEDDING_EVENTS = {'), 'Central event configuration missing');
+assert(js.includes('function renderWeddingEvents()'), 'Event rendering missing');
+assert(js.includes('function approvedMapUrl(rawUrl)'), 'Map URL validation missing');
+assert(js.includes('event.venueConfirmed ? approvedMapUrl(event.mapUrl)'), 'Directions must require venue confirmation');
+assert(js.includes('renderWeddingEvents();'), 'Event rendering not called');
+assert(read('events.css').includes('.celebration-events'), 'Event card styling missing');
+
+
+console.log('PASS: V4 single-image hero, bilingual family invitation, ceremony/reception cards, gated directions and shared personalization.');
 console.log('Next: test actual mobile framing, butterfly opening, natural scrolling and text readability.');
