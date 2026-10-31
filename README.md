@@ -80,6 +80,34 @@ const WEDDING_EVENTS = {
 
 Open `http://localhost:4173/index.html?heroPreview=1#details` to jump directly to Section 3 and review both cards. Responsive styles live in `events.css`.
 
+## Section 4 — Love Story & Countdown
+
+Section 4 is a static ivory stationery story paired with a live four-part countdown; there is **no scroll-triggered scenery animation**.
+
+- Three original story chapters, with placeholder prompts (no fabricated relationship history)
+- Burmese and English headings, antique-gold decorative frames, accessible live text
+- One `LOVE_STORY` object in `app.js` controls the introduction, chapter titles and chapter paragraphs
+- The countdown uses `DEMO.weddingDateISO` and displays days, hours, minutes and seconds in Myanmar-time sample configuration
+- Invalid wedding dates display `--` and a pending status; elapsed dates display zero and a day-arrived message
+- The sample dates and all story details **must be replaced with confirmed couple information**
+
+Example personalization in `app.js`:
+
+```js
+const LOVE_STORY = {
+  introduction: 'The moments that make your story uniquely yours.',
+  chapters: [
+    { title: 'The Beginning', text: 'Add how the couple met.' },
+    { title: 'Our Cherished Moments', text: 'Share a memory.' },
+    { title: 'A New Chapter', text: 'Add a personal message.' }
+  ]
+};
+```
+
+The styled content and responsive countdown are in `story.css`. Preview Section 4 directly at:
+
+`http://localhost:4173/index.html?heroPreview=1#countdown`
+
 ## Assets
 
 - `art/golden_autumn_heritage_master_v4.png` — sole garden image on the first section
