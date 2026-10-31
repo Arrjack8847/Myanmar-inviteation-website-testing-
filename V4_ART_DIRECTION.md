@@ -30,3 +30,9 @@ Open `http://localhost:4173/art-review.html` for mobile-width artwork/text previ
 ## Before merging
 
 Verify small-screen framing, readable names, functional open/skip controls, reduced motion and smooth ordinary scroll. No Vercel deployment has been created. Keep the old numbered and high-resolution individual PNGs as unused backups for now.
+
+## Section 2 art integration — uploaded November 1
+
+`art/section2_family_invitation_master.png` is the approved cohesive family invitation background. Its top edge is a continuation of the Section 1 walkway and flowers, and its bottom contains sunset garden and burgundy rose edges for the future transition to Section 3. It is rendered in `invitation.css` using a single-source nine-slice frame (source crop guides: top 355px, left/right 120px, bottom 470px); only blank parchment space stretches for live text. The old nested ivory card and duplicate corner/divider PNGs are removed from Section 2. No new scrolling effects.
+
+**Open visual issue:** Physical phone screenshots must confirm that the Section 1→2 edge is convincing. The final Section 2→3 edge depends on generating and integrating the matching Section 3 illustration; a matching palette alone is not proof of a seamless join.
