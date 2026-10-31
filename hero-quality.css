@@ -3,7 +3,8 @@
    The approved gateway remains ONE uncropped illustration, without parallax.
 */
 .hero {
-  --art-width: min(100vw, calc((100svh - 34px) * 0.46258));
+  /* Master aspect ratio: 853/1844. Convert to plain viewport lengths. */
+  --art-width: min(100vw, calc(46.258svh - 15.73px));
   position: relative;
   box-sizing: border-box;
   height: calc(100vh - 34px);
@@ -62,7 +63,7 @@
   position: absolute;
   top: 42%;
   left: 50%;
-  width: min(52vw, calc(var(--art-width) * .56));
+  width: min(52vw, calc(25.9svh - 8.81px));
   max-width: 270px;
   min-width: 0;
   margin: 0;
@@ -198,7 +199,7 @@
 @media (min-width:680px) {
   .hero {height:calc(100svh - 34px);min-height:0;max-height:none;}
   .hero-scene {width:100%;max-width:none;left:0;transform:none;box-shadow:none;}
-  .hero .hero-words {width:min(29vw,calc(var(--art-width) * .56),270px);}
+  .hero .hero-words {width:min(29vw,calc(25.9svh - 8.81px),270px);}
 }
 @media (prefers-reduced-motion:reduce) {
   .hero .hero-words {
