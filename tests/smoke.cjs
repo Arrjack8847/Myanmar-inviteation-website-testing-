@@ -85,6 +85,22 @@ assert(js.includes('event.venueConfirmed ? approvedMapUrl(event.mapUrl)'), 'Dire
 assert(js.includes('renderWeddingEvents();'), 'Event rendering not called');
 assert(read('events.css').includes('.celebration-events'), 'Event card styling missing');
 
+/* Section 3: the artwork is one complete illustrated source from the user's
+   testing-version-2 upload. The live text floats inside its two original
+   frames, not inside duplicated rectangular/card borders. */
+const section3MasterUrl='https://raw.githubusercontent.com/Arrjack8847/testing-version-2/66f9366ae4037238345f232e4185be4b44aaf697/1d9dbc80-eada-40a7-b1be-7182c2cffbbe.png';
+assert(eventsSection.includes(section3MasterUrl), 'Uploaded section 3 source missing');
+assert.equal((eventsSection.match(/class="ceremony-master-art"/g)||[]).length, 1, 'Section 3 must render exactly one master image');
+assert.equal((eventsSection.match(/class="celebration-event"/g)||[]).length, 2, 'Expected exactly two live overlays for the two painted panels');
+assert(!eventsSection.includes('class="celebration-event-number"'), 'Do not reintroduce floating extra artwork ornaments');
+const eventsArtCss = read('events-art.css');
+assert(html.includes('href="events-art.css"'), 'Section 3 art CSS is not linked');
+assert(eventsArtCss.includes('.ceremony-master-scene'), 'Unified Section 3 scene styles missing');
+assert(eventsArtCss.includes('aspect-ratio:1086 / 1448'), 'Do not stretch the complete Section 3 illustration');
+assert(eventsArtCss.includes('background:transparent'), 'Native ornamented panels must stay visible beneath live text');
+assert(!eventsArtCss.includes('ScrollTrigger')&&!eventsArtCss.includes('parallax'), 'Section 3 must stay still during page scroll');
+
+
 /* Section 4: optional factual story copy and live countdown. */
 assert(html.includes('href="story.css"'), 'Missing Love Story stylesheet');
 const storySection = html.split('<section class="content-section countdown-section story-countdown-section"')[1]?.split('<section class="content-section closing-section"')[0] || '';
@@ -111,5 +127,5 @@ assert.equal((html.match(/class="content-section countdown-section story-countdo
 
 
 
-console.log('PASS: V4 unified garden, new Section 2 art master safe-edge frame, family invitation, events, story and countdown.');
+console.log('PASS: V4 unified garden, Section 2 safe-edge frame, Section 3 illustrated two-panel scene, editable events, story and countdown.');
 console.log('Next: test actual mobile framing, butterfly opening, natural scrolling and text readability.');
