@@ -1,0 +1,208 @@
+/* Golden Autumn Heritage — Section 3 unified illustrated wedding garden.
+   Both ornate panels, flowers, stone path and sunset come from ONE master PNG.
+   Text remains live HTML. No added flower layers, parallax or scroll animation. */
+.details-section {
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  max-width:none;
+  width:100%;
+  min-height:0;
+  margin:0;
+  padding:0 0 16px;
+  background:linear-gradient(180deg,#d69b7d 0%,#e9bca0 23%,#f6d8ae 65%,#c98b68 100%);
+  overflow:hidden;
+}
+.details-section .scene-accessible-title {
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
+.ceremony-master-scene {
+  position:relative;
+  display:block;
+  width:min(100%,660px);
+  aspect-ratio:1086 / 1448;
+  margin:0 auto;
+  isolation:isolate;
+  overflow:hidden;
+  background:#efd1b4;
+}
+.ceremony-master-art {
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  max-width:none;
+  object-fit:fill;
+  object-position:center;
+  user-select:none;
+  pointer-events:none;
+}
+.details-section .celebration-events {
+  display:block;
+  position:absolute;
+  z-index:2;
+  inset:0;
+  width:100%;
+  height:100%;
+  max-width:none;
+  margin:0;
+  padding:0;
+  pointer-events:none;
+}
+.details-section .celebration-event {
+  position:absolute;
+  box-sizing:border-box;
+  left:15.4%;
+  width:69.2%;
+  min-width:0;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  pointer-events:auto;
+}
+.details-section .celebration-event[data-event="ceremony"] {
+  top:15%;
+  height:26.8%;
+}
+.details-section .celebration-event[data-event="reception"] {
+  top:47.7%;
+  height:27.2%;
+}
+.details-section .celebration-event::before,
+.details-section .celebration-event::after { content:none; }
+.details-section .celebration-event-inner {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  box-sizing:border-box;
+  width:100%;
+  height:100%;
+  min-height:0;
+  padding:0 2px;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  text-align:center;
+  overflow-x:hidden;
+  overflow-y:auto;
+  scrollbar-width:thin;
+  scrollbar-color:#c3a2779c transparent;
+  overscroll-behavior:contain;
+}
+.details-section .celebration-event-inner::before,
+.details-section .celebration-event-inner::after {content:none;}
+.details-section .celebration-event h3 {
+  margin:0 0 2px;
+  font:normal clamp(17px,4.5vw,32px)/1.07 var(--display);
+  color:#5d3a43;
+}
+.details-section .celebration-event h3 em {color:#a47452;}
+.details-section .celebration-event-myanmar {
+  margin:0;
+  font:normal clamp(10px,2.8vw,15px)/1.65 'Noto Sans Myanmar','Myanmar Text','Pyidaungsu',sans-serif;
+  color:#886253;
+}
+.details-section .celebration-event-date {
+  display:block;
+  margin:2px 0 0;
+  font:600 clamp(11px,3.05vw,18px)/1.2 var(--display);
+  color:#7b5046;
+  letter-spacing:.06em;
+  overflow-wrap:anywhere;
+}
+.details-section .celebration-event-time {
+  margin:1px 0 0;
+  color:#926e58;
+  font:normal clamp(10px,2.7vw,15px)/1.27 var(--body);
+  overflow-wrap:anywhere;
+}
+.details-section .celebration-venue {
+  margin:3px 0 0;
+  font:600 clamp(11px,3vw,17px)/1.18 var(--display);
+  color:#664147;
+  overflow-wrap:anywhere;
+}
+.details-section .celebration-address {
+  margin:2px 0 0;
+  color:#967569;
+  font:normal clamp(9px,2.3vw,13px)/1.27 var(--body);
+  overflow-wrap:anywhere;
+}
+.details-section .celebration-directions {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:auto;
+  max-width:95%;
+  min-height:23px;
+  margin:4px 0 0;
+  padding:3px 9px;
+  gap:6px;
+  border:1px solid #b3926a;
+  border-radius:99px;
+  background:#f1d5ac;
+  box-shadow:none;
+  color:#65443e;
+  font:700 clamp(9px,2.4vw,11px)/1.15 var(--body);
+  letter-spacing:.06em;
+  text-decoration:none;
+}
+.details-section .celebration-directions[hidden]{display:none!important;}
+.details-section .celebration-directions-pending {
+  margin:3px 0 0;
+  padding:0;
+  width:100%;
+  border:0;
+  background:transparent;
+  color:#9c7965;
+  font:italic clamp(9px,2.25vw,12px)/1.22 var(--display);
+}
+.details-section .celebration-directions-pending[hidden]{display:none!important;}
+.details-section .celebration-disclaimer {
+  max-width:540px;
+  width:100%;
+  margin:12px auto 0;
+  padding:0 21px;
+  font:normal 11px/1.6 var(--body);
+  letter-spacing:0;
+  color:#5f4541;
+  text-shadow:0 1px #fff5e09c;
+}
+@media (max-width:420px) {
+  .details-section .celebration-event[data-event="ceremony"]{top:15.2%;height:26.4%;}
+  .details-section .celebration-event[data-event="reception"]{top:48.0%;height:26.4%;}
+  .details-section .celebration-event h3{font-size:clamp(16px,4.4vw,19px);}
+  .details-section .celebration-directions-pending{font-size:9px;}
+}
+@media (max-width:350px) {
+  .details-section .celebration-event {left:16.2%;width:67.6%;}
+  .details-section .celebration-event h3{font-size:16px;}
+  .details-section .celebration-event-myanmar{font-size:10px;line-height:1.45;}
+  .details-section .celebration-event-date{font-size:10px;}
+  .details-section .celebration-event-time{font-size:9px;}
+  .details-section .celebration-venue{font-size:10px;}
+  .details-section .celebration-address{font-size:9px;}
+  .details-section .celebration-directions-pending{font-size:9px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .details-section .celebration-event, .details-section .celebration-event-inner {
+    animation:none!important;
+    transition:none!important;
+    scroll-behavior:auto!important;
+  }
+}
