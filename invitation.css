@@ -209,3 +209,133 @@
 
 /* Reuse DEMO names in the closing signature without inheriting its ampersand styling. */
 .closing-signature .closing-name { font-size: inherit; color: inherit; }
+
+/* === V4 Section 2 approved artwork integration =================================
+   The artwork comes from ONE original master PNG. Nine-slice rendering is used
+   only to extend its plain parchment middle for variable-length Burmese copy:
+   the painted top gateway, bottom garden, and four flower corners are retained.
+   We do NOT assemble separate rose/gateway assets, stretch the whole image, or
+   animate scenery while scrolling.
+*/
+.invitation-section {
+  padding: 0 12px 24px;
+  min-height: 0;
+  background:
+    linear-gradient(180deg,#b9836c 0%,#e5b39a 9%,#efd8be 38%,#e3ba9f 86%,#c89170 100%);
+}
+.invitation-section::before { content: none; }
+.invitation-section .heritage-invitation {
+  box-sizing: border-box;
+  display:block;
+  width:min(100%, 660px);
+  min-width:0;
+  margin:0 auto;
+  padding:0;
+  /* Source dimensions 1086x1448: top 355, side 120, bottom 470 source pixels.
+     At narrow widths preserve these edge regions, expanding only blank paper. */
+  border-style:solid;
+  border-color:transparent;
+  border-width:
+    clamp(100px, 32.7vw, 215px)
+    clamp(29px, 11vw, 73px)
+    clamp(132px, 43.2vw, 286px);
+  border-image-source:url("art/section2_family_invitation_master.png");
+  border-image-slice:355 120 470 120 fill;
+  border-image-width:1;
+  border-image-repeat:stretch;
+  background:#f8e9d4;
+  box-shadow:none;
+  filter:none;
+}
+.invitation-section .heritage-invitation::before {content:none;}
+.invitation-section .heritage-invitation-inner {
+  position:relative;
+  padding:0 8px 5px;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+  overflow:visible;
+}
+.invitation-section .heritage-invitation-inner::after {content:none;}
+.invitation-section .invitation-section-intro {
+  max-width:100%;
+  margin:0 auto 17px;
+}
+.invitation-section .invitation-section-intro .section-heading {
+  font:normal clamp(29px,6.6vw,45px)/1.15 var(--display);
+  letter-spacing:-.045em;
+  color:#5d3940;
+  margin:6px auto 3px;
+}
+.invitation-section .heritage-burmese-title {
+  font-size:clamp(18px,4.6vw,25px);
+  margin:0;
+  line-height:1.7;
+}
+.invitation-section .heritage-english-title {
+  font-size:9px;
+  line-height:1.55;
+  letter-spacing:.14em;
+  margin:0;
+}
+.invitation-section .heritage-invitation-intro {
+  max-width:100%;
+  margin:0 auto 8px;
+  font-size:clamp(13px,3.1vw,16px);
+  line-height:1.95;
+}
+.invitation-section .heritage-families {
+  margin:13px auto 15px;
+  padding:14px 0;
+  gap:9px;
+  border-color:#b89e7a6b;
+}
+.invitation-section .heritage-family-parents {
+  font-size:clamp(11px,2.8vw,13px);
+  line-height:1.5;
+}
+.invitation-section .heritage-invitation-main {
+  font-size:clamp(13px,3.2vw,17px);
+  margin:10px auto;
+  line-height:1.95;
+}
+.invitation-section .heritage-invitation-translation {
+  font-size:clamp(13px,3vw,15px);
+  line-height:1.55;
+  margin:10px auto 16px;
+}
+.invitation-section .heritage-date {
+  font-size:clamp(14px,3.6vw,20px);
+  letter-spacing:.09em;
+  margin:10px auto 4px;
+}
+.invitation-section .heritage-footer-note {
+  font-size:8px;
+  letter-spacing:.12em;
+  margin:5px auto 0;
+}
+.invitation-section .heritage-demo-note {
+  color:#664641;
+  max-width:440px;
+  font-size:10px;
+  padding:0 12px;
+  margin:12px auto 0;
+  text-shadow:0 1px 3px #fff4e7b0;
+}
+@media (max-width:440px) {
+  .invitation-section {padding:0 8px 20px;}
+  .invitation-section .heritage-invitation {
+    border-width:
+      clamp(87px,32.7vw,144px)
+      clamp(26px,11vw,49px)
+      clamp(117px,43.2vw,190px);
+  }
+  .invitation-section .heritage-invitation-inner {padding:0 4px 2px;}
+  .invitation-section .heritage-families {padding:11px 0;margin:10px auto 12px;}
+  .invitation-section .heritage-family-label {font-size:8px;}
+  .invitation-section .heritage-family-person {font-size:clamp(25px,7vw,30px);}
+  .invitation-section .heritage-family-join {font-size:20px;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .invitation-section .heritage-invitation {animation:none!important;transition:none!important;}
+}
