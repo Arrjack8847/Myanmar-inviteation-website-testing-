@@ -55,6 +55,8 @@ assert(section.includes('src="32_gold_corner_ornament.png"'), 'Corner ornaments 
 assert(section.includes('src="31_gold_ornamental_divider.png"'), 'Gold divider missing');
 assert(js.includes('firstFamily:') && js.includes('secondFamily:'), 'Parent-name customization missing');
 assert(read('invitation.css').includes('.heritage-invitation-inner'), 'Invitation styling missing');
+const closing = html.split('<section class="content-section closing-section"')[1] || '';
+assert(closing.includes('data-name="first"') && closing.includes('data-name="second"'), 'Closing names are not linked to DEMO');
 assert.equal((html.match(/class="content-section invitation-section"/g) || []).length, 1, 'Duplicate invitation section');
 
 console.log('PASS: V4 single-image garden, family invitation layout, dynamic name fields, sample date, and review page verified.');
