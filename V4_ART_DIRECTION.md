@@ -36,3 +36,9 @@ Verify small-screen framing, readable names, functional open/skip controls, redu
 `art/section2_family_invitation_master.png` is the approved cohesive family invitation background. Its top edge is a continuation of the Section 1 walkway and flowers, and its bottom contains sunset garden and burgundy rose edges for the future transition to Section 3. It is rendered in `invitation.css` using a single-source nine-slice frame (source crop guides: top 355px, left/right 120px, bottom 470px); only blank parchment space stretches for live text. The old nested ivory card and duplicate corner/divider PNGs are removed from Section 2. No new scrolling effects.
 
 **Open visual issue:** Physical phone screenshots must confirm that the Section 1→2 edge is convincing. The final Section 2→3 edge depends on generating and integrating the matching Section 3 illustration; a matching palette alone is not proof of a seamless join.
+
+## Section 3 illustrated master (external-source preview)
+
+The new Section 3 image is one cohesive, unchanged 1086×1448 graphic with two gold-framed panels, flowers, lanterns and a bottom sunset landscape. Its top begins with autumn stone pavement and roses to continue Section 2. It was uploaded to the separate `Arrjack8847/testing-version-2` repo; we verified its exact bytes through its Git SHA. To avoid incorrectly claiming it is in V4, the image is temporarily referenced by immutable `raw.githubusercontent.com` URL in `index.html` while the couple/event text remains live HTML. Before public release, move the source PNG to `art/section3_ceremony_reception_master.png` in the V4 repo and switch the URL.
+
+The actual edge match between Sections 2 and 3 is still unapproved until viewed on mobile. Unlike Section 2's nine-slice frame, Section 3 must preserve both original hand-painted panels in one unwarped 1086:1448 portrait scene.
