@@ -47,6 +47,39 @@ The parent fields deliberately show placeholders rather than invented family nam
 
 Open `http://localhost:4173/index.html?heroPreview=1#invitation` to skip the cover and jump straight to Section 2.
 
+## Section 3 — ceremony and reception cards
+
+The wedding-details section now presents two matching, responsive ivory-and-antique-gold cards: **Wedding Ceremony** and **Wedding Reception**. Each displays a date, time, venue, address and an optional directions link.
+
+All event-specific values are stored in the `WEDDING_EVENTS` object near the beginning of `app.js`, separate from the shared couple information in `DEMO`:
+
+```js
+const WEDDING_EVENTS = {
+  ceremony: {
+    dateLabel: DEMO.displayDate,
+    dateISO: DEMO.weddingDateISO.slice(0, 10),
+    time: '4:30 PM · MYANMAR TIME',
+    venue: 'Venue to be confirmed',
+    address: 'Yangon, Myanmar — sample city only',
+    venueConfirmed: false,
+    mapUrl: ''
+  },
+  reception: {
+    dateLabel: 'Date to be confirmed',
+    dateISO: '',
+    time: 'Time to be confirmed',
+    venue: 'Reception venue to be confirmed',
+    address: 'Venue and address to be added',
+    venueConfirmed: false,
+    mapUrl: ''
+  }
+};
+```
+
+**Important:** These are **demonstration placeholders**, not actual event reservations or addresses. A directions link is only displayed when `venueConfirmed: true` **and** `mapUrl` contains a valid HTTPS Google Maps or Waze URL. Until then, visitors see a courteous pending notice instead of misleading directions.
+
+Open `http://localhost:4173/index.html?heroPreview=1#details` to jump directly to Section 3 and review both cards. Responsive styles live in `events.css`.
+
 ## Assets
 
 - `art/golden_autumn_heritage_master_v4.png` — sole garden image on the first section
@@ -59,6 +92,6 @@ Earlier individual garden and gateway assets remain in the repository as unused 
 
 ## Sample details and status
 
-Names **Thiri & Min**, date **20 June 2027**, and Yangon event information are **fictional placeholders**. Change the demonstration names/date in the `DEMO` object in `app.js` and real event details in `index.html`.
+Names **Thiri & Min**, date **20 June 2027**, and Yangon event information are **fictional placeholders**. Change couple names/date in the `DEMO` object and event details in `WEDDING_EVENTS` in `app.js`.
 
 This remains a local, un-deployed prototype: no RSVP database, payment system or public domain. The master artwork is relatively large; image compression and real-device QA are recommended before production.
