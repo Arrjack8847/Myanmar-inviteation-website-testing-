@@ -1,8 +1,8 @@
 /* Golden Autumn Heritage — uninterrupted, touch-friendly page flow
  * Screenshot-driven repair, 2026-11-01.
  *
- * Reverses the forced one-viewport Section 2/3 containers which left large
- * peach voids when their artwork was shorter than the device height.
+ * Replaces the obsolete forced-viewport layout which left large peach voids
+ * when the painting was shorter than the device height.
  * No flattened, baked-text illustration: all guest details remain live HTML.
  * The garden stays static; only the DOCUMENT scrolls.
  */
@@ -18,7 +18,7 @@ body.has-opened {
   -webkit-overflow-scrolling: touch;
 }
 main { touch-action: pan-y pinch-zoom; }
-#home, #invitation, #details { scroll-margin-top: 34px; }
+#home, #invitation, #details { scroll-margin-top: 0; }
 
 /* Remove synthetic full-page floral overlays and fixed-height spacer effects. */
 .garden-flow {
@@ -197,8 +197,8 @@ main { touch-action: pan-y pinch-zoom; }
   bottom: max(39px,calc(env(safe-area-inset-bottom) + 34px));
 }
 
-/* Do not allow the older forced-height short-screen rules to return via
-   420px/640px media breakpoints. This file is loaded LAST on purpose. */
+/* Keep content-height behavior stable on short phones. This stylesheet is
+   deliberately loaded LAST after the illustrated component styles. */
 @media (max-width: 420px) {
   .invitation-section .heritage-invitation,
   .details-section .ceremony-master-scene { height:auto; max-height:none; }
