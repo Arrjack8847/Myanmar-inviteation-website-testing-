@@ -119,6 +119,10 @@ const cover = document.getElementById('openingCover');
 const openButton = document.getElementById('openInvitation');
 const skipButton = document.getElementById('skipOpening');
 const leafField = document.getElementById('leafField');
+const mainContent = document.getElementById('mainContent');
+const heroTitle = document.getElementById('heroTitle');
+const openingEnvelope = document.querySelector('.envelope');
+mainContent.inert = true;
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 let hasOpened = false;
 
@@ -154,12 +158,17 @@ function makeLeaf(ambient = false, index = 0) {
 }
 
 function finishOpening() {
-  cover.setAttribute('aria-hidden', 'true');
-  cover.removeAttribute('role');
+  if (!document.body.classList.contains('not-opened')) return;
   document.body.classList.remove('not-opened');
   document.body.classList.add('has-opened');
+  // Deactivate the cover AFTER its animation and unlock the document.
+  cover.setAttribute('aria-hidden', 'true');
+  cover.removeAttribute('aria-modal');
+  cover.inert = true;
+  mainContent.inert = false;
   openButton.disabled = true;
   skipButton.disabled = true;
+  if (heroTitle) heroTitle.focus({ preventScroll: true });
 }
 
 function openInvitation(skip = false) {
@@ -177,9 +186,28 @@ function openInvitation(skip = false) {
 }
 openButton.addEventListener('click', () => openInvitation());
 skipButton.addEventListener('click', () => openInvitation(true));
-document.getElementById('butterfly').addEventListener('click', () => openInvitation());
-// Overlay butterfly is part of the visually accessible envelope; clicking anywhere on it also opens.
-document.querySelector('.envelope').addEventListener('click', () => openInvitation());
+// The full envelope is a proper keyboard-accessible button; its butterfly
+// is decorative artwork inside that one target, not a second hidden control.
+openingEnvelope.addEventListener('click', () => openInvitation());
+
+// Keep keyboard focus inside the opening dialog until it is dismissed.
+cover.addEventListener('keydown', event => {
+  if (event.key === 'Escape') {
+    event.preventDefault();
+    openInvitation(true);
+    return;
+  }
+  if (event.key !== 'Tab' || hasOpened) return;
+  const controls = [openingEnvelope, openButton, skipButton].filter(node => !node.disabled);
+  const current = controls.indexOf(document.activeElement);
+  if (event.shiftKey && (current <= 0)) {
+    event.preventDefault();
+    controls[controls.length - 1].focus();
+  } else if (!event.shiftKey && current === controls.length - 1) {
+    event.preventDefault();
+    controls[0].focus();
+  }
+});
 
 // Art direction review only. The ?artReview=1 route opens the hero without a cover,
 // strips UI overlays via CSS and freezes motion for master-scene comparisons.
@@ -191,6 +219,9 @@ if (previewParams.get('artReview') === '1') {
 } else if (previewParams.get('heroPreview') === '1') {
   // Design-review route: inspect the normal hero text without redoing the cover.
   openInvitation(true);
+} else {
+  // Explicit initial focus for an accessible modal invitation cover.
+  openButton.focus({ preventScroll: true });
 }
 
 const counterKeys = ['days', 'hours', 'minutes', 'seconds'];
