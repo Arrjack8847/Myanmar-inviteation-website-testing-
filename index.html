@@ -17,7 +17,7 @@
 <body class="not-opened">
   <div class="demo-bar" aria-label="Prototype notice"><span class="demo-indicator"></span> LOCAL DESIGN DEMO <span class="demo-separator">·</span> SAMPLE DETAILS</div>
 
-  <div class="cover" id="openingCover" role="dialog" aria-modal="true" aria-label="Open the wedding invitation">
+  <div class="cover" id="openingCover" role="dialog" aria-modal="true" aria-labelledby="openingTitle">
     <div class="cover-aura" aria-hidden="true"></div>
     <div class="cover-leaves" aria-hidden="true">
       <img src="23_leaf_golden_teak.png" class="cover-leaf c1" alt="" />
@@ -27,28 +27,28 @@
       <img src="27_leaf_orange_bodhi.png" class="cover-leaf c5" alt="" />
     </div>
     <div class="cover-topline"><span class="star">✧</span> GOLDEN AUTUMN HERITAGE <span class="star">✧</span></div>
-    <div class="envelope" aria-hidden="true">
-      <div class="envelope-top"></div><div class="envelope-bottom"></div>
+    <button class="envelope" type="button" aria-label="Tap the butterfly to open the invitation">
+      <span class="envelope-top"></span><span class="envelope-bottom"></span>
       <img class="opening-card-art" src="29_opening_invitation_card.png" alt="" />
-      <div class="envelope-trim"></div>
-      <div class="wax-seal"><img class="wax-seal-art" src="30_wax_seal.png" alt="" /></div>
-      <div class="butterfly butterfly--cover" id="butterfly" aria-hidden="true">
+      <span class="envelope-trim"></span>
+      <span class="wax-seal"><img class="wax-seal-art" src="30_wax_seal.png" alt="" /></span>
+      <span class="butterfly butterfly--cover" id="butterfly" aria-hidden="true">
         <img class="wing wing--left" src="21_butterfly_left_wing.png" alt="" />
         <img class="wing wing--right" src="22_butterfly_right_wing.png" alt="" />
         <img class="butterfly-body" src="20_butterfly_body.png" alt="" />
-      </div>
-    </div>
-    <div class="cover-copy"><span class="overline">A STORY WRITTEN IN GOLDEN LIGHT</span><h1>An invitation<br /><em>to remember</em></h1><p>A little moment of magic awaits.</p></div>
+      </span>
+    </button>
+    <div class="cover-copy"><span class="overline">A STORY WRITTEN IN GOLDEN LIGHT</span><h1 id="openingTitle">An invitation<br /><em>to remember</em></h1><p>A little moment of magic awaits.</p></div>
     <button id="openInvitation" class="open-button" type="button"><span class="open-button-icon">✦</span> OPEN INVITATION <span aria-hidden="true">↗</span></button>
     <p class="cover-hint">Touch the butterfly or open the invitation</p>
     <button class="skip-button" id="skipOpening" type="button">Skip opening</button>
   </div>
 
-  <main id="mainContent">
+  <main id="mainContent" inert>
     <section class="hero" id="home" aria-label="Welcome to the wedding invitation">
       <div class="hero-scene" aria-hidden="true">
         <!-- One cohesive master illustration; do not split the gateway, trees or flowers. -->
-        <img class="hero-master" src="art/golden_autumn_heritage_master_v4.png" alt="" fetchpriority="high" decoding="async" />
+        <img class="hero-master" src="art/golden_autumn_heritage_master_v4.png" alt="" width="853" height="1844" fetchpriority="high" decoding="async" />
         <!-- Only temporary leaves from the butterfly opening; not scroll/parallax layers. -->
         <div class="leaf-field" id="leafField"></div>
       </div>
@@ -56,7 +56,7 @@
       <div class="hero-words" id="heroWords">
         <p class="hero-eyebrow">TOGETHER WITH THEIR FAMILIES</p>
         <p class="hero-smalltitle">THE WEDDING OF</p>
-        <h2><span data-name="first">Thiri</span><span class="ampersand">&</span><span data-name="second">Min</span></h2>
+        <h2 tabindex="-1" id="heroTitle"><span data-name="first">Thiri</span><span class="ampersand">&</span><span data-name="second">Min</span></h2>
         <img src="31_gold_ornamental_divider.png" class="divider-art" alt="" />
         <p class="hero-date" data-date-text>20 JUNE 2027</p>
         <p class="hero-subtitle">A celebration of love, family & forever</p>
