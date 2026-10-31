@@ -128,6 +128,29 @@ assert.equal((html.match(/class="content-section countdown-section story-countdo
 
 
 
+/* Section 1 production review: one uncropped master, accessible butterfly opening,
+   complete keyboard focus lifecycle and safe mobile layout. */
+const coverMarkup = html.split('<div class="cover"')[1]?.split('<div class="cover-copy">')[0] || '';
+const heroMarkup = html.split('<section class="hero"')[1]?.split('<div class="garden-flow">')[0] || '';
+const heroCSS = read('hero-quality.css');
+assert(html.includes('href="hero-quality.css"'), 'Section 1 production CSS missing');
+assert(html.indexOf('href="hero-quality.css"') > html.indexOf('href="screen-fit.css"'), 'Section 1 CSS overrides must load last');
+assert(coverMarkup.includes('<button class="envelope"'), 'Butterfly/envelope target must be a real button');
+assert(coverMarkup.includes('aria-label="Tap the butterfly to open the invitation"'), 'Envelope button needs an accessible label');
+assert(html.includes('aria-labelledby="openingTitle"')&&html.includes('id="openingTitle"'), 'Opening dialog must have a named heading');
+assert(html.includes('<main id="mainContent" inert>'), 'Opening must keep background interactions inert');
+assert(heroMarkup.includes('id="heroTitle"')&&heroMarkup.includes('tabindex="-1"'), 'Hero heading needs a programmatic focus target');
+assert(heroMarkup.includes('width="853" height="1844"'), 'Prevent hero image layout shift via intrinsic size');
+assert(heroCSS.includes('object-fit: contain'), 'Do not crop the single illustrated garden');
+assert(heroCSS.includes('top: 42%'), 'Wedding text should be aligned to the painted arch opening');
+assert(js.includes('cover.inert = true')&&js.includes('mainContent.inert = false'), 'Opening must unlock main and deactivate cover');
+assert(js.includes('heroTitle.focus({ preventScroll: true })'), 'Opening must transfer focus to the invitation');
+assert(js.includes("event.key === 'Escape'")&&js.includes("event.key !== 'Tab'"), 'Opening must support keyboard skip and focus trap');
+assert(js.includes('openButton.focus({ preventScroll: true })'), 'Opening dialog needs initial keyboard focus');
+assert(heroCSS.includes('@media (max-height: 680px)'), 'Short-screen hero layout missing');
+assert(heroCSS.includes('prefers-reduced-motion:reduce'), 'Hero CSS must respect reduced motion');
+assert(!/ScrollTrigger|scroll-snap-type|object-fit: cover/.test(heroCSS), 'Section 1 must not use scene parallax, snap or image cropping');
+
 /* One screen per illustrated scene, without cropping their source artwork. */
 const fitCSS=read('screen-fit.css');
 assert(html.includes('href="screen-fit.css"'), 'Viewport fit stylesheet is not linked');
@@ -140,5 +163,5 @@ assert(fitCSS.includes('overflow-y:auto'), 'Long wedding text must not be clippe
 assert(fitCSS.includes('@media (max-height:640px)'), 'Short phone fallback is missing');
 assert(!/object-fit:cover|scroll-snap-type/.test(fitCSS), 'Viewport fit should not crop the art or snap page scrolling');
 
-console.log('PASS: V4 unified garden, Section 2 safe-edge frame, Section 3 illustrated two-panel scene, editable events, story, countdown and single-screen illustrated layout.');
+console.log('PASS: Section 1 hero QA guards, Sections 2/3 layout, preserved editable event and story content.');
 console.log('Next: test actual mobile framing, butterfly opening, natural scrolling and text readability.');
