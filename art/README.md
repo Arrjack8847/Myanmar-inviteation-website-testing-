@@ -25,3 +25,7 @@ Preview: `http://localhost:4173/art-review.html`, after running `node server.js`
 - Do not swap the Section 1 garden or assume the Section 2 → 3 seam is final before Section 3's matching art is ready.
 
 Review: `http://localhost:4173/index.html?heroPreview=1#invitation`.
+
+## Section 3 — two-panel illustrated event master
+
+The source is currently in the user's separate public GitHub repository `Arrjack8847/testing-version-2` (file `1d9dbc80-eada-40a7-b1be-7182c2cffbbe.png`). Its matching Git blob SHA is `fca0d987ac2e13686dfd08463401a6c5f24e023e`. Section 3 temporarily references the immutable raw URL; the preferred future local filename is `art/section3_ceremony_reception_master.png` in this repo. No copy has been placed here yet. Do not remove the remote image until a verified local copy exists.
