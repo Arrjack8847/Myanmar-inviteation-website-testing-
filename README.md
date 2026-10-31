@@ -26,6 +26,30 @@ Open these URLs:
 
 For an existing cloned repository, use `git fetch origin` followed by `git switch feat/hires-garden-preview-20261101` and `git pull --ff-only origin feat/hires-garden-preview-20261101`.
 
+## Section 1 — Production-quality improvement pass (current focus)
+
+All work from here is limited to the initial **envelope/butterfly opening** and the **Golden Autumn Gateway hero**. Sections 2–6 are not part of the current development scope.
+
+The approved 853×1844 garden master remains a **single, complete illustration**. The new `hero-quality.css` file is loaded last to avoid cuts to the gateway, garden path, and flowers: it uses `object-fit:contain`, positions wedding names inside the arch, and handles short mobile screens without parallax or scroll snapping. The original master file is unchanged.
+
+Opening improvements:
+- The envelope/butterfly is a native HTML button, accessible to mouse, touch, and keyboard users.
+- The opening overlay is labeled as a modal; background controls stay inert while it is active.
+- Open, Skip, Escape, Tab, Shift+Tab, and reduced-motion opening paths are supported; focus moves to the couple's names when opened.
+- Hero image dimensions are declared to reduce avoidable layout shift, and the scroll cue has an accessible focus state.
+
+Run tests:
+
+```powershell
+node tests/smoke.cjs
+node tests/hero-interaction.cjs
+node server.js
+```
+
+View `http://localhost:4173/art-review.html` to compare actual **320×568**, **390×844**, **430×932** virtual phone sizes, with or without the invitation text.
+
+The acceptance criteria for calling Section 1 production-ready are defined in `HERO_QA.md`. Source checks and isolated JavaScript behavior simulations have passed, but real browser screenshots, iOS/Android accessibility checks, Lighthouse measurements, and master-image optimization remain **unverified**. Do not treat this as a final 10/10 release until those gates pass.
+
 ## Section 2 — formal family invitation
 
 The second section now uses your newly uploaded **one-piece illustrated invitation master** `art/section2_family_invitation_master.png` (1086 × 1448 PNG). The stone path along its top is intended to continue Section 1; its burgundy flowers, gold frame and sunset are all painted as ONE matching picture. Burmese-first and English invitation wording, two family blocks, and the wedding date stay accessible, editable HTML.
