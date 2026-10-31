@@ -127,5 +127,18 @@ assert.equal((html.match(/class="content-section countdown-section story-countdo
 
 
 
-console.log('PASS: V4 unified garden, Section 2 safe-edge frame, Section 3 illustrated two-panel scene, editable events, story and countdown.');
+
+/* One screen per illustrated scene, without cropping their source artwork. */
+const fitCSS=read('screen-fit.css');
+assert(html.includes('href="screen-fit.css"'), 'Viewport fit stylesheet is not linked');
+assert(html.indexOf('href="screen-fit.css"') > html.indexOf('href="story.css"'), 'Viewport overrides must load last');
+assert(fitCSS.includes('.invitation-section,') && fitCSS.includes('.details-section {'), 'Both illustrated sections must be included');
+assert(fitCSS.includes('height:calc(100svh - var(--wedding-demo-bar-height))'), 'Viewport height rule is missing');
+assert(fitCSS.includes('border-image-slice:355 120 470 120 fill'), 'Section 2 illustrated edges must stay preserved');
+assert(fitCSS.includes('aspect-ratio:1086 / 1448'), 'Section 3 complete illustration aspect ratio must be preserved');
+assert(fitCSS.includes('overflow-y:auto'), 'Long wedding text must not be clipped');
+assert(fitCSS.includes('@media (max-height:640px)'), 'Short phone fallback is missing');
+assert(!/object-fit:cover|scroll-snap-type/.test(fitCSS), 'Viewport fit should not crop the art or snap page scrolling');
+
+console.log('PASS: V4 unified garden, Section 2 safe-edge frame, Section 3 illustrated two-panel scene, editable events, story, countdown and single-screen illustrated layout.');
 console.log('Next: test actual mobile framing, butterfly opening, natural scrolling and text readability.');
