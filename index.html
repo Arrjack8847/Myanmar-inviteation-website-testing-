@@ -64,22 +64,16 @@
 
     <div class="garden-flow">
       <section class="content-section invitation-section" id="invitation" aria-labelledby="invitationTitle">
-        <div class="invitation-section-intro">
-          <p class="eyebrow">TWO FAMILIES · ONE BEAUTIFUL BEGINNING</p>
-          <h2 class="section-heading" id="invitationTitle">With love, <em>together</em></h2>
-          <p class="invitation-section-lead">An invitation to celebrate a cherished new chapter.</p>
-        </div>
-
-        <article class="heritage-invitation" aria-label="Formal family wedding invitation">
+        <!-- One approved illustrated invitation master; the artwork is applied in CSS
+             as a scalable nine-slice of the SAME image to protect ornate corners
+             while allowing variable-length Burmese and English text. -->
+        <article class="heritage-invitation" aria-label="Family wedding invitation">
           <div class="heritage-invitation-inner">
-            <img class="heritage-corner heritage-corner--tl" src="32_gold_corner_ornament.png" alt="" loading="lazy" />
-            <img class="heritage-corner heritage-corner--tr" src="32_gold_corner_ornament.png" alt="" loading="lazy" />
-            <img class="heritage-corner heritage-corner--bl" src="32_gold_corner_ornament.png" alt="" loading="lazy" />
-            <img class="heritage-corner heritage-corner--br" src="32_gold_corner_ornament.png" alt="" loading="lazy" />
-
-            <p class="heritage-burmese-title" lang="my">မင်္ဂလာဖိတ်စာ</p>
-            <p class="heritage-english-title">A WEDDING INVITATION</p>
-            <img class="heritage-divider" src="31_gold_ornamental_divider.png" alt="" loading="lazy" />
+            <header class="invitation-section-intro">
+              <p class="heritage-burmese-title" lang="my">မင်္ဂလာဖိတ်စာ</p>
+              <p class="heritage-english-title">A WEDDING INVITATION</p>
+              <h2 class="section-heading" id="invitationTitle">With love, <em>together</em></h2>
+            </header>
 
             <p class="heritage-invitation-intro burmese" lang="my">
               မိသားစုနှစ်ဖက်၏ မေတ္တာနှင့် ကောင်းချီးမင်္ဂလာများဖြင့်
@@ -107,13 +101,11 @@
               With the love and blessings of our families, we warmly invite you
               to honor us with your presence on our special day.
             </p>
-
-            <img class="heritage-divider heritage-divider--closing" src="31_gold_ornamental_divider.png" alt="" loading="lazy" />
             <p class="heritage-date" data-date-text>20 JUNE 2027</p>
             <p class="heritage-footer-note">YOUR PRESENCE IS OUR GREATEST JOY</p>
           </div>
         </article>
-        <p class="fine-print heritage-demo-note">Demo invitation: replace the sample couple, date and parents' names with confirmed details before sharing with guests.</p>
+        <p class="fine-print heritage-demo-note">Demo invitation: replace the couple, date and parents' names with confirmed details before sharing with guests.</p>
       </section>
 
       <section class="content-section details-section" id="details" aria-labelledby="detailsTitle">
