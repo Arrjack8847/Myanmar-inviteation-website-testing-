@@ -15,3 +15,13 @@ Wedding names and date remain editable, accessible live HTML text over the image
 The image was copied without re-encoding from the uploaded `download.png` in the repository. Other prototype art remains archived but is not rendered in the hero.
 
 Preview: `http://localhost:4173/art-review.html`, after running `node server.js`.
+
+## Section 2 — approved painted family invitation
+
+- `section2_family_invitation_master.png` is an unchanged copy of the user-uploaded `3b176df0-2def-4450-a24d-a070e3838c18.png` in this same folder (both SHA `2d622fd5a6aa92ba3a9f794682442a2c1b848df2`).
+- The complete floral/gold/stone-path illustration is treated as **one cohesive source**.
+- To allow longer live text without cutting off carved corners, CSS nine-slice scaling extends the *blank parchment center*. The top arch, rose corners and lower garden remain aligned.
+- The artwork is static; no parallax or animated floral layers.
+- Do not swap the Section 1 garden or assume the Section 2 → 3 seam is final before Section 3's matching art is ready.
+
+Review: `http://localhost:4173/index.html?heroPreview=1#invitation`.
