@@ -33,10 +33,10 @@ No separate moving scenery and no scroll-driven animation.</p>
 </header>
 <main>
 <div class="controls" role="group" aria-label="Screen size">
- <span>Choose preview width</span>
- <button type="button" data-width="320" aria-pressed="false">320 px</button>
- <button type="button" data-width="390" aria-pressed="true">390 px</button>
- <button type="button" data-width="430" aria-pressed="false">430 px</button>
+ <span>Choose real phone viewport</span>
+ <button type="button" data-width="320" data-height="568" aria-pressed="false">320 × 568</button>
+ <button type="button" data-width="390" data-height="844" aria-pressed="true">390 × 844</button>
+ <button type="button" data-width="430" data-height="932" aria-pressed="false">430 × 932</button>
 </div>
 <div class="preview" id="preview">
  <iframe id="heroFrame" src="./index.html?heroPreview=1#home" title="Full unified hero with the wedding names" loading="eager"></iframe>
@@ -46,7 +46,7 @@ No separate moving scenery and no scroll-driven animation.</p>
  <button type="button" id="withText" aria-pressed="true">With wedding text</button>
  <button type="button" id="artOnly" aria-pressed="false">Artwork only</button>
 </div>
-<p class="note">The image stays exactly as illustrated. Mobile screens can crop a little at the top and bottom when their shape differs from the original portrait. Check the gateway crest, pillars, foreground and live text at every width. <a href="./index.html">Open the full invitation</a>.</p>
+<p class="note">The complete illustration now uses contain sizing without cutting off its gateway, flowers or bottom stone path. Decorative color may appear along the sides on short screens. Check the gateway crest, pillars, foreground and live text at every width. <a href="./index.html">Open the full invitation</a>.</p>
 </main>
 <script>
 'use strict';
@@ -58,7 +58,7 @@ const artOnly=document.getElementById('artOnly');
 widths.forEach(button=>button.addEventListener('click',()=>{
  const w=Number(button.dataset.width);
  panel.style.width=Math.min(w,window.innerWidth-32)+'px';
- panel.style.height=Math.round(w*844/390)+'px';
+ panel.style.height=button.dataset.height+'px';
  widths.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
 }));
 function setArtworkOnly(isArtOnly){
