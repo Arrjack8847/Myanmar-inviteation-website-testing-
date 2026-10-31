@@ -77,6 +77,31 @@ assert(js.includes('event.venueConfirmed ? approvedMapUrl(event.mapUrl)'), 'Dire
 assert(js.includes('renderWeddingEvents();'), 'Event rendering not called');
 assert(read('events.css').includes('.celebration-events'), 'Event card styling missing');
 
+/* Section 4: optional factual story copy and live countdown. */
+assert(html.includes('href="story.css"'), 'Missing Love Story stylesheet');
+const storySection = html.split('<section class="content-section countdown-section story-countdown-section"')[1]?.split('<section class="content-section closing-section"')[0] || '';
+assert(storySection.includes('id="storyTitle"'), 'Love Story heading missing');
+assert(storySection.includes('id="countdownTitle"'), 'Countdown heading missing');
+assert(storySection.includes('lang="my"'), 'Love Story Myanmar heading missing');
+assert.equal((storySection.match(/class="story-chapter"/g) || []).length, 3, 'Expect three editable story chapters');
+assert.equal((storySection.match(/data-story-title="[0-2]"/g) || []).length, 3, 'Story chapter titles not editable');
+assert.equal((storySection.match(/data-story-text="[0-2]"/g) || []).length, 3, 'Story chapter body not editable');
+assert(storySection.includes('data-story-intro'), 'Story introduction missing');
+assert(storySection.includes('data-date-text'), 'Countdown display date not linked to shared date');
+assert(storySection.includes('id="countdownStatus"'), 'Countdown state message missing');
+for (const id of ['days','hours','minutes','seconds']) {
+  assert(storySection.includes('id="' + id + '"'), 'Countdown field missing: '+id);
+}
+assert(js.includes('const LOVE_STORY = {'), 'Love Story configuration missing');
+assert(js.includes('function renderLoveStory()'), 'Love Story renderer missing');
+assert(js.includes('renderLoveStory();'), 'Love Story renderer never called');
+assert(js.includes('Number.isFinite(deadline)'), 'Countdown should guard invalid dates');
+assert(js.includes('The wedding day has arrived'), 'Countdown should show the past-date state');
+assert(read('story.css').includes('.story-paper-inner'), 'Love Story styles missing');
+assert(read('story.css').includes('@media(max-width:520px)'), 'Love Story mobile styling missing');
+assert.equal((html.match(/class="content-section countdown-section story-countdown-section"/g) || []).length, 1, 'Duplicate Section 4');
 
-console.log('PASS: V4 single-image hero, bilingual family invitation, ceremony/reception cards, gated directions and shared personalization.');
+
+
+console.log('PASS: V4 unified garden, family invitation, events, customizable love story, guarded live countdown and personalization.');
 console.log('Next: test actual mobile framing, butterfly opening, natural scrolling and text readability.');
