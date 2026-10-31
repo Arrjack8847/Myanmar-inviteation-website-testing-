@@ -28,7 +28,9 @@ For an existing cloned repository, use `git fetch origin` followed by `git switc
 
 ## Section 2 — formal family invitation
 
-The second section is a new ivory-and-antique-gold wedding stationery card with Burmese-first wording, English translation, two family blocks, gold corner ornaments, and a live wedding date. The design is static and scrolls naturally after the complete garden illustration.
+The second section now uses your newly uploaded **one-piece illustrated invitation master** `art/section2_family_invitation_master.png` (1086 × 1448 PNG). The stone path along its top is intended to continue Section 1; its burgundy flowers, gold frame and sunset are all painted as ONE matching picture. Burmese-first and English invitation wording, two family blocks, and the wedding date stay accessible, editable HTML.
+
+**Responsive edge handling:** The ornate image is presented with CSS `border-image` nine-slicing: the top arch, all four corners, and bottom scenery remain intact, while only the spacious parchment center adjusts for longer family names or Burmese text. We do not stretch the whole illustration vertically, crop away the frame, or add separate decorative PNG overlays. This is one master source, not nineteen independent artwork layers. The precise Section 1→2 join still needs real-phone review. Section 3's dedicated transition illustration is not yet integrated.
 
 To personalize the demo, change these values in `app.js`:
 
@@ -111,6 +113,7 @@ The styled content and responsive countdown are in `story.css`. Preview Section 
 ## Assets
 
 - `art/golden_autumn_heritage_master_v4.png` — sole garden image on the first section
+- `art/section2_family_invitation_master.png` — approved Section 2 illustration, protected by safe-edge scaling
 - `20_butterfly_body.png`, `21_butterfly_left_wing.png`, `22_butterfly_right_wing.png` — opening butterfly
 - `23_...` to `28_...` — leaves for brief opening gust
 - `29_...` to `30_...` — invitation card and seal
