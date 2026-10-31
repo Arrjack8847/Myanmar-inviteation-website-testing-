@@ -61,6 +61,21 @@ Both events remain customizable via `WEDDING_EVENTS` in `app.js`. Unconfirmed lo
 
 Preview: `http://localhost:4173/index.html?heroPreview=1#details`.
 
+## One-screen mobile layout for Sections 2 and 3
+
+The first three illustrated scenes now each occupy **one viewport** on ordinary phone and desktop previews. Section 1 already used a viewport-height hero. Section 2 and Section 3 are constrained by the new `screen-fit.css`, loaded after all earlier styling.
+
+- Section 2 keeps the same approved nine-slice gold/floral master; the parchment adjusts to a single screen without cropping the original arch or corners.
+- Section 3 shows both gold-framed event panels within a single **uncropped** 1086:1448 illustration. Its display width is reduced when needed so the full image can fit above the demo disclaimer.
+- Guests still scroll normally from Section 1 to Section 2 to Section 3. There is **no scroll snapping, parallax or stretching of the entire picture**.
+- Extremely short phone screens, longer verified names, large accessibility text, or unusually long venue details may need **scrolling within the card's text area**. We protect legibility and complete content rather than cutting words off or shrinking type to unreadable sizes.
+
+Review these page anchors in your local V4 clone:
+- `http://localhost:4173/index.html?heroPreview=1#invitation`
+- `http://localhost:4173/index.html?heroPreview=1#details`
+
+Run `node tests/smoke.cjs` after each pull and visually test at 320×568, 390×844, and 430×932. Browser checks still need to be performed locally.
+
 ## Section 4 — Love Story & Countdown
 
 Section 4 is a static ivory stationery story paired with a live four-part countdown; there is **no scroll-triggered scenery animation**.
