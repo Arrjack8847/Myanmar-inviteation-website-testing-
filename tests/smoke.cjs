@@ -141,7 +141,10 @@ assert(html.includes('aria-labelledby="openingTitle"')&&html.includes('id="openi
 assert(html.includes('<main id="mainContent" inert>'), 'Opening must keep background interactions inert');
 assert(heroMarkup.includes('id="heroTitle"')&&heroMarkup.includes('tabindex="-1"'), 'Hero heading needs a programmatic focus target');
 assert(heroMarkup.includes('width="853" height="1844"'), 'Prevent hero image layout shift via intrinsic size');
-assert(heroCSS.includes('object-fit: contain'), 'Do not crop the single illustrated garden');
+assert(heroCSS.includes('object-fit: cover'), 'Phone hero must fill width without peach side gutters');
+assert(heroCSS.includes('object-position:center 47%'), 'Mobile crop needs a fixed visual focal point');
+assert(heroCSS.includes('#heroTitle:focus { outline:none; }'), 'Programmatic focus must not draw a dark box around names');
+assert(heroCSS.includes('width:min(47vw,calc(29svh - 10px))'), 'Arch text should use a legible safe width');
 assert(heroCSS.includes('top: 42%'), 'Wedding text should be aligned to the painted arch opening');
 assert(js.includes('cover.inert = true')&&js.includes('mainContent.inert = false'), 'Opening must unlock main and deactivate cover');
 assert(js.includes('heroTitle.focus({ preventScroll: true })'), 'Opening must transfer focus to the invitation');
