@@ -1,21 +1,17 @@
-# Golden Autumn Heritage — V4 master image
+# Golden Autumn Heritage — approved unified hero
 
-`golden_autumn_heritage_master_v4.png` is the **approved softened illustration**, copied directly from the original GitHub upload `download.png` on `main` (same image bytes, not recompressed).
+The file `golden_autumn_heritage_master_v4.png` is the **single, complete background image for Section 1**, including its gateway, trees, garden, pathway and floral borders.
 
-This flattened image is the **visual target**, not the animated website layer. Existing background, gateway, flower, vine and pathway PNG elements remain independently movable.
+## Design decision (November 1, 2026)
 
-## Compare scene to reference
+Keep the garden illustration intact rather than rebuilding it from individually generated layers, which caused misalignments and inconsistent lighting. The HTML/CSS website now displays this image directly:
 
-Run the local static server from the repository root:
-
-```powershell
-node server.js
+```html
+<img class="hero-master" src="art/golden_autumn_heritage_master_v4.png" alt="" fetchpriority="high" />
 ```
 
-Visit **http://localhost:4173/art-review.html**. Use the overlay-opacity slider to compare the approved static master against the actual assembled hero at 390 × 844 logical pixels. Switch between website only and master only, and display text-safe guides. Reference details:
-- Gateway arch, pillar joints and step positions should coincide
-- Background horizon should match in height and perspective
-- Floral edges should frame the center without obscuring names
-- Dramatic sunlight should be softened toward romantic ivory and peach
+Wedding names and date remain editable, accessible live HTML text over the image. The separate butterfly and six leaf images are used solely for the *opening interaction*, not to reconstruct the scenery. The hero does not parallax or move during scrolling; the page naturally continues to invitation details.
 
-The standard website still lives at `index.html`. The `?artReview=1` query is exclusively for the static alignment comparison.
+The image was copied without re-encoding from the uploaded `download.png` in the repository. Other prototype art remains archived but is not rendered in the hero.
+
+Preview: `http://localhost:4173/art-review.html`, after running `node server.js`.
