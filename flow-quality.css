@@ -176,7 +176,11 @@ main { touch-action: pan-y pinch-zoom; }
    The masks affect only their first few edge pixels; the real text starts
    well below the transparent strips. */
 @supports ((mask-image:linear-gradient(#000,#000)) or (-webkit-mask-image:linear-gradient(#000,#000))) {
-  .garden-flow { margin-top: -18px; }
+  .garden-flow {
+    margin-top: -18px;
+    background:linear-gradient(to bottom,transparent 0,transparent 22px,#dea68a 62px,#e9b898 75%,#d19a79);
+  }
+  .garden-flow > .invitation-section { background: transparent; }
   .invitation-section .heritage-invitation {
     -webkit-mask-image: linear-gradient(to bottom,transparent 0,#000 24px,#000 100%);
     mask-image: linear-gradient(to bottom,transparent 0,#000 24px,#000 100%);
