@@ -4,7 +4,7 @@
 
 ## Architecture
 - Original approved `art/golden_autumn_heritage_master_v4.png` is the **only painted hero scene** (853 × 1844). No extra standalone roses/trees/columns, nine-slicing, parallax or snap scrolling.
-- HTML controls/text overlay the illustration. The image is fitted with `object-fit: contain`, never cropped.
+- HTML controls/text overlay the illustration. The image now uses `object-fit: cover` on mobile, maintaining aspect ratio and filling the viewport without side bars; this intentionally crops some top/bottom scenery on short screens, not the central gateway.
 - Mobile typography sits within the gateway opening. On very short screens, decorative eyebrow/subtitle may be omitted but names/date remain.
 - Demo banner is fixed at 34px. Hero occupies remaining small viewport height.
 - The initial envelope/butterfly is an HTML `button` with a label; decorative wing/body PNGs are not separate controls.
@@ -22,9 +22,9 @@
 10. Check the actual artwork edge and text-safe zone at **320×568**, **390×844**, **430×932**, and one landscape/tablet viewport.
 
 ## Visual acceptance
-- The upper Kanote-inspired crest, both gateway pillars, foreground roses and pathway are all present with no crop.
+- The Kanote-inspired crest and BOTH pillars remain visible. Some outer canopy/path may be cropped on short screens; review exact art composition at the target devices.
 - The couple names and date are inside the arch rather than painted over the pillars.
-- On narrower/short phones, the side gutter is a soft color continuation rather than stretched image artifacts.
+- On phones there must be NO solid peach side bars, NO image stretching, and NO black browser-focus rectangle around the names.
 - Opening leaves and butterfly appear only over the cover/hero, without changing the painted garden scenery.
 - Links and controls are clearly visible and have keyboard focus indicators.
 - The hero feels balanced with long sample couple names as well as the default **Thiri & Min**.
@@ -49,3 +49,7 @@ Preview:
 - Width/height comparison: `http://localhost:4173/art-review.html`
 
 **Status:** Source-level checks and JS syntax have been inspected via the GitHub connector. The actual local Node smoke test, interactive real browser/mobile QA, full Lighthouse run and optimized-image release are still pending. No honest 10/10 claim until the complete gate passes.
+
+## Screenshot regression recorded (November 1, 2026)
+
+A phone simulator screenshot showed a **narrow contained illustration with obvious peach side bars**, a **black programmatic-focus outline around the names**, and **undersized, constrained wedding text**. Changes in `hero-quality.css` now use mobile `object-fit:cover;object-position:center 47%`, an improved arch text width/font, and suppress focus outlines on the *noninteractive, programmatically focused* heading only (real interactive focus outlines remain). Validate after pulling; screenshot still needs a side-by-side browser check.
