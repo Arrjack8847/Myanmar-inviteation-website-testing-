@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="artwork.css" />
   <link rel="stylesheet" href="invitation.css" />
+  <link rel="stylesheet" href="events.css" />
 </head>
 <body class="not-opened">
   <div class="demo-bar" aria-label="Prototype notice"><span class="demo-indicator"></span> LOCAL DESIGN DEMO <span class="demo-separator">·</span> SAMPLE DETAILS</div>
@@ -115,20 +116,74 @@
       </section>
 
       <section class="content-section details-section" id="details" aria-labelledby="detailsTitle">
-        <div class="section-ornament">✦ &nbsp; ❦ &nbsp; ✦</div>
-        <p class="eyebrow">SAVE THE DATE</p>
-        <h2 class="section-heading" id="detailsTitle">Our special <em>day</em></h2>
-        <img class="divider-art" src="31_gold_ornamental_divider.png" alt="" />
-        <div class="event-card">
-          <p class="event-card-label">THE WEDDING CEREMONY</p>
-          <div class="date-number">20</div>
-          <p class="event-month">JUNE 2027</p>
-          <div class="event-rule"></div>
-          <div class="detail-row"><span class="detail-icon">◷</span><span>4:30 PM <small>MYANMAR TIME</small></span></div>
-          <div class="detail-row"><span class="detail-icon">⌖</span><span>Yangon, Myanmar <small>Venue added for each customer</small></span></div>
-          <a class="outline-button" href="https://www.google.com/maps/search/?api=1&amp;query=Yangon%2C%20Myanmar" target="_blank" rel="noopener noreferrer">EXPLORE YANGON <span aria-hidden="true">↗</span></a>
-          <p class="event-note">Demo location only — this is not a real wedding venue.</p>
+        <div class="details-intro">
+          <p class="eyebrow">THE CELEBRATION</p>
+          <h2 class="section-heading" id="detailsTitle">Our special <em>day</em></h2>
+          <p class="details-intro-burmese" lang="my">မင်္ဂလာအခမ်းအနားနှင့် ဧည့်ခံပွဲ</p>
+          <img class="details-heading-divider" src="31_gold_ornamental_divider.png" alt="" loading="lazy" />
+          <p class="details-description">Two moments to cherish, surrounded by those we love.</p>
         </div>
+
+        <div class="celebration-events" aria-label="Wedding ceremony and reception information">
+          <article class="celebration-event" data-event="ceremony" aria-labelledby="ceremonyTitle">
+            <div class="celebration-event-inner">
+              <div class="celebration-event-top">
+                <span class="celebration-event-number" aria-hidden="true">01</span>
+                <span class="celebration-event-type">THE WEDDING CEREMONY</span>
+              </div>
+              <h3 id="ceremonyTitle">Wedding <em>Ceremony</em></h3>
+              <p class="celebration-event-myanmar" lang="my">မင်္ဂလာအခမ်းအနား</p>
+              <div class="celebration-event-divider" aria-hidden="true"><span>✦</span></div>
+              <dl class="celebration-details">
+                <div class="celebration-detail">
+                  <dt>DATE</dt>
+                  <dd><time data-event-field="date">20 JUNE 2027</time></dd>
+                </div>
+                <div class="celebration-detail">
+                  <dt>TIME</dt>
+                  <dd data-event-field="time">4:30 PM · MYANMAR TIME</dd>
+                </div>
+                <div class="celebration-detail">
+                  <dt>VENUE</dt>
+                  <dd class="celebration-venue" data-event-field="venue">Venue to be confirmed</dd>
+                  <dd class="celebration-address" data-event-field="address">Yangon, Myanmar — sample city only</dd>
+                </div>
+              </dl>
+              <a class="celebration-directions" data-event-link hidden target="_blank" rel="noopener noreferrer" aria-label="Open directions to the wedding ceremony venue">GET DIRECTIONS <span aria-hidden="true">↗</span></a>
+              <p class="celebration-directions-pending" data-event-pending>Directions available when the venue is confirmed</p>
+            </div>
+          </article>
+
+          <article class="celebration-event" data-event="reception" aria-labelledby="receptionTitle">
+            <div class="celebration-event-inner">
+              <div class="celebration-event-top">
+                <span class="celebration-event-number" aria-hidden="true">02</span>
+                <span class="celebration-event-type">THE WEDDING RECEPTION</span>
+              </div>
+              <h3 id="receptionTitle">Wedding <em>Reception</em></h3>
+              <p class="celebration-event-myanmar" lang="my">မင်္ဂလာဧည့်ခံပွဲ</p>
+              <div class="celebration-event-divider" aria-hidden="true"><span>✦</span></div>
+              <dl class="celebration-details">
+                <div class="celebration-detail">
+                  <dt>DATE</dt>
+                  <dd><time data-event-field="date">Date to be confirmed</time></dd>
+                </div>
+                <div class="celebration-detail">
+                  <dt>TIME</dt>
+                  <dd data-event-field="time">Time to be confirmed</dd>
+                </div>
+                <div class="celebration-detail">
+                  <dt>VENUE</dt>
+                  <dd class="celebration-venue" data-event-field="venue">Reception venue to be confirmed</dd>
+                  <dd class="celebration-address" data-event-field="address">Venue and address to be added</dd>
+                </div>
+              </dl>
+              <a class="celebration-directions" data-event-link hidden target="_blank" rel="noopener noreferrer" aria-label="Open directions to the wedding reception venue">GET DIRECTIONS <span aria-hidden="true">↗</span></a>
+              <p class="celebration-directions-pending" data-event-pending>Directions available when the venue is confirmed</p>
+            </div>
+          </article>
+        </div>
+        <p class="celebration-disclaimer">These are demonstration details. Event times, dates, and locations must be confirmed with the couple before publishing an invitation.</p>
       </section>
 
       <section class="content-section countdown-section" id="countdown" aria-labelledby="countdownTitle">
