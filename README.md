@@ -85,11 +85,19 @@ Both events remain customizable via `WEDDING_EVENTS` in `app.js`. Unconfirmed lo
 
 Preview: `http://localhost:4173/index.html?heroPreview=1#details`.
 
+## Mobile QA and simplified scrolling styles (next pass)
+
+To reduce cascading-layout bugs, the old `screen-fit.css` is **no longer loaded**. It remains in the repository as a historical backup only. The final live stylesheets now load `hero-quality.css` followed by `flow-quality.css`. The scroll anchor uses only one 34px offset for the fixed demo bar, avoiding unintended extra top space.
+
+Open `http://localhost:4173/flow-review.html` to inspect the **actual website** at 320 × 568, 390 × 844 or 430 × 932, jump between the three painted scenes, and run automatic page-geometry checks. The page reports the measured space/overlap at both joins, any horizontal overflow, whether the whole document scrolls, and whether the invitation still has an unwanted nested scrollbar. It requires no npm packages.
+
+The browser review page is a **local diagnostic**; passing geometry checks does not establish that the independently painted illustrations are pixel-perfect at the joins. Continue inspecting actual phone screenshots before publishing.
+
 ## Continuous scrolling — Sections 1, 2 and 3 (latest repair)
 
 The November 1 mobile screenshots exposed a major layout regression: Section 2 was fixed to `100svh`, leaving a **large empty peach band** before Section 3. Scroll gestures could also get captured by nested parchment/event scroll containers.
 
-The corrective **`flow-quality.css`** stylesheet is deliberately loaded **last**, after `screen-fit.css` and `hero-quality.css`. It restores natural vertical document flow.
+The corrective **`flow-quality.css`** stylesheet is loaded **last**, after `hero-quality.css` (the obsolete `screen-fit.css` is no longer linked). It restores natural vertical document flow.
 
 - **Section 1** remains a single-viewport gateway scene. Its complete static painting and live HTML names remain unchanged. The visible scroll cue stays above the transition.
 - **Section 2** now grows to fit its actual bilingual family-invitation content. No fixed section height, no filler band, no extra inner scroll. The approved one-piece nine-slice gold floral artwork is unchanged.
