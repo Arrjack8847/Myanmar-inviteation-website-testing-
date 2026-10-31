@@ -154,7 +154,7 @@
 .details-section .ceremony-master-scene {
   box-sizing:border-box;
   flex:0 0 auto;
-  width:min(100%, 660px, calc(75svh - 75px));
+  width:min(100%, 660px, calc(75svh - 83px));
   max-width:100%;
   aspect-ratio:1086 / 1448;
   height:auto;
