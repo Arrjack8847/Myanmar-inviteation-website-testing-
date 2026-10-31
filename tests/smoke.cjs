@@ -39,7 +39,7 @@ const masterImage=fs.readFileSync(masterPath);
 assert(masterImage.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10])), 'V4 master is not a PNG');
 assert(masterImage.readUInt32BE(16)>=800 && masterImage.readUInt32BE(20)>=1700, 'V4 master is unexpectedly small');
 const review=read('art-review.html');
-assert(review.includes('art/golden_autumn_heritage_master_v4.png'), 'Review page not linked to master image');
+assert(review.includes('index.html?heroPreview=1'), 'Review page must display the actual hero and master artwork');
 assert(review.includes('index.html?artReview=1'), 'Review page not linked to static scene preview');
 assert(js.includes("get('artReview')"), 'Preview route not enabled');
 
@@ -145,26 +145,36 @@ assert(heroCSS.includes('object-fit: cover'), 'Phone hero must fill width withou
 assert(heroCSS.includes('object-position:center 47%'), 'Mobile crop needs a fixed visual focal point');
 assert(heroCSS.includes('#heroTitle:focus { outline:none; }'), 'Programmatic focus must not draw a dark box around names');
 assert(heroCSS.includes('width:min(47vw,calc(29svh - 10px))'), 'Arch text should use a legible safe width');
-assert(heroCSS.includes('top: 42%'), 'Wedding text should be aligned to the painted arch opening');
+assert(heroCSS.includes('top: 44%'), 'Wedding text should be aligned to the painted arch opening');
 assert(js.includes('cover.inert = true')&&js.includes('mainContent.inert = false'), 'Opening must unlock main and deactivate cover');
 assert(js.includes('heroTitle.focus({ preventScroll: true })'), 'Opening must transfer focus to the invitation');
 assert(js.includes("event.key === 'Escape'")&&js.includes("event.key !== 'Tab'"), 'Opening must support keyboard skip and focus trap');
 assert(js.includes('openButton.focus({ preventScroll: true })'), 'Opening dialog needs initial keyboard focus');
 assert(heroCSS.includes('@media (max-height: 680px)'), 'Short-screen hero layout missing');
 assert(heroCSS.includes('prefers-reduced-motion:reduce'), 'Hero CSS must respect reduced motion');
-assert(!/ScrollTrigger|scroll-snap-type|object-fit: cover/.test(heroCSS), 'Section 1 must not use scene parallax, snap or image cropping');
+assert(!/ScrollTrigger|scroll-snap-type/.test(heroCSS), 'Section 1 must not use parallax or forced scroll snapping');
 
-/* One screen per illustrated scene, without cropping their source artwork. */
+/* Screenshot regression: remove full-height empty gaps and nested swipe traps.
+   These rules must LOAD AFTER screen-fit.css (the previous forced-height design).
+   Section 2's editable parchment now grows naturally, with Section 3 directly
+   following it in normal document flow. */
 const fitCSS=read('screen-fit.css');
-assert(html.includes('href="screen-fit.css"'), 'Viewport fit stylesheet is not linked');
-assert(html.indexOf('href="screen-fit.css"') > html.indexOf('href="story.css"'), 'Viewport overrides must load last');
-assert(fitCSS.includes('.invitation-section,') && fitCSS.includes('.details-section {'), 'Both illustrated sections must be included');
-assert(fitCSS.includes('height:calc(100svh - var(--wedding-demo-bar-height))'), 'Viewport height rule is missing');
-assert(fitCSS.includes('border-image-slice:355 120 470 120 fill'), 'Section 2 illustrated edges must stay preserved');
-assert(fitCSS.includes('aspect-ratio:1086 / 1448'), 'Section 3 complete illustration aspect ratio must be preserved');
-assert(fitCSS.includes('overflow-y:auto'), 'Long wedding text must not be clipped');
-assert(fitCSS.includes('@media (max-height:640px)'), 'Short phone fallback is missing');
-assert(!/object-fit:cover|scroll-snap-type/.test(fitCSS), 'Viewport fit should not crop the art or snap page scrolling');
+const flowCSS=read('flow-quality.css');
+assert(html.includes('href="screen-fit.css"'), 'Legacy art styles should remain available');
+assert(html.includes('href="flow-quality.css"'), 'Continuous-scroll corrections missing');
+assert(html.indexOf('href="flow-quality.css"') > html.indexOf('href="hero-quality.css"'), 'Natural flow overrides must load last');
+assert(flowCSS.includes('.garden-flow > .invitation-section,'), 'Family invitation flow reset missing');
+assert(flowCSS.includes('.garden-flow > .details-section'), 'Ceremony flow reset missing');
+assert(flowCSS.includes('height: auto'), 'Sections must use content height instead of fixed viewport spacer');
+assert(flowCSS.includes('overflow: visible'), 'Text must not be trapped in a nested scroll pane');
+assert(flowCSS.includes('overscroll-behavior: auto'), 'Mobile swipes must chain to page scroll');
+assert(flowCSS.includes('.invitation-section .heritage-invitation-inner'), 'Long invitation text must reflow on the document');
+assert(flowCSS.includes('border-image-slice: 355 120 470 120 fill'), 'Preserve the one-piece invitation artwork');
+assert(flowCSS.includes('aspect-ratio: 1086 / 1448'), 'Keep the 2-panel event illustration proportional');
+assert(flowCSS.includes('-webkit-mask-image: linear-gradient'), 'Soft painted scene transitions missing');
+assert(flowCSS.includes('scroll-margin-top: 34px'), 'Anchored sections must account for the fixed demo bar');
+assert(flowCSS.includes('touch-action: pan-y pinch-zoom'), 'Normal phone swipe/zoom handling missing');
+assert(!/scroll-snap-type\s*:|ScrollTrigger|animation\s*:\s*parallax/.test(flowCSS), 'The scroll should not snap or animate the scenery');
 
-console.log('PASS: Section 1 hero QA guards, Sections 2/3 layout, preserved editable event and story content.');
-console.log('Next: test actual mobile framing, butterfly opening, natural scrolling and text readability.');
+console.log('PASS: Section 1 opening, natural phone scrolling, no artwork gap and preserved editable wedding details.');
+console.log('Next: verify touch scrolling and artwork seams in the mobile browser at 320/390/430px.');
