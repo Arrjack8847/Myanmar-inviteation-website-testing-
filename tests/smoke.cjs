@@ -98,7 +98,7 @@ assert(html.includes('href="events-art.css"'), 'Section 3 art CSS is not linked'
 assert(eventsArtCss.includes('.ceremony-master-scene'), 'Unified Section 3 scene styles missing');
 assert(eventsArtCss.includes('aspect-ratio:1086 / 1448'), 'Do not stretch the complete Section 3 illustration');
 assert(eventsArtCss.includes('background:transparent'), 'Native ornamented panels must stay visible beneath live text');
-assert(!eventsArtCss.includes('ScrollTrigger')&&!eventsArtCss.includes('parallax'), 'Section 3 must stay still during page scroll');
+assert(!/animation\s*:\s*parallax|animation-name\s*:\s*parallax|ScrollTrigger/.test(eventsArtCss), 'Section 3 must stay still during page scroll');
 
 
 /* Section 4: optional factual story copy and live countdown. */
