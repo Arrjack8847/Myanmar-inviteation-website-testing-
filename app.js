@@ -7,6 +7,9 @@
 const DEMO = {
   firstName: 'Thiri',
   secondName: 'Min',
+  // Demo placeholders: replace with the couple's confirmed parent names before publishing.
+  firstFamily: "Parents' names to be added",
+  secondFamily: "Parents' names to be added",
   weddingDateISO: '2027-06-20T16:30:00+06:30',
   displayDate: '20 JUNE 2027',
 };
@@ -20,6 +23,8 @@ let hasOpened = false;
 
 for (const item of document.querySelectorAll('[data-name="first"]')) item.textContent = DEMO.firstName;
 for (const item of document.querySelectorAll('[data-name="second"]')) item.textContent = DEMO.secondName;
+for (const item of document.querySelectorAll('[data-family="first"]')) item.textContent = DEMO.firstFamily;
+for (const item of document.querySelectorAll('[data-family="second"]')) item.textContent = DEMO.secondFamily;
 for (const item of document.querySelectorAll('[data-date-text]')) item.textContent = DEMO.displayDate;
 
 function makeLeaf(ambient = false, index = 0) {
