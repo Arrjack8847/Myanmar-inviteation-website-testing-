@@ -51,8 +51,16 @@ assert(section.includes('lang="my"'), 'Myanmar wording missing');
 assert(section.includes('data-name="first"') && section.includes('data-name="second"'), 'Family couple names are not dynamic');
 assert(section.includes('data-family="first"') && section.includes('data-family="second"'), 'Parent-name fields are missing');
 assert(section.includes('data-date-text'), 'Invitation date not connected to DEMO');
-assert(section.includes('src="32_gold_corner_ornament.png"'), 'Corner ornaments missing');
-assert(section.includes('src="31_gold_ornamental_divider.png"'), 'Gold divider missing');
+assert(!section.includes('class="heritage-corner'), 'Separate artwork corners must not be layered onto the master');
+assert(!section.includes('src="32_gold_corner_ornament.png"'), 'Avoid duplicated gold ornaments over the master');
+const invitationArt = fs.readFileSync(path.join(root, 'art', 'section2_family_invitation_master.png'));
+assert(invitationArt.subarray(0, 8).equals(Buffer.from([137,80,78,71,13,10,26,10])), 'Section 2 master is not PNG');
+assert.equal(invitationArt.readUInt32BE(16), 1086, 'Section 2 master unexpected width');
+assert.equal(invitationArt.readUInt32BE(20), 1448, 'Section 2 master unexpected height');
+const invitationCss = read('invitation.css');
+assert(invitationCss.includes('art/section2_family_invitation_master.png'), 'Uploaded Section 2 artwork not used');
+assert(invitationCss.includes('border-image-slice:355 120 470 120 fill'), 'Responsive safe-edge art slicing missing');
+assert(!invitationCss.includes('animation:parallax'), 'No image parallax allowed in Section 2');
 assert(js.includes('firstFamily:') && js.includes('secondFamily:'), 'Parent-name customization missing');
 assert(read('invitation.css').includes('.heritage-invitation-inner'), 'Invitation styling missing');
 const closing = html.split('<section class="content-section closing-section"')[1] || '';
@@ -103,5 +111,5 @@ assert.equal((html.match(/class="content-section countdown-section story-countdo
 
 
 
-console.log('PASS: V4 unified garden, family invitation, events, customizable love story, guarded live countdown and personalization.');
+console.log('PASS: V4 unified garden, new Section 2 art master safe-edge frame, family invitation, events, story and countdown.');
 console.log('Next: test actual mobile framing, butterfly opening, natural scrolling and text readability.');
