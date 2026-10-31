@@ -49,38 +49,17 @@ The parent fields deliberately show placeholders rather than invented family nam
 
 Open `http://localhost:4173/index.html?heroPreview=1#invitation` to skip the cover and jump straight to Section 2.
 
-## Section 3 — ceremony and reception cards
+## Section 3 — ceremony and reception master artwork
 
-The wedding-details section now presents two matching, responsive ivory-and-antique-gold cards: **Wedding Ceremony** and **Wedding Reception**. Each displays a date, time, venue, address and an optional directions link.
+Section 3 now displays a **single, complete original image**, with its two ivory-and-gold frames and surrounding autumn garden painted together. The existing HTML ceremony and reception details overlay the two empty panels. The flowers, carvings, lanterns, stone path and sunset are not reassembled from separate assets.
 
-All event-specific values are stored in the `WEDDING_EVENTS` object near the beginning of `app.js`, separate from the shared couple information in `DEMO`:
+**Upload location:** the approved 1086×1448 image was uploaded to the public repository `Arrjack8847/testing-version-2` as `1d9dbc80-eada-40a7-b1be-7182c2cffbbe.png` at commit `66f9366ae4037238345f232e4185be4b44aaf697`, rather than the Golden Autumn Heritage V4 repo. The image bytes were checked against the generated Section 3 artwork (matching Git blob `fca0d987ac2e13686dfd08463401a6c5f24e023e`).
 
-```js
-const WEDDING_EVENTS = {
-  ceremony: {
-    dateLabel: DEMO.displayDate,
-    dateISO: DEMO.weddingDateISO.slice(0, 10),
-    time: '4:30 PM · MYANMAR TIME',
-    venue: 'Venue to be confirmed',
-    address: 'Yangon, Myanmar — sample city only',
-    venueConfirmed: false,
-    mapUrl: ''
-  },
-  reception: {
-    dateLabel: 'Date to be confirmed',
-    dateISO: '',
-    time: 'Time to be confirmed',
-    venue: 'Reception venue to be confirmed',
-    address: 'Venue and address to be added',
-    venueConfirmed: false,
-    mapUrl: ''
-  }
-};
-```
+Until that PNG is copied to this repository, `index.html` loads a **fixed-commit** public raw GitHub URL for the artwork. This is a **temporary external dependency**: the remote file must remain publicly accessible during previews. Before production, upload that exact PNG to `art/section3_ceremony_reception_master.png` in this repository and change the `<img class="ceremony-master-art">` source to the local path.
 
-**Important:** These are **demonstration placeholders**, not actual event reservations or addresses. A directions link is only displayed when `venueConfirmed: true` **and** `mapUrl` contains a valid HTTPS Google Maps or Waze URL. Until then, visitors see a courteous pending notice instead of misleading directions.
+Both events remain customizable via `WEDDING_EVENTS` in `app.js`. Unconfirmed locations show a pending notice and never offer invented directions. Actual long Burmese/venue text and visual joins at 320/390/430px must still be reviewed on a phone. Styling and responsive panel overlays are in `events-art.css`.
 
-Open `http://localhost:4173/index.html?heroPreview=1#details` to jump directly to Section 3 and review both cards. Responsive styles live in `events.css`.
+Preview: `http://localhost:4173/index.html?heroPreview=1#details`.
 
 ## Section 4 — Love Story & Countdown
 
