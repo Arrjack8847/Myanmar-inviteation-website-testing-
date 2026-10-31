@@ -1,47 +1,43 @@
-# Golden Autumn Heritage — PNG-integrated interactive prototype
+# Golden Autumn Heritage — unified garden invitation (V4 preview)
 
-A **mobile-first Myanmar-inspired digital wedding invitation prototype** featuring romantic golden-hour lighting, an original carved gateway, animated butterfly, drifting leaves, and interactive wedding content.
+An original, mobile-first Myanmar-inspired digital wedding invitation. This V4 branch intentionally shows **one complete garden illustration** for the first section: an ivory-and-gold gateway, roses, autumn trees, path and sunset all remain perfectly connected.
 
-The **32 original prototype PNGs** supplied in this repository are now referenced by the page. The website uses live HTML text, CSS layering and JavaScript animation rather than flattening the scene into a single image.
+The master image is `art/golden_autumn_heritage_master_v4.png`. It is displayed as one static image, with **real HTML wedding names and date** on top. There are **no separate moving scenery layers and no scroll/parallax animation** in the first section.
 
-## What's integrated
+The opening retains a decorative envelope, butterfly with independent wings, a brief wind-and-leaf effect and optional Skip. After opening, the garden stays still and guests simply scroll to the invitation and event information.
 
-- **01–03**: Sunset backdrop, distant trees and foreground autumn framing
-- **04–08**: Five-part ivory and antique-gold gateway (pillars, arch, foundation, crest)
-- **09–11**: Garden, ceremonial path and foreground bushes
-- **12–19**: Eight independently positioned floral and vine components
-- **20–22**: Butterfly body and separate animated wings
-- **23–28**: Six individual PNG leaves reused for gust and ambient drift
-- **29–30**: Invitation artwork and decorative wax seal on the opening envelope
-- **31–32**: Gold divider and reusable corner ornament
+## Run the V4 preview locally
 
-The **PNG files are stored in the repository root** because that's where they were uploaded. The earlier SVG proofs remain in `assets/` for comparison but the updated page no longer relies on them.
-
-## Local testing on Windows
-
-Requires Node.js 18+; no npm install or build tools.
+Requires Node.js 18+. No npm install or build is required.
 
 ```powershell
 git clone https://github.com/Arrjack8847/Myanmar-inviteation-website-testing-.git
 cd Myanmar-inviteation-website-testing-
+git switch feat/hires-garden-preview-20261101
 node tests/smoke.cjs
 node server.js
 ```
 
-Open **http://localhost:4173** in Chrome or Edge, then:
+Open these URLs:
 
-1. Press **Open Invitation** or tap the envelope; verify the butterfly and scattered leaves.
-2. Reload and press **Skip opening**; verify the hero is immediately visible.
-3. View the ivory-and-gold gateway, trees, pathway and animated floral edges.
-4. Scroll to family invitation, ceremony details, countdown and closing.
-5. Test the 320px–430px mobile layout and a reduced-motion setting.
+- `http://localhost:4173` — full invitation and opening
+- `http://localhost:4173/art-review.html` — switch 320/390/430-pixel phone widths and show artwork with or without live text
+- `http://localhost:4173/index.html?heroPreview=1` — jump directly to the hero with text, skipping the opening
 
-The `start-local.bat` launcher also starts the local server.
+For an existing cloned repository, use `git fetch origin` followed by `git switch feat/hires-garden-preview-20261101` and `git pull --ff-only origin feat/hires-garden-preview-20261101`.
 
-## Current status and limitations
+## Assets
 
-- This is **an integrated design prototype, not a finished sales release**. Image dimensions are relatively small (many artworks under 350 px across), so large displays can show softness.
-- **Thiri & Min**, **20 June 2027**, and **Yangon** are fictional demonstration details. The map is not an actual wedding venue.
-- No customer checkout, backend, RSVP, or live domain exists.
-- Do not share `localhost` as a public invitation link. A public deployment requires a separate step.
-- Customize example names and date in `app.js` (the `DEMO` object); other example details currently live in `index.html`.
+- `art/golden_autumn_heritage_master_v4.png` — sole garden image on the first section
+- `20_butterfly_body.png`, `21_butterfly_left_wing.png`, `22_butterfly_right_wing.png` — opening butterfly
+- `23_...` to `28_...` — leaves for brief opening gust
+- `29_...` to `30_...` — invitation card and seal
+- `31_...` to `32_...` — ornaments for lower sections
+
+Earlier individual garden and gateway assets remain in the repository as unused backups, not active scenery. See `V4_ART_DIRECTION.md`.
+
+## Sample details and status
+
+Names **Thiri & Min**, date **20 June 2027**, and Yangon event information are **fictional placeholders**. Change the demonstration names/date in the `DEMO` object in `app.js` and real event details in `index.html`.
+
+This remains a local, un-deployed prototype: no RSVP database, payment system or public domain. The master artwork is relatively large; image compression and real-device QA are recommended before production.
