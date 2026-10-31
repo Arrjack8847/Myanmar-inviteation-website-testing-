@@ -10,7 +10,6 @@ const read = f => fs.readFileSync(path.join(root,f), 'utf8');
 const html = read('index.html'), js = read('app.js'), css = read('artwork.css');
 const assets = fs.readdirSync(root).filter(f => /^\d{2}_[a-z0-9_]+\.png$/i.test(f)).sort();
 assert.equal(assets.length, 32, 'Expected all 32 extracted PNG artwork assets in the repository root');
-const allRefs = new Set((html + '\\n' + js + '\\n' + css).match(/[A-Za-z0-9 _-]+\\.png/gi) || []);
 for (const file of assets) {
   // Original 32 prototype files are preserved as a recoverable fallback.
   const data = fs.readFileSync(path.join(root,file));
