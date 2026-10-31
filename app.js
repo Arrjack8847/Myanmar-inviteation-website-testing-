@@ -14,6 +14,76 @@ const DEMO = {
   displayDate: '20 JUNE 2027',
 };
 
+// Customize verified wedding details here. Empty/unknown information stays visibly pending.
+// A working map button requires BOTH a confirmed venue and an approved directions URL.
+const WEDDING_EVENTS = {
+  ceremony: {
+    dateLabel: DEMO.displayDate,
+    dateISO: DEMO.weddingDateISO.slice(0, 10),
+    time: '4:30 PM · MYANMAR TIME', // Fictional sample event time
+    venue: 'Venue to be confirmed',
+    address: 'Yangon, Myanmar — sample city only',
+    venueConfirmed: false,
+    mapUrl: ''
+  },
+  reception: {
+    dateLabel: 'Date to be confirmed',
+    dateISO: '',
+    time: 'Time to be confirmed',
+    venue: 'Reception venue to be confirmed',
+    address: 'Venue and address to be added',
+    venueConfirmed: false,
+    mapUrl: ''
+  }
+};
+
+// Only trusted Google Maps or Waze links may become clickable directions.
+// The event's venueConfirmed flag must also be explicitly enabled.
+function approvedMapUrl(rawUrl) {
+  if (!rawUrl || typeof rawUrl !== 'string') return '';
+  try {
+    const url = new URL(rawUrl);
+    if (url.protocol !== 'https:') return '';
+    const host = url.hostname.toLowerCase();
+    if (host === 'maps.app.goo.gl' || host === 'maps.google.com') return url.href;
+    if ((host === 'google.com' || host === 'www.google.com') && url.pathname.startsWith('/maps')) return url.href;
+    if ((host === 'waze.com' || host === 'www.waze.com') && (url.pathname.startsWith('/ul') || url.pathname.startsWith('/live-map'))) return url.href;
+    return '';
+  } catch {
+    return '';
+  }
+}
+
+function renderWeddingEvents() {
+  for (const card of document.querySelectorAll('[data-event]')) {
+    const event = WEDDING_EVENTS[card.dataset.event];
+    if (!event) continue;
+    for (const [field, value] of Object.entries({
+      date: event.dateLabel || 'Date to be confirmed',
+      time: event.time || 'Time to be confirmed',
+      venue: event.venue || 'Venue to be confirmed',
+      address: event.address || 'Address to be added'
+    })) {
+      const node = card.querySelector('[data-event-field="' + field + '"]');
+      if (node) node.textContent = value;
+    }
+    const dateNode = card.querySelector('time[data-event-field="date"]');
+    if (dateNode) {
+      if (/^\d{4}-\d{2}-\d{2}$/.test(event.dateISO || '')) dateNode.dateTime = event.dateISO;
+      else dateNode.removeAttribute('datetime');
+    }
+    const link = card.querySelector('[data-event-link]');
+    const pending = card.querySelector('[data-event-pending]');
+    const url = event.venueConfirmed ? approvedMapUrl(event.mapUrl) : '';
+    if (link) {
+      link.hidden = !url;
+      if (url) link.href = url;
+      else link.removeAttribute('href');
+    }
+    if (pending) pending.hidden = Boolean(url);
+  }
+}
+
 const cover = document.getElementById('openingCover');
 const openButton = document.getElementById('openInvitation');
 const skipButton = document.getElementById('skipOpening');
@@ -26,6 +96,7 @@ for (const item of document.querySelectorAll('[data-name="second"]')) item.textC
 for (const item of document.querySelectorAll('[data-family="first"]')) item.textContent = DEMO.firstFamily;
 for (const item of document.querySelectorAll('[data-family="second"]')) item.textContent = DEMO.secondFamily;
 for (const item of document.querySelectorAll('[data-date-text]')) item.textContent = DEMO.displayDate;
+renderWeddingEvents();
 
 function makeLeaf(ambient = false, index = 0) {
   const leaf = document.createElement('img');
