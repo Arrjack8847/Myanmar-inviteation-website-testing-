@@ -30,7 +30,7 @@ for (const id of ['openingCover','openInvitation','skipOpening','butterfly','lea
    available in the repository but must not reappear in the assembled hero. */
 const hero = html.split('<section class="hero"')[1]?.split('<div class="hero-topline"')[0] || '';
 assert(hero.includes('src="art/golden_autumn_heritage_master_v4.png"'), 'Master image missing from hero');
-assert.equal((hero.match(/<img\\b/g) || []).length, 1, 'Hero should have exactly one image');
+assert.equal((hero.match(/<img\b/g) || []).length, 1, 'Hero should have exactly one image');
 assert(!hero.includes('scene-art'), 'Old separate scenery layers should be removed');
 assert(html.includes('id="leafField"'), 'Opening wind leaf field missing');
 assert(!js.includes('window.setInterval'), 'Static hero must not continuously spawn leaves');
@@ -42,5 +42,20 @@ const review=read('art-review.html');
 assert(review.includes('art/golden_autumn_heritage_master_v4.png'), 'Review page not linked to master image');
 assert(review.includes('index.html?artReview=1'), 'Review page not linked to static scene preview');
 assert(js.includes("get('artReview')"), 'Preview route not enabled');
-console.log('PASS: 32 archived prototype assets, single master-image hero, opening interaction, V4 master and review page verified.');
+
+/* Section 2 must be a single complete invitation, not disconnected overlays. */
+assert(html.includes('href="invitation.css"'), 'Missing Section 2 stylesheet');
+const section = html.split('<section class="content-section invitation-section"')[1]?.split('<section class="content-section details-section"')[0] || '';
+assert(section.includes('class="heritage-invitation"'), 'Formal invitation card missing');
+assert(section.includes('lang="my"'), 'Myanmar wording missing');
+assert(section.includes('data-name="first"') && section.includes('data-name="second"'), 'Family couple names are not dynamic');
+assert(section.includes('data-family="first"') && section.includes('data-family="second"'), 'Parent-name fields are missing');
+assert(section.includes('data-date-text'), 'Invitation date not connected to DEMO');
+assert(section.includes('src="32_gold_corner_ornament.png"'), 'Corner ornaments missing');
+assert(section.includes('src="31_gold_ornamental_divider.png"'), 'Gold divider missing');
+assert(js.includes('firstFamily:') && js.includes('secondFamily:'), 'Parent-name customization missing');
+assert(read('invitation.css').includes('.heritage-invitation-inner'), 'Invitation styling missing');
+assert.equal((html.match(/class="content-section invitation-section"/g) || []).length, 1, 'Duplicate invitation section');
+
+console.log('PASS: V4 single-image garden, family invitation layout, dynamic name fields, sample date, and review page verified.');
 console.log('Next: test actual mobile framing, butterfly opening, natural scrolling and text readability.');
