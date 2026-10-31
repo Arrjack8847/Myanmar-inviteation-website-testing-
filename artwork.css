@@ -1,0 +1,93 @@
+
+/* Golden Autumn Heritage: integration of 32 original PNG prototype layers.
+   Assets live in the repository root. Keep each layer separate for animation. */
+.hero-scene {
+  background: radial-gradient(circle at 67% 24%, #e9bb80 0%, #b4766f 44%, #513841 100%);
+}
+.scene-art {
+  position: absolute;
+  display: block;
+  height: auto;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  object-fit: contain;
+  transform: translateZ(0);
+}
+.scene-sky { z-index: 0; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .92; }
+.scene-distant { z-index: 1; width: 118%; left: -9%; bottom: 19%; opacity: .82; }
+.scene-trees { z-index: 2; width: 113%; left: -6.5%; top: 0; opacity: .92; }
+.scene-landscape { z-index: 2; width: 100%; left: 0; bottom: 9%; }
+.scene-path { z-index: 3; width: 82%; left: 9%; bottom: 0; opacity: .87; }
+.scene-foundation { z-index: 4; width: 88%; left: 6%; top: 66%; }
+.scene-gateway { z-index: 5; opacity: 0; transition: opacity 1.15s ease, translate 1.35s ease; translate: 0 18px; }
+.has-opened .scene-gateway { opacity: 1; translate: 0 0; }
+.scene-pillar-left { width: 19%; left: 6.5%; top: 34%; }
+.scene-pillar-right { width: 19%; right: 6.5%; top: 34%; }
+.scene-arch { width: 88%; left: 6%; top: 17%; }
+.scene-crest { width: 46%; left: 27%; top: 10%; }
+.scene-bushes { z-index: 6; width: 108%; left: -4%; bottom: 4%; }
+.scene-upper-flower { z-index: 7; width: 49%; transform-origin: top center; }
+.scene-flower-left { left: -11%; top: 0; animation: png-sway-left 7.3s ease-in-out infinite alternate; }
+.scene-flower-right { right: -11%; top: 0; animation: png-sway-right 8.7s ease-in-out infinite alternate; }
+.scene-vine { z-index: 7; width: 23%; top: 34%; transform-origin: top center; animation: png-vine-sway 9.8s ease-in-out infinite alternate; }
+.scene-vine-left { left: -5%; }
+.scene-vine-right { right: -5%; animation-delay: -4.2s; }
+.scene-bouquet { z-index: 8; width: 58%; bottom: -5%; transform-origin: bottom center; animation: png-sway-left 8.2s ease-in-out infinite alternate; }
+.scene-bouquet-left { left: -22%; }
+.scene-bouquet-right { right: -22%; animation-name: png-sway-right; animation-delay: -3s; }
+.scene-hanging-sprig { z-index: 8; width: 30%; top: -6%; right: -7%; transform-origin: top center; animation: png-vine-sway 8s ease-in-out infinite alternate; }
+.scene-front-flowers { z-index: 8; width: 115%; left: -7.5%; bottom: -3%; opacity: .95; }
+.hero-scene .sunbeam { z-index: 5; opacity: .65; }
+.hero-scene .scene-vignette { z-index: 9; }
+.hero-words { background: radial-gradient(ellipse at center, #fff3ddb5, #fff3dd65 51%, transparent 76%); border-radius: 40%; padding-top: 34px; padding-bottom: 30px; max-width: min(77%, 390px); }
+.hero-words h2 { font-size: clamp(36px, 9.2vw, 62px); }
+.hero-eyebrow { font-size: 8px; }
+.hero-subtitle { max-width: 235px; }
+@keyframes png-sway-left { to { rotate: 2.2deg; translate: 3px -1px; } }
+@keyframes png-sway-right { to { rotate: -2deg; translate: -3px 0; } }
+@keyframes png-vine-sway { to { rotate: 1.7deg; translate: 2px 0; } }
+
+/* Actual source artwork for the opening: paper card, antique seal and separate wings. */
+.envelope { isolation: isolate; }
+.opening-card-art { position: absolute; z-index: 1; width: 64%; height: 84%; object-fit: fill; left: 18%; top: 7%; filter: drop-shadow(0 2px 2px #6b433b43); }
+.wax-seal { border: 0; background: transparent; box-shadow: none; width: 72px; height: 72px; }
+.wax-seal-art { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 3px 7px #41252e99); }
+.butterfly { width: 86px; height: 93px; top: 36%; }
+.butterfly .wing { display: block; position: absolute; top: 4px; width: 45px; height: 68px; border: 0; border-radius: 0; background: none; object-fit: contain; animation: png-wing-flap .68s ease-in-out infinite alternate; backface-visibility: visible; }
+.butterfly .wing--left { left: 0; transform-origin: 92% 70%; }
+.butterfly .wing--right { right: 0; transform-origin: 8% 70%; animation-delay: -.34s; }
+.butterfly .butterfly-body { display: block; position: absolute; left: 38%; top: 4px; width: 24%; height: 75px; object-fit: contain; background: none; border-radius: 0; z-index: 2; }
+.butterfly .butterfly-body::before, .butterfly .butterfly-body::after { content: none; }
+@keyframes png-wing-flap { 0% { transform: scaleX(.35) rotate(-3deg); } 100% { transform: scaleX(1) rotate(5deg); } }
+.is-revealing .butterfly .wing { animation-duration: .18s; }
+.cover-leaf { object-fit: contain; }
+.c1,.c2,.c3,.c4,.c5 { max-width: 27vw; }
+.paper-corner { position: absolute; width: 40px; height: 40px; object-fit: contain; opacity: .82; }
+.paper-corner--tr { transform: scaleX(-1); }
+.paper-corner--bl { transform: scaleY(-1); }
+.paper-corner--br { transform: scale(-1); }
+.garden-flow::before,.garden-flow::after { background-image: url('14_left_climbing_vine.png'); background-size: contain; width: 265px; left: -182px; opacity: .27; }
+.garden-flow::after { left: auto; right: -182px; background-image: url('15_right_climbing_vine.png'); transform: none; }
+.divider-art { width: min(230px, 75%); }
+.closing-section .divider-art { filter: brightness(1.15); }
+@media (min-width:680px) {
+  .hero-scene { max-width: 660px; }
+  .hero-words { max-width: 380px; }
+  .scene-arch { top: 17%; }
+  .scene-pillar-left,.scene-pillar-right { top: 34%; }
+}
+@media (max-width:410px) {
+  .hero-words { max-width: 79%; padding: 22px 4px; margin-top: 12vh; }
+  .hero-words h2 { font-size: clamp(30px, 9vw, 40px); }
+  .scene-front-flowers { bottom: -1%; }
+  .scene-bouquet { bottom: -2%; }
+  .butterfly { width: 72px; height: 78px; }
+  .butterfly .wing { width: 38px; height: 58px; }
+  .butterfly .butterfly-body { height: 63px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scene-gateway { opacity: 1; translate: 0 0; }
+  .scene-upper-flower, .scene-vine, .scene-bouquet, .scene-hanging-sprig { animation: none; }
+}
