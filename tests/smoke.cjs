@@ -134,7 +134,7 @@ const coverMarkup = html.split('<div class="cover"')[1]?.split('<div class="cove
 const heroMarkup = html.split('<section class="hero"')[1]?.split('<div class="garden-flow">')[0] || '';
 const heroCSS = read('hero-quality.css');
 assert(html.includes('href="hero-quality.css"'), 'Section 1 production CSS missing');
-assert(html.indexOf('href="hero-quality.css"') > html.indexOf('href="screen-fit.css"'), 'Section 1 CSS overrides must load last');
+assert(html.indexOf('href="hero-quality.css"') > html.indexOf('href="story.css"'), 'Section 1 styles must load after the story component styles');
 assert(coverMarkup.includes('<button class="envelope"'), 'Butterfly/envelope target must be a real button');
 assert(coverMarkup.includes('aria-label="Tap the butterfly to open the invitation"'), 'Envelope button needs an accessible label');
 assert(html.includes('aria-labelledby="openingTitle"')&&html.includes('id="openingTitle"'), 'Opening dialog must have a named heading');
@@ -154,13 +154,10 @@ assert(heroCSS.includes('@media (max-height: 680px)'), 'Short-screen hero layout
 assert(heroCSS.includes('prefers-reduced-motion:reduce'), 'Hero CSS must respect reduced motion');
 assert(!/ScrollTrigger|scroll-snap-type/.test(heroCSS), 'Section 1 must not use parallax or forced scroll snapping');
 
-/* Screenshot regression: remove full-height empty gaps and nested swipe traps.
-   These rules must LOAD AFTER screen-fit.css (the previous forced-height design).
-   Section 2's editable parchment now grows naturally, with Section 3 directly
-   following it in normal document flow. */
-const fitCSS=read('screen-fit.css');
+/* Screenshot regression: natural content heights and ordinary page swipes.
+   The old forced-height stylesheet must not load at all. */
 const flowCSS=read('flow-quality.css');
-assert(html.includes('href="screen-fit.css"'), 'Legacy art styles should remain available');
+assert(!html.includes('href="screen-fit.css"'), 'Obsolete fixed-height CSS must not load');
 assert(html.includes('href="flow-quality.css"'), 'Continuous-scroll corrections missing');
 assert(html.indexOf('href="flow-quality.css"') > html.indexOf('href="hero-quality.css"'), 'Natural flow overrides must load last');
 assert(flowCSS.includes('.garden-flow > .invitation-section,'), 'Family invitation flow reset missing');
@@ -172,7 +169,8 @@ assert(flowCSS.includes('.invitation-section .heritage-invitation-inner'), 'Long
 assert(flowCSS.includes('border-image-slice: 355 120 470 120 fill'), 'Preserve the one-piece invitation artwork');
 assert(flowCSS.includes('aspect-ratio: 1086 / 1448'), 'Keep the 2-panel event illustration proportional');
 assert(flowCSS.includes('-webkit-mask-image: linear-gradient'), 'Soft painted scene transitions missing');
-assert(flowCSS.includes('scroll-margin-top: 34px'), 'Anchored sections must account for the fixed demo bar');
+assert(flowCSS.includes('scroll-padding-top: 34px'), 'Anchor scroll must account for the fixed demo banner');
+assert(flowCSS.includes('scroll-margin-top: 0'), 'Do not double-offset anchors under the fixed demo banner');
 assert(flowCSS.includes('touch-action: pan-y pinch-zoom'), 'Normal phone swipe/zoom handling missing');
 assert(!/scroll-snap-type\s*:|ScrollTrigger|animation\s*:\s*parallax/.test(flowCSS), 'The scroll should not snap or animate the scenery');
 
