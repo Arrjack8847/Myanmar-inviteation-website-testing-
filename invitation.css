@@ -206,3 +206,6 @@
 @media (prefers-reduced-motion: reduce) {
   .heritage-invitation, .heritage-invitation * { animation: none !important; }
 }
+
+/* Reuse DEMO names in the closing signature without inheriting its ampersand styling. */
+.closing-signature .closing-name { font-size: inherit; color: inherit; }
