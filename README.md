@@ -26,6 +26,27 @@ Open these URLs:
 
 For an existing cloned repository, use `git fetch origin` followed by `git switch feat/hires-garden-preview-20261101` and `git pull --ff-only origin feat/hires-garden-preview-20261101`.
 
+## Section 2 — formal family invitation
+
+The second section is a new ivory-and-antique-gold wedding stationery card with Burmese-first wording, English translation, two family blocks, gold corner ornaments, and a live wedding date. The design is static and scrolls naturally after the complete garden illustration.
+
+To personalize the demo, change these values in `app.js`:
+
+```js
+const DEMO = {
+  firstName: 'Thiri',
+  secondName: 'Min',
+  firstFamily: "Parents' names to be added",
+  secondFamily: "Parents' names to be added",
+  weddingDateISO: '2027-06-20T16:30:00+06:30',
+  displayDate: '20 JUNE 2027',
+};
+```
+
+The parent fields deliberately show placeholders rather than invented family names. Replace them with **confirmed** names before publishing a customer's invitation. Review and customize the Burmese wording with the couple for the appropriate ceremony and formality.
+
+Open `http://localhost:4173/index.html?heroPreview=1#invitation` to skip the cover and jump straight to Section 2.
+
 ## Assets
 
 - `art/golden_autumn_heritage_master_v4.png` — sole garden image on the first section
