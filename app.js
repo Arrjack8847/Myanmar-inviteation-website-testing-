@@ -65,12 +65,7 @@ function openInvitation(skip = false) {
     for (let i = 0; i < 19; i++) makeLeaf(false, i);
     window.setTimeout(finishOpening, 2550);
   }
-  if (!reducedMotion) {
-    // Gentle, infrequent ambient leaves; never build up DOM nodes.
-    window.setInterval(() => {
-      if (document.visibilityState === 'visible' && leafField.childElementCount < 12) makeLeaf(true, Math.floor(Math.random() * 6));
-    }, 4300);
-  }
+
 }
 openButton.addEventListener('click', () => openInvitation());
 skipButton.addEventListener('click', () => openInvitation(true));
