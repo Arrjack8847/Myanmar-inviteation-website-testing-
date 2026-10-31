@@ -118,3 +118,89 @@
  .scene-front-flowers { bottom: -1%; }
  .scene-bushes { bottom: -1%; }
 }
+
+/* Golden Autumn Heritage V4 — soft heritage art direction, Nov 1 2026.
+   These are NON-DESTRUCTIVE CSS overrides using the existing uploaded art.
+   Artwork source of the newly approved flattened master must be uploaded separately.
+   Our reference is inspiration only: retain original Myanmar ceremonial gateway. */
+.hero-scene {
+  background: linear-gradient(180deg, #ba8e86 0%, #e5b8a0 43%, #e6b99b 100%);
+}
+.scene-art:not(.falling-leaf) {
+  filter: saturate(.70) sepia(.09) contrast(.92) brightness(1.045);
+}
+.scene-sky {
+  opacity: .87;
+  filter: saturate(.66) sepia(.11) contrast(.84) brightness(1.095);
+}
+.scene-distant {
+  opacity: .72;
+  filter: saturate(.63) contrast(.82) brightness(1.09);
+}
+.scene-trees {
+  opacity: .80;
+  filter: saturate(.72) contrast(.91) brightness(1.08);
+}
+.scene-landscape { opacity: .88; }
+.scene-path { opacity: .94; filter: saturate(.63) contrast(.91) brightness(1.04); }
+.scene-gateway {
+  filter: saturate(.67) sepia(.08) contrast(.92) brightness(1.06);
+}
+.scene-arch { width: 93%; left: 3.5%; top: 16.5%; }
+.scene-pillar-left { width: 37%; left: -5%; top: 37%; }
+.scene-pillar-right { width: 37%; right: -5%; top: 37%; }
+.scene-foundation { width: 97%; left: 1.5%; top: 62%; }
+.scene-upper-flower {
+  width: 34%;
+  opacity: .72;
+  filter: saturate(.64) contrast(.90) brightness(1.09);
+}
+.scene-flower-left { left: -7%; top: -1%; }
+.scene-flower-right { right: -7%; top: -1%; }
+.scene-vine {
+  width: 27%;
+  opacity: .77;
+  filter: saturate(.65) contrast(.89) brightness(1.055);
+}
+.scene-vine-left { left: -6%; }
+.scene-vine-right { right: -6%; }
+.scene-bouquet { width: 50%; opacity: .85; }
+.scene-front-flowers {
+  width: 98%;
+  left: 1%;
+  bottom: -2%;
+  opacity: .77;
+}
+.scene-hanging-sprig { width: 24%; opacity: .75; }
+.scene-bushes { opacity: .82; }
+.hero-scene::after {
+  content: "";
+  position: absolute;
+  z-index: 9;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 35% 24% at 50% 52%, #f9e4cc52 0%, #f9e4cc1c 60%, transparent 100%),
+    linear-gradient(to bottom, #f3d7c118 0%, transparent 33%, #fbe8d10a 70%, #6b4f441c 100%);
+}
+.hero-words {
+  background: radial-gradient(ellipse at center, #fff6e7bb 0%, #fff3df79 41%, #fff3df15 69%, transparent 83%);
+  max-width: min(78%, 375px);
+  padding: 31px 10px;
+  border-radius: 45%;
+  text-shadow: 0 1px 8px #fff3dc9c;
+}
+.hero-words h2 { color: #583b42; }
+.hero-date, .hero-subtitle { color: #71514b; }
+.hero-eyebrow, .hero-smalltitle { color: #725249; }
+.hero-topline { color: #fff4e5; }
+@media (max-width: 410px) {
+  .scene-upper-flower { width: 32%; }
+  .scene-front-flowers { width: 102%; left: -1%; }
+  .hero-words { padding: 25px 7px; max-width: 81%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scene-upper-flower, .scene-vine, .scene-bouquet, .scene-hanging-sprig {
+    animation: none !important;
+  }
+}
