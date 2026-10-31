@@ -78,6 +78,14 @@ document.getElementById('butterfly').addEventListener('click', () => openInvitat
 // Overlay butterfly is part of the visually accessible envelope; clicking anywhere on it also opens.
 document.querySelector('.envelope').addEventListener('click', () => openInvitation());
 
+// Art direction review only. The ?artReview=1 route opens the hero without a cover,
+// strips UI overlays via CSS and freezes motion for master-scene comparisons.
+// The normal guest experience is unchanged.
+if (new URLSearchParams(window.location.search).get('artReview') === '1') {
+  document.body.classList.add('art-review-mode');
+  openInvitation(true);
+}
+
 const counterKeys = ['days', 'hours', 'minutes', 'seconds'];
 function updateCountdown() {
   const delta = Math.max(0, new Date(DEMO.weddingDateISO).getTime() - Date.now());
