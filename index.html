@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="artwork.css" />
   <link rel="stylesheet" href="invitation.css" />
   <link rel="stylesheet" href="events.css" />
+  <link rel="stylesheet" href="story.css" />
 </head>
 <body class="not-opened">
   <div class="demo-bar" aria-label="Prototype notice"><span class="demo-indicator"></span> LOCAL DESIGN DEMO <span class="demo-separator">·</span> SAMPLE DETAILS</div>
@@ -186,18 +187,68 @@
         <p class="celebration-disclaimer">These are demonstration details. Event times, dates, and locations must be confirmed with the couple before publishing an invitation.</p>
       </section>
 
-      <section class="content-section countdown-section" id="countdown" aria-labelledby="countdownTitle">
-        <div class="section-ornament">✦ &nbsp; ❦ &nbsp; ✦</div>
-        <p class="eyebrow">THE MOMENT DRAWS NEAR</p>
-        <h2 class="section-heading" id="countdownTitle">Counting down <em>to forever</em></h2>
-        <p class="countdown-intro">Until our beautiful day begins</p>
-        <div class="countdown-grid" aria-label="Countdown until the sample wedding date">
-          <div class="countdown-box"><strong id="days">--</strong><span>DAYS</span></div>
-          <div class="countdown-box"><strong id="hours">--</strong><span>HOURS</span></div>
-          <div class="countdown-box"><strong id="minutes">--</strong><span>MINUTES</span></div>
-          <div class="countdown-box"><strong id="seconds">--</strong><span>SECONDS</span></div>
+      <section class="content-section countdown-section story-countdown-section" id="countdown" aria-labelledby="storyTitle">
+        <div class="story-intro">
+          <p class="eyebrow">EVERY LOVE HAS A STORY</p>
+          <h2 class="section-heading" id="storyTitle">Our <em>love story</em></h2>
+          <p class="story-intro-burmese" lang="my">တို့နှစ်ဦး၏ အချစ်ဇာတ်လမ်း</p>
+          <img class="story-ornament" src="31_gold_ornamental_divider.png" alt="" loading="lazy" />
+          <p class="story-lede" data-story-intro>The moments that make your story uniquely yours.</p>
         </div>
-        <p class="fine-print">Sample date for preview purposes.</p>
+
+        <div class="story-paper" aria-label="Personalizable love story">
+          <div class="story-paper-inner">
+            <img class="story-corner story-corner--tl" src="32_gold_corner_ornament.png" alt="" loading="lazy" />
+            <img class="story-corner story-corner--tr" src="32_gold_corner_ornament.png" alt="" loading="lazy" />
+            <p class="story-caption">A LOVE WORTH CELEBRATING</p>
+
+            <div class="story-chapters">
+              <article class="story-chapter">
+                <span class="story-chapter-marker" aria-hidden="true">I</span>
+                <div class="story-chapter-content">
+                  <p class="story-chapter-kicker">CHAPTER ONE</p>
+                  <h3 data-story-title="0">The Beginning</h3>
+                  <p data-story-text="0">Add how the couple met or how their story first began.</p>
+                </div>
+              </article>
+              <article class="story-chapter">
+                <span class="story-chapter-marker" aria-hidden="true">II</span>
+                <div class="story-chapter-content">
+                  <p class="story-chapter-kicker">CHAPTER TWO</p>
+                  <h3 data-story-title="1">Our Cherished Moments</h3>
+                  <p data-story-text="1">Share a favorite memory or a moment that means a lot to them.</p>
+                </div>
+              </article>
+              <article class="story-chapter">
+                <span class="story-chapter-marker" aria-hidden="true">III</span>
+                <div class="story-chapter-content">
+                  <p class="story-chapter-kicker">CHAPTER THREE</p>
+                  <h3 data-story-title="2">A New Chapter</h3>
+                  <p data-story-text="2">Add a personal message about celebrating their next chapter together.</p>
+                </div>
+              </article>
+            </div>
+            <img class="story-ornament story-paper-ornament" src="31_gold_ornamental_divider.png" alt="" loading="lazy" />
+            <p class="story-endnote">AND SO THE STORY CONTINUES...</p>
+            <img class="story-corner story-corner--bl" src="32_gold_corner_ornament.png" alt="" loading="lazy" />
+            <img class="story-corner story-corner--br" src="32_gold_corner_ornament.png" alt="" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="countdown-panel" aria-labelledby="countdownTitle">
+          <p class="eyebrow">THE MOMENT DRAWS NEAR</p>
+          <h2 class="section-heading" id="countdownTitle">Counting down <em>to forever</em></h2>
+          <p class="countdown-intro" id="countdownStatus">Until our beautiful day begins</p>
+          <p class="countdown-date" data-date-text>20 JUNE 2027</p>
+          <div class="countdown-grid" role="timer" aria-label="Time remaining until the sample wedding date">
+            <div class="countdown-box"><strong id="days">--</strong><span>DAYS</span></div>
+            <div class="countdown-box"><strong id="hours">--</strong><span>HOURS</span></div>
+            <div class="countdown-box"><strong id="minutes">--</strong><span>MINUTES</span></div>
+            <div class="countdown-box"><strong id="seconds">--</strong><span>SECONDS</span></div>
+          </div>
+          <p class="countdown-footnote">Our sample wedding countdown · Myanmar time (UTC+06:30)</p>
+        </div>
+        <p class="fine-print story-disclaimer">Love story text and date are demonstration placeholders. Replace them with details approved by the couple before sharing.</p>
       </section>
 
       <section class="content-section closing-section" id="closing" aria-labelledby="closingTitle">
