@@ -1,35 +1,32 @@
-# Golden Autumn Heritage — V4 soft-heritage refinement
+# Golden Autumn Heritage V4 — unified garden hero
 
-The V4 branch includes the approved flattened master illustration, matched high-resolution individual prototype layers and CSS adjustments for the softer heritage direction.
+## Approved choice
 
-## Current art direction
+The first section uses **ONE untouched master illustration**: `art/golden_autumn_heritage_master_v4.png`.
 
-- Subdued ivory, peach, rust, plum and antique-gold tones
-- Restrained carved-gateway saturation and metallic highlights
-- Smaller floral edges to frame, not overpower, the gateway
-- A clear central text-safe zone for wedding names
-- Independent layer architecture to preserve future butterfly, wind and scroll motion
+Previously, assembling a gateway, flower borders, trees and pathway from independent images made the illustration feel disconnected. Those parts have now been removed from the first section's HTML. The hero shows the original scene as one static image without extra color grading, scrolling/parallax motion or animated stone/floral pieces.
 
-## Master artwork
+## What remains interactive
 
-The approved original is stored at `art/golden_autumn_heritage_master_v4.png`, reused without re-encoding from the image uploaded to `main` as `download.png`.
+- The separate opening envelope and butterfly
+- A short wind-driven leaf burst during opening; **no continuous falling leaves**
+- Live sample couple names, date and text placed over the arch opening
+- Ordinary user scrolling into wedding invitation, venue, countdown and closing sections
 
-**Important:** This is a flattened reference illustration, not a replacement for the animation layers. It cannot be animated as if each flower, pillar and tree were separate without rebuilding those parts.
+The full image naturally crops slightly on device ratios other than the portrait master. Use `object-fit:cover` with centered framing and review 320px, 390px and 430px phone widths before production.
 
-## Visual alignment
+## Test locally
 
-Open `http://localhost:4173/art-review.html` after running `node server.js`, and use the percentage slider to align the assembled website scene with the approved master at 390 × 844. The comparison iframe uses `index.html?artReview=1` to hide invitation text/cover and freeze swaying movement.
+```powershell
+git fetch origin
+git switch feat/hires-garden-preview-20261101
+git pull --ff-only origin feat/hires-garden-preview-20261101
+node tests/smoke.cjs
+node server.js
+```
 
-Review these landmarks first: upper arch peak, right and left pillar bases, staircase width/top, distant horizon and garden foreground. The current artwork files were independently generated and may not match the master perfectly; verify visually before modifying the scene.
+Open `http://localhost:4173/art-review.html` for mobile-width artwork/text previews, then `http://localhost:4173` for the full opening and natural page scroll.
 
-## Release checklist
+## Before merging
 
-1. `node tests/smoke.cjs` — check asset format, references and DOM hooks.
-2. `node server.js`, then view `/art-review.html` for overlay comparison.
-3. Open the normal `/index.html` and test the 2.55-second butterfly, wind and leaf reveal.
-4. Test mobile widths of 320px, 390px and 430px, plus reduced motion.
-5. Confirm flowering branches and pillars do not obscure names.
-6. Optimize heavy PNGs to appropriate image formats before public deployment.
-7. Keep any extra changes on the draft PR until browser testing passes.
-
-There has been no deployment and `main` remains unchanged by the V4 code updates.
+Verify small-screen framing, readable names, functional open/skip controls, reduced motion and smooth ordinary scroll. No Vercel deployment has been created. Keep the old numbered and high-resolution individual PNGs as unused backups for now.
