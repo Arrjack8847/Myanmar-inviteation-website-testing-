@@ -14,6 +14,37 @@ const DEMO = {
   displayDate: '20 JUNE 2027',
 };
 
+// Optional sample story: every chapter below is an explicit writing prompt,
+// NOT a claim about any couple. Replace with approved details before publishing.
+const LOVE_STORY = {
+  introduction: 'The moments that make your story uniquely yours.',
+  chapters: [
+    {
+      title: 'The Beginning',
+      text: 'Add how the couple met or how their story first began.'
+    },
+    {
+      title: 'Our Cherished Moments',
+      text: 'Share a favorite memory or a moment that means a lot to them.'
+    },
+    {
+      title: 'A New Chapter',
+      text: 'Add a personal message about celebrating their next chapter together.'
+    }
+  ]
+};
+
+function renderLoveStory() {
+  const intro = document.querySelector('[data-story-intro]');
+  if (intro) intro.textContent = LOVE_STORY.introduction;
+  for (const [index, chapter] of LOVE_STORY.chapters.entries()) {
+    const title = document.querySelector('[data-story-title="' + index + '"]');
+    const text = document.querySelector('[data-story-text="' + index + '"]');
+    if (title) title.textContent = chapter.title;
+    if (text) text.textContent = chapter.text;
+  }
+}
+
 // Customize verified wedding details here. Empty/unknown information stays visibly pending.
 // A working map button requires BOTH a confirmed venue and an approved directions URL.
 const WEDDING_EVENTS = {
@@ -96,6 +127,7 @@ for (const item of document.querySelectorAll('[data-name="second"]')) item.textC
 for (const item of document.querySelectorAll('[data-family="first"]')) item.textContent = DEMO.firstFamily;
 for (const item of document.querySelectorAll('[data-family="second"]')) item.textContent = DEMO.secondFamily;
 for (const item of document.querySelectorAll('[data-date-text]')) item.textContent = DEMO.displayDate;
+renderLoveStory();
 renderWeddingEvents();
 
 function makeLeaf(ambient = false, index = 0) {
@@ -162,11 +194,37 @@ if (previewParams.get('artReview') === '1') {
 }
 
 const counterKeys = ['days', 'hours', 'minutes', 'seconds'];
+const countdownStatus = document.getElementById('countdownStatus');
+const countdownDisplay = document.querySelector('.countdown-grid');
 function updateCountdown() {
-  const delta = Math.max(0, new Date(DEMO.weddingDateISO).getTime() - Date.now());
+  const deadline = Date.parse(DEMO.weddingDateISO);
+  const valid = Number.isFinite(deadline);
+  const delta = valid ? Math.max(0, deadline - Date.now()) : 0;
   const totalSeconds = Math.floor(delta / 1000);
-  const parts = [Math.floor(totalSeconds / 86400), Math.floor(totalSeconds / 3600) % 24, Math.floor(totalSeconds / 60) % 60, totalSeconds % 60];
-  counterKeys.forEach((key, index) => { document.getElementById(key).textContent = String(parts[index]).padStart(2, '0'); });
+  const parts = [
+    Math.floor(totalSeconds / 86400),
+    Math.floor(totalSeconds / 3600) % 24,
+    Math.floor(totalSeconds / 60) % 60,
+    totalSeconds % 60
+  ];
+  counterKeys.forEach((key, index) => {
+    const node = document.getElementById(key);
+    if (node) node.textContent = valid ? String(parts[index]).padStart(2, '0') : '--';
+  });
+  if (countdownStatus) {
+    countdownStatus.textContent = !valid
+      ? 'Wedding date to be confirmed'
+      : delta === 0
+        ? 'The wedding day has arrived'
+        : 'Until our beautiful day begins';
+  }
+  if (countdownDisplay) {
+    countdownDisplay.setAttribute('aria-label', !valid
+      ? 'Wedding date not yet set'
+      : delta === 0
+        ? 'The sample wedding date has arrived'
+        : 'Time remaining until the sample wedding date');
+  }
 }
 updateCountdown();
 setInterval(updateCountdown, 1000);
