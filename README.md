@@ -30,7 +30,7 @@ For an existing cloned repository, use `git fetch origin` followed by `git switc
 
 All work from here is limited to the initial **envelope/butterfly opening** and the **Golden Autumn Gateway hero**. Sections 2–6 are not part of the current development scope.
 
-The approved 853×1844 garden master remains a **single, complete illustration**. The new `hero-quality.css` file is loaded last to avoid cuts to the gateway, garden path, and flowers: it uses `object-fit:contain`, positions wedding names inside the arch, and handles short mobile screens without parallax or scroll snapping. The original master file is unchanged.
+The approved 853×1844 garden master remains a **single, complete illustration**. The new `hero-quality.css` file is loaded last. After reviewing the actual phone screenshot, we corrected the first attempt: `object-fit:contain` produced obvious peach side bars. The phone layout now uses `object-fit:cover` with a deliberate vertical crop (without image distortion), positions wedding names in the arch, removes the unwanted keyboard-focus box around the noninteractive names, and handles short screens without parallax or scroll snapping. The original master file is unchanged.
 
 Opening improvements:
 - The envelope/butterfly is a native HTML button, accessible to mouse, touch, and keyboard users.
