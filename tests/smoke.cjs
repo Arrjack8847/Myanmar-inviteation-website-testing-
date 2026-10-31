@@ -46,5 +46,13 @@ for (const file of hires) {
   const b = fs.readFileSync(path.join(root,file));
   assert(b.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10])), 'Not PNG: '+file);
 }
-console.log('PASS: 32 archived prototypes valid; 13 high-resolution artworks found and used; interactive hooks present.');
+const masterPath=path.join(root,'art','golden_autumn_heritage_master_v4.png');
+const masterImage=fs.readFileSync(masterPath);
+assert(masterImage.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10])), 'V4 master is not a PNG');
+assert(masterImage.readUInt32BE(16)>=800 && masterImage.readUInt32BE(20)>=1700, 'V4 master is unexpectedly small');
+const review=read('art-review.html');
+assert(review.includes('art/golden_autumn_heritage_master_v4.png'), 'Review page not linked to master image');
+assert(review.includes('index.html?artReview=1'), 'Review page not linked to static scene preview');
+assert(js.includes("get('artReview')"), 'Preview route not enabled');
+console.log('PASS: 32 archived prototypes valid; 13 high-resolution artworks found and used; V4 master and alignment reviewer verified; interactive hooks present.');
 console.log('Next: open in a real browser, tap Open/Skip, scroll to venue and test mobile layout.');
