@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#342a35">
+<title>Golden Autumn Heritage — V4 Art Alignment Review</title>
+<style>
+:root {color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:#211e25;color:#fff3e4}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0%,#533c4a 0%,#211e25 60%)}
+header{padding:22px 18px 12px;text-align:center}
+header .tag{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#d8b58b}
+h1{font:500 clamp(20px,5vw,30px)/1.2 Georgia,serif;margin:10px 0 6px}
+header p{font-size:12px;color:#ddc9b7;line-height:1.6;margin:8px auto;max-width:670px}
+main{padding:8px 16px 30px;display:flex;align-items:center;flex-direction:column}
+.stage{position:relative;isolation:isolate;width:min(390px,calc(100vw - 40px));aspect-ratio:390 / 844;overflow:hidden;border:3px solid #c8a374;border-radius:22px;background:#d4a890;box-shadow:0 24px 65px #0009}
+.stage iframe{display:block;position:absolute;inset:0;width:100%;height:100%;border:0;background:#dfae96;pointer-events:none}
+.stage img{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:fill;pointer-events:none;opacity:.5}
+.stage.guides:after{content:"";position:absolute;z-index:4;inset:28% 30% 35% 30%;border:1px dashed #f7eac8;pointer-events:none;box-shadow:0 0 0 1px #37243366}
+.corner{position:absolute;top:12px;left:12px;z-index:5;padding:5px 8px;border-radius:4px;background:#1e1a20ac;color:#fff6e6;font-size:10px;letter-spacing:.06em}
+.legend{width:min(480px,100%);display:flex;justify-content:space-between;font-size:11px;color:#e2cdb6;margin:10px 0}
+.controls{width:min(480px,100%);padding:14px;border:1px solid #886b61;background:#352b34;border-radius:13px;display:flex;flex-direction:column;gap:12px}
+.controls label{display:flex;gap:12px;align-items:center;justify-content:space-between;font-size:13px;font-weight:650}
+input[type="range"]{width:100%;accent-color:#d6af79;cursor:pointer}
+.buttons{display:flex;flex-wrap:wrap;gap:8px}
+button{border:1px solid #987459;background:#513b42;color:#ffeacf;border-radius:7px;padding:9px 12px;cursor:pointer;font-size:12px;flex:1}
+button:focus-visible,input:focus-visible{outline:2px solid #ffe0a8;outline-offset:2px}
+button[aria-pressed="true"]{background:#c5a16f;color:#282029}
+.notes{max-width:540px;font-size:12px;line-height:1.7;color:#dec9b6;margin:18px 0 0}
+code{color:#f2c591}
+a{color:#f9c99a}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header><div class="tag">Golden Autumn Heritage · V4</div>
+<h1>Master vs Animated Layers</h1>
+<p>Artwork alignment tool. The <strong>master scene</strong> overlays the <strong>individually rendered website layers</strong> at the same 390 × 844 mobile proportions.</p></header>
+<main>
+  <div class="stage" id="stage">
+    <iframe title="Current layered hero, with wedding text and opening hidden for artwork inspection" src="./index.html?artReview=1#home" loading="eager"></iframe>
+    <img id="master" src="./art/golden_autumn_heritage_master_v4.png" alt="Approved V4 master garden illustration">
+    <div class="corner" id="corner">50% MASTER</div>
+  </div>
+  <div class="legend"><span>0% = current layered website</span><span>100% = approved master</span></div>
+  <div class="controls">
+    <label for="opacity">Master overlay opacity <output id="percent">50%</output></label>
+    <input type="range" id="opacity" min="0" max="100" step="1" value="50" aria-label="Master overlay opacity">
+    <div class="buttons">
+      <button type="button" id="websiteButton" aria-pressed="false">Website only</button>
+      <button type="button" id="bothButton" aria-pressed="true">50/50 overlay</button>
+      <button type="button" id="masterButton" aria-pressed="false">Master only</button>
+      <button type="button" id="guidesButton" aria-pressed="false">Text-safe guides</button>
+    </div>
+  </div>
+  <p class="notes"><strong>How to review:</strong> Compare the gateway arch peak, pillar bases, steps, garden horizon and floral edges. If an object appears twice or jumps as you slide, the animation layer is misaligned. The dashed guide marks an approximate central text-safe region. This tool makes <em>no changes</em> to customer-facing content. <a href="./index.html">Open the invitation</a>.</p>
+</main>
+<script>
+'use strict';
+const slider=document.getElementById('opacity');
+const master=document.getElementById('master');
+const percent=document.getElementById('percent');
+const corner=document.getElementById('corner');
+const buttons=[document.getElementById('websiteButton'),document.getElementById('bothButton'),document.getElementById('masterButton')];
+const setOpacity=v=>{
+ const value=Math.max(0,Math.min(100,Number(v)||0));
+ slider.value=value;
+ master.style.opacity=String(value/100);
+ percent.textContent=value+'%';
+ corner.textContent=value+'% MASTER';
+ buttons.forEach((button,i)=>button.setAttribute('aria-pressed',String(value===[0,50,100][i])));
+};
+slider.addEventListener('input',()=>setOpacity(slider.value));
+buttons.forEach((button,i)=>button.addEventListener('click',()=>setOpacity([0,50,100][i])));
+const guides=document.getElementById('guidesButton');
+guides.addEventListener('click',()=>{const on=document.getElementById('stage').classList.toggle('guides');guides.setAttribute('aria-pressed',String(on));});
+master.addEventListener('error',()=>{corner.textContent='MASTER NOT FOUND';});
+</script>
+</body>
+</html>
