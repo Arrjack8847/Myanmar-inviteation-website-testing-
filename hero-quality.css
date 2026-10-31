@@ -37,8 +37,8 @@
   width: 100%;
   height: 100%;
   max-width: none;
-  object-fit: contain;
-  object-position: center center;
+  object-fit: cover;
+  object-position: center 47%;
   transform: none;
   filter: none;
   user-select: none;
@@ -61,9 +61,9 @@
 /* Center words inside the *painted opening*, not across the carved columns. */
 .hero .hero-words {
   position: absolute;
-  top: 42%;
+  top: 44%;
   left: 50%;
-  width: min(48vw, calc(20svh - 6.8px));
+  width: min(47vw, calc(29svh - 10px));
   max-width: 270px;
   min-width: 0;
   margin: 0;
@@ -83,14 +83,14 @@
   transition-delay: .16s;
 }
 .hero .hero-eyebrow {
-  font-size: clamp(7px, 1.75vw, 9px);
+  font-size: clamp(8px, 1.95vw, 10px);
   letter-spacing: .06em;
   line-height: 1.35;
   color: #7c584b;
   margin: 0 auto 4px;
 }
 .hero .hero-smalltitle {
-  font-size: clamp(11px, 2.8vw, 15px);
+  font-size: clamp(12px, 3vw, 16px);
   letter-spacing: .09em;
   line-height: 1.23;
   margin: 0 auto 3px;
@@ -106,7 +106,7 @@
   margin: 0;
   font-family: var(--display);
   font-weight: normal;
-  font-size: clamp(21px, min(6.8vw, 3.6svh), 39px);
+  font-size: clamp(27px, min(7.6vw, 4.2svh), 43px);
   line-height: 1.02;
   letter-spacing: -.025em;
   color: #603b47;
@@ -125,14 +125,14 @@
   margin: clamp(3px, .8vh, 8px) auto;
 }
 .hero .hero-date {
-  font-size: clamp(10px, 2.65vw, 15px);
+  font-size: clamp(12px, 2.9vw, 16px);
   letter-spacing: .06em;
   line-height: 1.32;
   margin: 0 auto;
   color: #78504b;
 }
 .hero .hero-subtitle {
-  font-size: clamp(10px, 2.48vw, 13px);
+  font-size: clamp(11px, 2.55vw, 14px);
   line-height: 1.27;
   max-width: 100%;
   margin: 5px auto 0;
@@ -189,17 +189,17 @@
 /* Remove accidental horizontal drag and provide adequate cover room. */
 .cover {padding-bottom:env(safe-area-inset-bottom);}
 @media (max-height: 680px) {
-  .hero .hero-words {top:42%;padding:3px 1px;}
+  .hero .hero-words {top:44%;padding:3px 1px;}
   .hero .hero-eyebrow, .hero .hero-subtitle {display:none;}
   .hero .hero-words .divider-art {margin:2px auto;}
-  .hero .hero-words h2 {font-size:clamp(19px, min(6.5vw, 4svh), 27px);}
+  .hero .hero-words h2 {font-size:clamp(25px, min(7.5vw, 4.6svh), 34px);}
   .cover .cover-copy {margin-top:12px;}
   .cover .cover-hint {font-size:10px;}
 }
 @media (min-width:680px) {
   .hero {height:calc(100svh - 34px);min-height:0;max-height:none;}
   .hero-scene {width:100%;max-width:none;left:0;transform:none;box-shadow:none;}
-  .hero .hero-words {width:min(29vw,calc(20svh - 6.8px),270px);}
+  .hero .hero-words {width:min(29vw,calc(29svh - 10px),270px);}
 }
 @media (prefers-reduced-motion:reduce) {
   .hero .hero-words {
@@ -211,3 +211,37 @@
   .cover .butterfly .wing,
   .cover .cover-leaf {animation:none!important;}
 }
+
+/* Visual correction after mobile screenshot review:
+   The previous contain layout created large peach letterbox bars. On phones,
+   fill the viewport, accepting modest TOP/BOTTOM crop in preference to side
+   gutters. Keep the central gateway and both pillars unobstructed. */
+@media (max-width:679px) {
+  .hero-master {
+    object-fit:cover;
+    object-position:center 47%;
+  }
+  .hero .hero-words {
+    width:min(47vw,calc(29svh - 10px));
+    max-width:200px;
+    background:radial-gradient(ellipse at center,#fff2e3d6 0%,#fff2e39c 48%,transparent 87%);
+  }
+  .hero .hero-topline {
+    top:clamp(10px,2.8svh,24px);
+    width:max-content;
+    max-width:90vw;
+    padding:5px 11px;
+    background:#f9e6d59e;
+    border:1px solid #eed5ad66;
+    border-radius:100px;
+    font-size:clamp(9px,2.1vw,11px);
+    letter-spacing:.14em;
+    color:#5c3b3a;
+    box-shadow:0 2px 13px #62443e1c;
+  }
+}
+/* The heading receives focus programmatically after the opening. A UA focus
+   outline around this noninteractive heading appeared as a black rectangle.
+   Keep strong focus outlines on actual links and buttons instead. */
+.hero #heroTitle:focus { outline:none; }
+.hero .hero-words h2:focus-visible { outline:none; }
