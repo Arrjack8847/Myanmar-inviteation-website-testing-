@@ -56,7 +56,14 @@ async function run(skin,width){
         chapterHeight:[...document.querySelectorAll('.story-chapter')].reduce((n,el)=>n+el.getBoundingClientRect().height,0),
         connects:Math.abs(document.getElementById('countdown').getBoundingClientRect().top-
             document.getElementById('details').getBoundingClientRect().bottom),
-        paperWidth:body.querySelector('.story-paper').getBoundingClientRect().width
+        paperWidth:body.querySelector('.story-paper').getBoundingClientRect().width,
+        countdownInside:!!document.getElementById('countdownTitle').closest('.story-illustrated-frame'),
+        timerIDs:['days','hours','minutes','seconds'].every(id=>!!document.getElementById(id)),
+        countdownWidth:document.querySelector('.countdown-panel').getBoundingClientRect().width,
+        countdownScrollWidth:document.querySelector('.countdown-panel').scrollWidth,
+        gridColumns:getComputedStyle(document.querySelector('.countdown-grid')).gridTemplateColumns.split(' ').length,
+        countdownBorder:getComputedStyle(document.querySelector('.countdown-panel')).borderTopWidth,
+        countdownValues:[...document.querySelectorAll('.countdown-box strong')].map(el=>el.textContent.trim())
       };
     });
     assert.equal(art.dataCount,3,'All 3 editable story chapters must remain');
@@ -65,6 +72,12 @@ async function run(skin,width){
     assert(art.connects<=3,'Section 3 to 4 layout gap: '+art.connects);
     assert(art.paperWidth>160,'Story text became too narrow');
     assert(art.chapterHeight>320,'Story content did not expand for long paragraphs');
+    assert(art.countdownInside,'Countdown must stay inside the same illustrated story frame');
+    assert(art.timerIDs,'All live countdown IDs must remain');
+    assert(art.countdownWidth>=art.countdownScrollWidth-2,'Countdown content must fit its illustrated parchment');
+    assert.equal(art.gridColumns,4,'Count down needs four legible columns');
+    assert(art.countdownValues.every(v=>v!=='--'&&v.length>0),'Live countdown values failed to render');
+    assert.equal(art.countdownBorder,'0px','Do not reintroduce the disconnected rectangular countdown card');
     if(skin==='golden-autumn'){
       assert(art.artSource.includes('4ba5ed04'),'Golden artwork must load');
       assert(art.repeat.includes('round'),'Floral sides must repeat rather than stretch');
@@ -76,6 +89,11 @@ async function run(skin,width){
     if(width===390) {
       await page.locator('.story-illustrated-frame').screenshot({
         path:path.join(dir,'story-v5-'+skin+'-390.png'),
+        animations:'disabled',
+        timeout:30000
+      });
+      await page.locator('.countdown-panel').screenshot({
+        path:path.join(dir,'countdown-garden-'+skin+'-390.png'),
         animations:'disabled',
         timeout:30000
       });
