@@ -10,6 +10,13 @@ const {chromium}=require('playwright');
 const root=path.resolve(__dirname,'..');
 const url=process.env.QA_URL||'http://127.0.0.1:4173';
 const sizes=[320,390,430];
+function contrastAgainstWhite(cssColor){
+  const values=(cssColor.match(/[\d.]+/g)||[]).slice(0,3).map(Number);
+  if(values.length!==3)throw Error('Cannot parse text color: '+cssColor);
+  const channel=x=>{const v=x/255;return v<=0.04045?v/12.92:Math.pow((v+0.055)/1.055,2.4)};
+  const luminance=.2126*channel(values[0])+.7152*channel(values[1])+.0722*channel(values[2]);
+  return 1.05/(luminance+.05);
+}
 const dir=path.join(root,'qa-screenshots');
 fs.mkdirSync(dir,{recursive:true});
 let server,browser;
@@ -75,6 +82,14 @@ async function run(skin,width){
         bridgePointer:getComputedStyle(document.querySelector('.closing-edge-continuation')).pointerEvents,
         bridgeWidth:document.querySelector('.closing-edge-continuation').getBoundingClientRect().width,
         bridgeHeight:document.querySelector('.closing-edge-continuation').getBoundingClientRect().height,
+        eventInkColors:[...document.querySelectorAll('.event-reading-card')].flatMap(card=>
+          ['.event-reading-type','h4','.event-reading-date','.event-reading-time',
+           '.event-reading-venue','.event-reading-address','.event-reading-pending']
+            .map(selector=>card.querySelector(selector))
+            .filter(Boolean)
+            .map(el=>({name:el.className||el.tagName,color:getComputedStyle(el).color}))
+        ),
+        eventCardCount:document.querySelectorAll('.event-reading-card').length,
         closingHorizon:getComputedStyle(document.querySelector('.closing-garden-horizon')).backgroundImage,
         closingHorizonSize:getComputedStyle(document.querySelector('.closing-garden-horizon')).backgroundSize,
         closingHorizonRect:document.querySelector('.closing-garden-horizon').getBoundingClientRect().toJSON(),
@@ -108,6 +123,11 @@ async function run(skin,width){
     assert(art.closingHead.includes('With all our'),'Closing wedding text lost');
     assert(art.closingFloralPointer==='none'&&art.closingHorizonPointer==='none','Decorative closing art must never intercept taps');
     assert(art.closingHorizonRect.width<=width+2,'Closing illustration must not overflow phone width');
+    assert.equal(art.eventCardCount,2,'Both ceremony and reception cards must remain');
+    for(const ink of art.eventInkColors){
+      assert(contrastAgainstWhite(ink.color)>=4.5,
+        'Venue text has insufficient contrast against light paper: '+JSON.stringify(ink));
+    }
     assert(art.bridgePointer==='none','Decorative edge must not capture touches');
     assert(art.bridgePosition==='absolute','Transition artwork must not introduce document height');
     if(skin==='golden-autumn'){
@@ -129,6 +149,12 @@ async function run(skin,width){
     }else{
       assert.equal(art.artSource,'none','Golden art should not leak into Moonlit skin');
     }
+    // All sizes and both skins: verify the practical information visually.
+    await page.locator('.event-reading-section').screenshot({
+      path:path.join(dir,'event-reading-'+skin+'-'+width+'.png'),
+      animations:'disabled',
+      timeout:30000
+    });
     if(width===390) {
       await page.locator('.story-illustrated-frame').screenshot({
         path:path.join(dir,'story-v5-'+skin+'-390.png'),
