@@ -67,6 +67,14 @@ async function run(skin,width){
         bottomPadding:parseFloat(getComputedStyle(document.querySelector('.story-countdown-section')).paddingBottom),
         demoNoteClipped:getComputedStyle(document.querySelector('.story-disclaimer')).clipPath,
         closingFade:getComputedStyle(document.querySelector('#closing'),'::before').backgroundImage,
+        bridgeBackground:getComputedStyle(document.querySelector('.closing-edge-continuation')).backgroundImage,
+        bridgePosition:getComputedStyle(document.querySelector('.closing-edge-continuation')).position,
+        bridgeDisplay:getComputedStyle(document.querySelector('.closing-edge-continuation')).display,
+        bridgeTransform:getComputedStyle(document.querySelector('.closing-edge-continuation')).transform,
+        bridgeMask:getComputedStyle(document.querySelector('.closing-edge-continuation')).maskImage,
+        bridgePointer:getComputedStyle(document.querySelector('.closing-edge-continuation')).pointerEvents,
+        bridgeWidth:document.querySelector('.closing-edge-continuation').getBoundingClientRect().width,
+        bridgeHeight:document.querySelector('.closing-edge-continuation').getBoundingClientRect().height,
         closingHorizon:getComputedStyle(document.querySelector('.closing-garden-horizon')).backgroundImage,
         closingHorizonSize:getComputedStyle(document.querySelector('.closing-garden-horizon')).backgroundSize,
         closingHorizonRect:document.querySelector('.closing-garden-horizon').getBoundingClientRect().toJSON(),
@@ -100,6 +108,16 @@ async function run(skin,width){
     assert(art.closingHead.includes('With all our'),'Closing wedding text lost');
     assert(art.closingFloralPointer==='none'&&art.closingHorizonPointer==='none','Decorative closing art must never intercept taps');
     assert(art.closingHorizonRect.width<=width+2,'Closing illustration must not overflow phone width');
+    assert(art.bridgePointer==='none','Decorative edge must not capture touches');
+    assert(art.bridgePosition==='absolute','Transition artwork must not introduce document height');
+    assert(art.bridgeWidth<=width+2&&art.bridgeHeight>=60,'Transition must fit mobile width');
+    if(skin==='golden-autumn'){
+      assert(art.bridgeBackground.includes('4ba5ed04'),'Bridge must match original story image');
+      assert(art.bridgeTransform.includes('-1'),'Bridge must mirror image vertically');
+      assert(art.bridgeMask.includes('gradient'),'Transition must fade out to dusk');
+    }else{
+      assert.equal(art.bridgeDisplay,'none','Golden Autumn transition must be hidden on Moonlit');
+    }
     assert(art.closingHorizonSize.includes('230%'),'Closing must zoom to landscape-only crop; no event frames');
     assert(art.closingHorizon.includes(skin==='moonlit-amethyst'?'moonlit-amethyst/events.webp':'section3_ceremony_reception_master.webp'),
       'Closing must reuse the correct garden painting for '+skin);
@@ -124,6 +142,15 @@ async function run(skin,width){
       });
       await page.locator('#closing').screenshot({
         path:path.join(dir,'closing-garden-'+skin+'-390.png'),
+        animations:'disabled',
+        timeout:30000
+      });
+      await page.evaluate(() => {
+        const closing=document.getElementById('closing');
+        window.scrollTo({top:Math.max(0,closing.getBoundingClientRect().top+window.scrollY-130),behavior:'instant'});
+      });
+      await page.screenshot({
+        path:path.join(dir,'story-to-closing-'+skin+'-390.png'),
         animations:'disabled',
         timeout:30000
       });
