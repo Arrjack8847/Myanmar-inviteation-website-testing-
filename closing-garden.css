@@ -90,7 +90,7 @@
   to {transform:rotate(-1.4deg) translateX(-2px);}
 }
 /* Real name/text and interactive controls always stay ABOVE scenic layers. */
-#closing > :not(.closing-garden-horizon):not(.closing-garden-haze):not(.closing-floral) {
+#closing > :not(.closing-garden-horizon):not(.closing-garden-haze):not(.closing-floral):not(.closing-edge-continuation) {
   position:relative;
   z-index:3;
 }
