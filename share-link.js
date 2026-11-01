@@ -9,9 +9,18 @@
     try { parsed = new URL(url); } catch { return null; }
     if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') return null;
     const host = parsed.hostname.toLowerCase().replace(/^\[|\]$/g, '');
+    // Local, LAN and reserved addresses are not public guest links.
+    const ipv4=host.match(/^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$/);
+    const localIPv4=ipv4 && (
+      [0,10,127].includes(Number(ipv4[1])) ||
+      (Number(ipv4[1])===192 && Number(ipv4[2])===168) ||
+      (Number(ipv4[1])===169 && Number(ipv4[2])===254) ||
+      (Number(ipv4[1])===172 && Number(ipv4[2])>=16 && Number(ipv4[2])<=31)
+    );
     if (host === 'localhost' || host.endsWith('.localhost') ||
-        host === '127.0.0.1' || host === '0.0.0.0' || host === '::1' ||
-        host.endsWith('.local')) return null;
+        host === '::1' || host === '0.0.0.0' ||
+        host.startsWith('fe80:') || host.startsWith('fc') || host.startsWith('fd') ||
+        host.endsWith('.local') || localIPv4) return null;
     const skin = parsed.searchParams.get('skin');
     parsed.search = '';
     parsed.hash = '';
