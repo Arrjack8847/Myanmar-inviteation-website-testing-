@@ -71,6 +71,17 @@ function measure() {
     art2MaskActive:getComputedStyle(art2).maskImage!=='none',
     art3MaskActive:getComputedStyle(document.querySelector('.ceremony-master-scene')).maskImage!=='none',
     art1Fit:getComputedStyle(master).objectFit,
+    eventReadingCount:document.querySelectorAll('.event-reading-card').length,
+    eventReadingVisible:[...document.querySelectorAll('.event-reading-card')].every(node=>{
+      const r=node.getBoundingClientRect();
+      return r.height>=190 && getComputedStyle(node).display!=='none';
+    }),
+    addressFontSizes:[...document.querySelectorAll('.event-reading-address')].map(el=>parseFloat(getComputedStyle(el).fontSize)),
+    venueFontSizes:[...document.querySelectorAll('.event-reading-venue')].map(el=>parseFloat(getComputedStyle(el).fontSize)),
+    directionsInitiallyHidden:[...document.querySelectorAll('.event-reading-directions')].every(el=>el.hidden),
+    eventPaintingSummaryNonInteractive:document.querySelector('.celebration-events')?.getAttribute('aria-hidden')==='true',
+    artSummariesFit:[...document.querySelectorAll('.celebration-event-inner')].every(el=>el.scrollHeight<=el.clientHeight+3),
+    eventCardOverflow:[...document.querySelectorAll('.event-reading-card')].map(el=>el.scrollWidth-el.clientWidth),
     bodyScroll:getComputedStyle(document.body).overflowY
   };
 }
@@ -125,6 +136,14 @@ async function testSize(size) {
     assert(metrics.art3Webp,'Browser did not choose optimized Section 3 WebP');
     assert(metrics.art3Local,'Section 3 must use its local verified source, not another repository');
     assert(metrics.art1Fit==='cover','Hero must fill the phone without wide side gutters');
+    assert.equal(metrics.eventReadingCount,2,'Ceremony and reception must have two readable detail cards');
+    assert(metrics.eventReadingVisible,'One or more event detail cards are missing or collapsed');
+    assert(metrics.addressFontSizes.every(px=>px>=14),'Event address is too small: '+metrics.addressFontSizes);
+    assert(metrics.venueFontSizes.every(px=>px>=16),'Event venue is too small: '+metrics.venueFontSizes);
+    assert(metrics.directionsInitiallyHidden,'Unknown venue must not offer invented map directions');
+    assert(metrics.eventPaintingSummaryNonInteractive,'Decorative summary should not be duplicated for screen readers');
+    assert(metrics.artSummariesFit,'Compact artwork labels must fit within the painted event panels');
+    assert(metrics.eventCardOverflow.every(px=>px<=2),'Readable event cards have horizontal text overflow');
     assert.deepEqual(errors,[],'Uncaught JS errors: '+errors.join('; '));
 
     await page.screenshot({path:path.join(output,`gateway-${size.width}x${size.height}.png`)});
@@ -202,6 +221,15 @@ async function testSize(size) {
       },id);
       await page.waitForTimeout(220);
       await page.screenshot({path:path.join(output,`${id==='invitation'?'invitation':'events'}-${size.width}x${size.height}.png`)});
+      if(id==='details'){
+        await page.evaluate(()=>{
+          const n=document.querySelector('.event-reading-section');
+          const top=n.getBoundingClientRect().top+scrollY-34;
+          window.scrollTo({top,behavior:'instant'});
+        });
+        await page.waitForTimeout(220);
+        await page.screenshot({path:path.join(output,`readable-event-details-${size.width}x${size.height}.png`)});
+      }
     }
     if(size.width===390) {
       await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
