@@ -1,0 +1,192 @@
+/*
+ * Section 4 Love Story — V5 illustration integration.
+ *
+ * Source: the user's uploaded 1024x1536 original painting (4ba5ed04-e01d-4bed-a71e-42f2bdf5f8a5.png).
+ * Its golden border, roses and cobblestone are decorative only: every story
+ * chapter remains editable, selectable HTML. Do not use background-size:cover,
+ * an absolutely-positioned full painting, or a fixed story height.
+ *
+ * The nine-slice top/bottom retain the actual painted boundary and carved
+ * ornaments; the middle parchment grows with long customer copy. CSS extends
+ * the warm colors behind Section 3's venue cards. This is an edge-safe
+ * integration candidate, not a claim of pixel-identical neighboring paintings.
+ */
+
+:root {
+  --story-top-edge: clamp(70px, 21.98vw, 145px);
+  --story-side-edge: clamp(36px, 12.20vw, 81px);
+  --story-bottom-edge: clamp(100px, 31.25vw, 207px);
+}
+
+/* Soften the actual venue-card to story handoff. Never insert a fake full-
+   viewport spacer: section 3's readable event cards are dynamic height. */
+.details-section .event-reading-section {
+  padding-bottom: clamp(65px, 18vw, 112px);
+  background:
+    radial-gradient(ellipse 85% 42% at 50% 2%, #fff8e8b0, transparent 75%),
+    linear-gradient(180deg, #f2dbbc 0%, #f8e8d1 62%, #c89375 100%);
+}
+.garden-flow > .story-countdown-section {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  min-height: 0;
+  margin: 0;
+  padding: clamp(12px, 4vw, 32px) 0 clamp(85px, 13vw, 128px);
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 26% at 50% 20%, #f8dca9aa, transparent),
+    linear-gradient(180deg, #c89375 0%, #e8bc96 17%, #efdfc8 68%, #d8b59c 100%);
+}
+.garden-flow > .story-countdown-section::before {
+  content: none;
+}
+
+/* The full original illustration becomes a growing decorative border.
+   Slices are measured in original image pixels: top 225, right/left 125,
+   bottom 320. Border widths follow image scale at mobile viewport widths. */
+#countdown .story-paper {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  isolation: isolate;
+  width: min(100%, 660px);
+  max-width: 100%;
+  height: auto;
+  min-height: 0;
+  margin: 0 auto;
+  padding: var(--story-top-edge) var(--story-side-edge) var(--story-bottom-edge);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+#countdown .story-paper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  box-sizing: border-box;
+  border-style: solid;
+  border-color: transparent;
+  border-width:
+    var(--story-top-edge)
+    var(--story-side-edge)
+    var(--story-bottom-edge)
+    var(--story-side-edge);
+  border-image-source: url("4ba5ed04-e01d-4bed-a71e-42f2bdf5f8a5.png");
+  border-image-slice: 225 125 320 125 fill;
+  border-image-width: 1;
+  border-image-repeat: stretch;
+  border-radius: 0;
+  background: #f5ddba;
+  pointer-events: none;
+}
+#countdown .story-paper-inner {
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  min-height: 0;
+  padding: clamp(9px, 2.7vw, 22px) 0 8px;
+  margin: 0;
+  border: 0;
+  background: linear-gradient(180deg, #fff7e77d, #fff2df91 56%, #fff7e76e);
+  box-shadow: none;
+  overflow: visible;
+}
+#countdown .story-paper-inner::before { content: none; }
+#countdown .story-paper .story-corner { display: none; }
+
+/* The heading lives INSIDE the painted frame rather than floating in a
+   disconnected cream region above it. The middle is readable, not painted
+   text, and all Burmese and English copy can expand without cropping. */
+#countdown .story-intro {
+  box-sizing: border-box;
+  max-width: 100%;
+  margin: 0 auto clamp(20px, 5vw, 33px);
+  padding: 0;
+}
+#countdown .story-intro .section-heading {
+  font-size: clamp(30px, 7.1vw, 48px);
+  line-height: 1.16;
+}
+#countdown .story-intro-burmese {
+  font-size: clamp(13px, 3.35vw, 17px);
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+#countdown .story-lede {
+  font-size: clamp(14px, 3.3vw, 18px);
+  overflow-wrap: anywhere;
+  line-height: 1.65;
+}
+#countdown .story-caption {
+  margin-bottom: clamp(19px, 5vw, 30px);
+  letter-spacing: .13em;
+}
+#countdown .story-chapters,
+#countdown .story-chapter-content {
+  min-width: 0;
+}
+#countdown .story-chapter h3,
+#countdown .story-chapter-content > p:last-child {
+  overflow-wrap: anywhere;
+}
+#countdown .story-paper-ornament { max-width: 65%; }
+
+/* Maintain separate editable timer instead of stamping numbers into art.
+   Warm garden color rolls from the parchment into the timer naturally. */
+#countdown .countdown-panel {
+  width: min(calc(100% - 26px), 660px);
+  margin-top: clamp(24px, 6vw, 50px);
+  background: linear-gradient(145deg, #fbebd9ed, #f1dbc7f2);
+  border-color: #c6a078;
+}
+#countdown .story-disclaimer {
+  padding: 0 16px;
+  overflow-wrap: anywhere;
+}
+
+/* Apply a provisional night grade to the artwork ALONE. Avoid filtering
+   actual text and numbers; a matching Moonlit painting is the future target. */
+html[data-skin="moonlit-amethyst"] .details-section .event-reading-section {
+  background:
+    radial-gradient(ellipse 80% 42% at 50% 0%, #f3e7f3b5, transparent),
+    linear-gradient(180deg, #e8dceb 0%, #f7eef4 63%, #7c688d 100%);
+}
+html[data-skin="moonlit-amethyst"] .garden-flow > .story-countdown-section {
+  background: linear-gradient(180deg, #7c688d 0%, #9d88a9 19%, #e2d6e3 69%, #ab92b1 100%);
+}
+html[data-skin="moonlit-amethyst"] #countdown .story-paper::before {
+  filter: sepia(.12) hue-rotate(215deg) saturate(.64) brightness(.86);
+}
+html[data-skin="moonlit-amethyst"] #countdown .story-paper-inner {
+  background: linear-gradient(#fff7f3b8, #f7edf5ab);
+}
+html[data-skin="moonlit-amethyst"] #countdown .story-intro .section-heading,
+html[data-skin="moonlit-amethyst"] #countdown .story-chapter h3 {
+  color: #4f405d;
+}
+html[data-skin="moonlit-amethyst"] #countdown .countdown-panel {
+  background: linear-gradient(145deg, #faf2f9ec, #e8dbeef2);
+  border-color: #a48cba;
+}
+
+@media (min-width: 661px) {
+  /* Sizes at 660px are proportional to the entire 1024px-wide source. */
+  #countdown .story-paper { width: 660px; }
+}
+@media (max-width: 350px) {
+  #countdown .story-paper-inner { padding-inline: 0; }
+  #countdown .story-caption { font-size: 8px; letter-spacing: .08em; }
+  #countdown .story-chapter h3 { font-size: 23px; }
+  #countdown .story-chapter-content > p:last-child { font-size: 14px; line-height: 1.75; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #countdown .story-paper::before,
+  #countdown .story-paper-inner { animation: none !important; transition: none !important; }
+}
