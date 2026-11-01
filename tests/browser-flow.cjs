@@ -64,6 +64,9 @@ function measure() {
     art1Loaded:allImgs[0].complete && allImgs[0].naturalWidth>0,
     art3Loaded:allImgs[1].complete && allImgs[1].naturalWidth>0,
     art3Local:scene.getAttribute('src')==='art/section3_ceremony_reception_master.png',
+    art1Webp:master.currentSrc.endsWith('/art/golden_autumn_heritage_master_v4.webp'),
+    art2Webp:section2Style.borderImageSource.includes('section2_family_invitation_master.webp'),
+    art3Webp:scene.currentSrc.endsWith('/art/section3_ceremony_reception_master.webp'),
     art2Set:section2Style.borderImageSource.includes('section2_family_invitation_master.png'),
     art2MaskActive:getComputedStyle(art2).maskImage!=='none',
     art3MaskActive:getComputedStyle(document.querySelector('.ceremony-master-scene')).maskImage!=='none',
@@ -113,10 +116,13 @@ async function testSize(size) {
     assert(metrics.paperOverflow!=='auto'&&metrics.paperOverflow!=='scroll','Nested invitation scrollbar traps touch swipes');
     assert(metrics.eventOverflow!=='auto'&&metrics.eventOverflow!=='scroll','Nested event scrollbar traps touch swipes');
     assert(metrics.art1Loaded,'Approved gateway master failed to load');
+    assert(metrics.art1Webp,'Browser did not choose optimized gateway WebP');
     assert(metrics.art2Set,'Section 2 illustration was not applied');
+    assert(metrics.art2Webp,'CSS did not select optimized Section 2 border art');
     assert(metrics.art2MaskActive,'Responsive garden → invitation seam mask is missing');
     assert(metrics.art3MaskActive,'Responsive invitation → events seam mask is missing');
     assert(metrics.art3Loaded,'Section 3 original illustration failed to load');
+    assert(metrics.art3Webp,'Browser did not choose optimized Section 3 WebP');
     assert(metrics.art3Local,'Section 3 must use its local verified source, not another repository');
     assert(metrics.art1Fit==='cover','Hero must fill the phone without wide side gutters');
     assert.deepEqual(errors,[],'Uncaught JS errors: '+errors.join('; '));
