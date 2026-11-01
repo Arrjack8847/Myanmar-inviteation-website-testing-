@@ -81,6 +81,23 @@ async function testSize(size) {
   try{
     await page.goto(url+'/index.html?heroPreview=1#home',{waitUntil:'load',timeout:30000});
     await page.waitForFunction(()=>document.body.classList.contains('has-opened'));
+    // Guests should see a clear, touch-friendly way to continue immediately
+    // after the cover, not a button hidden by a delayed opacity transition.
+    await page.waitForTimeout(400);
+    const cue=await page.locator('.scroll-cue').evaluate(node=>{
+      const s=getComputedStyle(node),r=node.getBoundingClientRect();
+      return {
+        opacity:Number(s.opacity),
+        width:r.width,
+        height:r.height,
+        visible:r.bottom<=innerHeight+1&&r.top>=0,
+        href:node.getAttribute('href')
+      };
+    });
+    assert(cue.opacity>.85,'Scroll cue must be visible promptly after opening: '+cue.opacity);
+    assert(cue.width>=150&&cue.height>=44,'Scroll cue tap target is too small: '+JSON.stringify(cue));
+    assert(cue.visible,'Scroll cue must fit inside the first phone viewport');
+    assert.equal(cue.href,'#invitation','Scroll cue should take guests to the family invitation');
     await page.locator('.ceremony-master-art').scrollIntoViewIfNeeded();
     await page.waitForTimeout(600);
     await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
