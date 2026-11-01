@@ -83,6 +83,16 @@ Both events remain customizable via `WEDDING_EVENTS` in `app.js`. Unconfirmed lo
 
 Preview: `http://localhost:4173/index.html?heroPreview=1#details`.
 
+## Readable ceremony and reception information — mobile accessibility update
+
+The approved Section 3 garden illustration stays **one unchanged painted master** (with WebP/PNG compatibility). On a 320px phone, each gilt event panel is only about 114px high: earlier iterations squeezed venue names, addresses and unconfirmed-direction messages to approximately 9–11px and overlaid the bottom carvings.
+
+Section 3 now displays **only the two concise event summaries** (event name, Burmese heading, date, time) in those painted panels. These decorative summaries have `aria-hidden="true"`. Directly below the illustration, two generously spaced, responsive **live HTML event detail cards** display the complete dates, times, venues, addresses and confirmed directions at readable font sizes. All fields still use the same `WEDDING_EVENTS` configuration through `renderWeddingEvents()`; there are no fake or clickable map directions until `venueConfirmed` and the allowed HTTPS map URL have been set.
+
+The new `event-reading.css` is loaded **last** to preserve the mobile layout and original artwork. The cards are part of the normal document flow, not inner-scroll overlays. The design shows one card per row on phones and two columns on wider screens. Browser QA confirms the addresses are at least 14px, venues at least 16px, both cards display, decorative summaries fit their frames and the page remains easy to swipe. Screenshots are captured at `readable-event-details-320x568.png`, `readable-event-details-390x844.png`, and `readable-event-details-430x932.png`.
+
+**Trade-off:** Section 3 now extends beyond a single phone screen to keep event information readable. The important details are not hidden behind a tap or clipped off inside gold artwork.
+
 ## Mobile QA and simplified scrolling styles (next pass)
 
 To reduce cascading-layout bugs, the old `screen-fit.css` is **no longer loaded**. It remains in the repository as a historical backup only. The final live stylesheets now load `hero-quality.css` followed by `flow-quality.css`. The scroll anchor uses only one 34px offset for the fixed demo bar, avoiding unintended extra top space.
