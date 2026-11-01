@@ -80,6 +80,9 @@
   border-image-width: 1;
   border-image-repeat: stretch;
   border-radius: 0;
+  /* Soften the painted top/bottom boundaries without fading the gold crests. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 36px, #000 calc(100% - 42px), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 36px, #000 calc(100% - 42px), transparent 100%);
   background: #f5ddba;
   pointer-events: none;
 }
@@ -91,10 +94,14 @@
   min-width: 0;
   height: auto;
   min-height: 0;
-  padding: clamp(9px, 2.7vw, 22px) 0 8px;
+  /* Keep live headings below the upper crest and story closing copy above
+     the lower filigree, even for longer Myanmar/English paragraphs. */
+  padding: clamp(36px, 8.2vw, 58px) 0 clamp(90px, 26vw, 145px);
   margin: 0;
   border: 0;
-  background: linear-gradient(180deg, #fff7e77d, #fff2df91 56%, #fff7e76e);
+  /* The original source already contains a readable parchment texture.
+     Do not cover it with a visible rectangular tint. */
+  background: transparent;
   box-shadow: none;
   overflow: visible;
 }
@@ -165,7 +172,7 @@ html[data-skin="moonlit-amethyst"] #countdown .story-paper::before {
   filter: sepia(.12) hue-rotate(215deg) saturate(.64) brightness(.86);
 }
 html[data-skin="moonlit-amethyst"] #countdown .story-paper-inner {
-  background: linear-gradient(#fff7f3b8, #f7edf5ab);
+  background: transparent;
 }
 html[data-skin="moonlit-amethyst"] #countdown .story-intro .section-heading,
 html[data-skin="moonlit-amethyst"] #countdown .story-chapter h3 {
