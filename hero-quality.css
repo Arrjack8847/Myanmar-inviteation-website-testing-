@@ -245,3 +245,50 @@
    Keep strong focus outlines on actual links and buttons instead. */
 .hero #heroTitle:focus { outline:none; }
 .hero .hero-words h2:focus-visible { outline:none; }
+
+/* Screenshot-backed usability correction: the scroll cue previously remained
+   invisible for over a second after the hero was unlocked. Make the next-step
+   action visible almost immediately and large enough to tap on phones. */
+.hero .scroll-cue {
+  box-sizing:border-box;
+  display:flex;
+  min-width:174px;
+  min-height:48px;
+  padding:10px 16px 9px;
+  gap:4px;
+  border-radius:999px;
+  border:1px solid rgba(255,233,193,.78);
+  background:rgba(66,37,45,.81);
+  box-shadow:0 5px 18px rgba(52,30,37,.28);
+  color:#ffedcf;
+  text-shadow:none;
+  -webkit-backdrop-filter:blur(4px);
+  backdrop-filter:blur(4px);
+  transition:opacity .24s ease;
+  transition-delay:0s;
+  touch-action:manipulation;
+}
+body.has-opened .hero .scroll-cue {
+  opacity:1;
+  transition-delay:0s;
+}
+.hero .scroll-cue > span:first-child {
+  color:inherit;
+  font-size:10px;
+  letter-spacing:.13em;
+  line-height:1.2;
+}
+.hero .scroll-line {
+  height:13px;
+  background:linear-gradient(#ffe6bf,transparent);
+}
+@media (max-height:640px) {
+  .hero .scroll-cue {
+    min-height:44px;
+    padding:7px 12px;
+    bottom:max(25px,calc(env(safe-area-inset-bottom) + 20px));
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  .hero .scroll-cue {transition:none;}
+}
