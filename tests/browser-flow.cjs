@@ -129,6 +129,10 @@ async function testSize(size) {
     assert(butterflyRest.inViewport && butterflyRest.width>=44 && butterflyRest.height>=44,
       'Replay butterfly must be an accessible phone touch target: '+JSON.stringify(butterflyRest));
     assert(butterflyRest.animation==='none','Resting butterfly must not animate automatically');
+    const hintOpacity=await page.locator('.hero-butterfly-hint')
+      .evaluate(el=>Number(getComputedStyle(el).opacity));
+    assert(hintOpacity===0,'Butterfly caption must not overlap wedding titles on touchscreen: '+hintOpacity);
+
     await replay.click();
     assert.equal(await replay.evaluate(el=>el.classList.contains('is-flying')),true,
       'Tapping the butterfly must trigger one short flight');
