@@ -68,6 +68,7 @@ async function run(skin,width){
         demoNoteClipped:getComputedStyle(document.querySelector('.story-disclaimer')).clipPath,
         closingFade:getComputedStyle(document.querySelector('#closing'),'::before').backgroundImage,
         closingHorizon:getComputedStyle(document.querySelector('.closing-garden-horizon')).backgroundImage,
+        closingHorizonSize:getComputedStyle(document.querySelector('.closing-garden-horizon')).backgroundSize,
         closingHorizonRect:document.querySelector('.closing-garden-horizon').getBoundingClientRect().toJSON(),
         closingFloralLeft:getComputedStyle(document.querySelector('.closing-floral--left')).backgroundImage,
         closingFloralPointer:getComputedStyle(document.querySelector('.closing-floral--left')).pointerEvents,
@@ -99,6 +100,7 @@ async function run(skin,width){
     assert(art.closingHead.includes('With all our'),'Closing wedding text lost');
     assert(art.closingFloralPointer==='none'&&art.closingHorizonPointer==='none','Decorative closing art must never intercept taps');
     assert(art.closingHorizonRect.width<=width+2,'Closing illustration must not overflow phone width');
+    assert(art.closingHorizonSize.includes('205%'),'Closing must zoom to landscape-only crop; no event frames');
     assert(art.closingHorizon.includes(skin==='moonlit-amethyst'?'moonlit-amethyst/events.webp':'section3_ceremony_reception_master.webp'),
       'Closing must reuse the correct garden painting for '+skin);
     if(skin==='golden-autumn'){
