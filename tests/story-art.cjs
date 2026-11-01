@@ -38,4 +38,16 @@ for(const id of ['countdownTitle','days','hours','minutes','seconds']){
 assert(css.includes('html[data-skin="moonlit-amethyst"] .story-illustrated-frame'),
  'Do not expose golden-only artwork in unapproved Moonlit skin');
 assert(css.includes('prefers-reduced-motion:reduce'),'Reduced-motion support missing');
-console.log('PASS story artwork, live text fields, native edge caps and Moonlit fallback');
+const closingCss=read('closing-garden.css');
+assert(html.includes('href="closing-garden.css"'),'Closing Garden stylesheet missing');
+const closing=html.split('<section class="content-section closing-section"')[1]||'';
+for(const cls of ['closing-garden-horizon','closing-garden-haze','closing-floral--left','closing-floral--right']){
+  assert(closing.includes(cls),'Closing decoration missing: '+cls);
+}
+assert(closing.includes('id="shareButton"')&&closing.includes('href="#home"'),'Share and return actions must survive');
+assert(closing.includes('data-name="first"')&&closing.includes('data-name="second"'),'Personalized closing names lost');
+assert(closingCss.includes('section3_ceremony_reception_master.webp'),'Approved Golden garden source not reused');
+assert(closingCss.includes('skins/moonlit-amethyst/events.webp'),'Approved Moonlit garden source not reused');
+assert(closingCss.includes('pointer-events:none'),'Decorative closing art may not capture taps');
+assert(closingCss.includes('prefers-reduced-motion:reduce'),'Closing motion must respect user preference');
+console.log('PASS story, countdown, closing garden, editable content, and skin separation');
