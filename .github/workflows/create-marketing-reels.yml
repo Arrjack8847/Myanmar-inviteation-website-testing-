@@ -1,0 +1,45 @@
+name: Generate invitation reel demos
+on:
+  push:
+    branches:
+      - feat/hires-garden-preview-20261101
+    paths:
+      - scripts/render-reel.cjs
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  reel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate code and both skin packs
+        run: |
+          node tests/skin-system.cjs
+          node tests/smoke.cjs
+      - name: Install Playwright
+        run: npm install --no-save --no-package-lock playwright@1.56.0
+      - name: Install Chromium and FFmpeg
+        run: |
+          npx playwright install --with-deps chromium
+          if ! command -v ffmpeg >/dev/null; then
+            sudo apt-get update && sudo apt-get install -y ffmpeg
+          fi
+      - name: Record real vertical website demonstrations
+        run: node scripts/render-reel.cjs
+      - name: Encode shareable 1080x1920 MP4 videos
+        run: |
+          for skin in golden-autumn moonlit-amethyst; do
+            ffmpeg -y -i "reel-output/${skin}.webm"               -vf "fps=24,scale=1080:1920:flags=lanczos"               -c:v libx264 -preset veryfast -crf 24 -pix_fmt yuv420p               -movflags +faststart -an "reel-output/${skin}.mp4"
+          done
+          ls -lh reel-output/*.mp4
+      - name: Publish reel previews for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-autumn-two-skin-reels
+          path: reel-output/*.mp4
+          retention-days: 30
