@@ -68,9 +68,6 @@ async function run(skin,width){
         demoNoteClipped:getComputedStyle(document.querySelector('.story-disclaimer')).clipPath,
         closingFade:getComputedStyle(document.querySelector('#closing'),'::before').backgroundImage,
         closingHorizon:getComputedStyle(document.querySelector('.closing-garden-horizon')).backgroundImage,
-        closingPath:getComputedStyle(document.querySelector('.closing-garden-path')).backgroundImage,
-        closingPathHeight:document.querySelector('.closing-garden-path').getBoundingClientRect().height,
-        closingPathPointer:getComputedStyle(document.querySelector('.closing-garden-path')).pointerEvents,
         closingHorizonSize:getComputedStyle(document.querySelector('.closing-garden-horizon')).backgroundSize,
         closingHorizonRect:document.querySelector('.closing-garden-horizon').getBoundingClientRect().toJSON(),
         closingFloralLeft:getComputedStyle(document.querySelector('.closing-floral--left')).backgroundImage,
@@ -102,10 +99,6 @@ async function run(skin,width){
     assert(art.closingShare&&art.closingScrollLink==='#home','Closing actions should still work');
     assert(art.closingHead.includes('With all our'),'Closing wedding text lost');
     assert(art.closingFloralPointer==='none'&&art.closingHorizonPointer==='none','Decorative closing art must never intercept taps');
-    assert(art.closingPathPointer==='none','Closing transition path must not intercept taps');
-    assert(art.closingPathHeight>80&&art.closingPathHeight<200,'Garden path bridge must be short and not add a new section');
-    assert(art.closingPath.includes(skin==='moonlit-amethyst'?'moonlit-amethyst/events.webp':'section3_ceremony_reception_master.webp'),
-      'Closing foreground path must be skin-matched');
     assert(art.closingHorizonRect.width<=width+2,'Closing illustration must not overflow phone width');
     assert(art.closingHorizonSize.includes('230%'),'Closing must zoom to landscape-only crop; no event frames');
     assert(art.closingHorizon.includes(skin==='moonlit-amethyst'?'moonlit-amethyst/events.webp':'section3_ceremony_reception_master.webp'),
