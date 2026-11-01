@@ -131,6 +131,30 @@ html[data-skin="moonlit-amethyst"] .story-illustrated-frame .countdown-box span,
 html[data-skin="moonlit-amethyst"] .story-illustrated-frame .countdown-footnote {
   color:#81728d;
 }
+/* Section 5 -> 6 edge treatment (until a bespoke dusk-garden painting
+ * exists). The source artwork ends at its real lower border, followed
+ * immediately by a dusk gradient rather than a visible empty peach strip.
+ * The prototype disclaimer is still readable to assistive technology; the
+ * fixed demo banner already identifies all dates/names as examples. */
+.story-countdown-section {padding-bottom:0;}
+.story-countdown-section .story-disclaimer {
+  position:absolute!important;
+  width:1px!important;height:1px!important;
+  min-width:0!important;min-height:0!important;
+  margin:-1px!important;padding:0!important;border:0!important;
+  overflow:hidden!important;white-space:nowrap!important;
+  clip-path:inset(50%)!important;
+}
+#closing::before {
+  background:
+    radial-gradient(ellipse 66% 40% at 50% 29%,#e7b9833d,transparent 72%),
+    linear-gradient(180deg,#dfc5b2 0%,#ae7b70 18%,#825b61 42%,#482d38 100%);
+}
+html[data-skin="moonlit-amethyst"] #closing::before {
+  background:
+    radial-gradient(ellipse 68% 40% at 50% 30%,#b8a3ca2e,transparent 70%),
+    linear-gradient(180deg,#d8cce6 0%,#92809e 18%,#61516d 42%,#332c45 100%);
+}
 @media(max-width:350px){
   .story-illustrated-frame .countdown-panel .countdown-box {border-radius:12px 12px 6px 6px;}
   .story-illustrated-frame .countdown-panel .countdown-box strong {font-size:21px;}
