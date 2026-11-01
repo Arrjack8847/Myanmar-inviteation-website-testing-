@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="story-art-v5.css" />
   <link rel="stylesheet" href="countdown-garden.css" />
   <link rel="stylesheet" href="closing-garden.css" />
+  <link rel="stylesheet" href="story-closing-bridge.css" />
 </head>
 <body class="not-opened">
   <div class="demo-bar" aria-label="Prototype notice"><span class="demo-indicator"></span> LOCAL DESIGN DEMO <span class="demo-separator">·</span> SAMPLE DETAILS</div>
@@ -286,6 +287,9 @@
       <section class="content-section closing-section" id="closing" aria-labelledby="closingTitle">
         <!-- Use the approved lower garden scene as dusk artwork; decorative
              overlays never capture taps or obscure the live closing text. -->
+        <!-- Extend the exact last painted edge of the storybook into the
+             farewell; this overlay has no document height or interactions. -->
+        <div class="closing-edge-continuation" aria-hidden="true"></div>
         <div class="closing-garden-horizon" aria-hidden="true"></div>
         <div class="closing-garden-haze" aria-hidden="true"></div>
         <div class="closing-floral closing-floral--left" aria-hidden="true"></div>
