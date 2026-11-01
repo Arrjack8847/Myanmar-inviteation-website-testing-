@@ -209,5 +209,33 @@ assert(flowCSS.includes('scroll-margin-top: 0'), 'Do not double-offset anchors u
 assert(flowCSS.includes('touch-action: pan-y pinch-zoom'), 'Normal phone swipe/zoom handling missing');
 assert(!/scroll-snap-type\s*:|ScrollTrigger|animation\s*:\s*parallax/.test(flowCSS), 'The scroll should not snap or animate the scenery');
 
+/* Option A: original painted scenes stay static; only UI/typography reveals. */
+const motionCss=read('scene-motion.css');
+const motionJs=read('scene-motion.js');
+assert(html.includes('href="scene-motion.css"'), 'Option A motion stylesheet missing');
+assert(html.includes('src="scene-motion.js" defer'), 'Option A interaction script missing');
+assert(html.indexOf('href="scene-motion.css"')>html.indexOf('href="event-reading.css"'), 'Option A CSS should load last');
+assert(html.indexOf('src="scene-motion.js"')>html.indexOf('src="app.js"'), 'Motion enhancements must load after the wedding data');
+assert(html.includes('id="blessingToggle"')&&html.includes('aria-controls="invitationBlessing"'), 'Blessing toggle must be accessible');
+assert(html.includes('id="invitationBlessing" hidden'), 'Blessing must be closed by default');
+assert(html.includes('class="heritage-blessing-label"'), 'Blessing label must reflect toggle state');
+for(const [selector,id] of [
+  ['event-panel-hotspot--ceremony','ceremonyDetails'],
+  ['event-panel-hotspot--reception','receptionDetails']
+]){
+  assert(html.includes(selector),selector+' tap target missing');
+  assert(html.includes('href="#'+id+'"'),selector+' must navigate within the actual document');
+  assert(html.includes('id="'+id+'"'),id+' detail card anchor missing');
+}
+assert(motionCss.includes('touch-action:pan-y pinch-zoom'), 'Event panel touch gestures must pan document normally');
+assert(motionCss.includes('prefers-reduced-motion:reduce'), 'Option A animations must respect reduced motion');
+assert(motionJs.includes('IntersectionObserver'), 'Text reveal must be visibility-triggered, not tied to scroll position');
+assert(motionJs.includes('observer.unobserve(entry.target)'), 'Text reveal should only animate once');
+assert(!/scroll-snap-type\s*:|ScrollTrigger|animation\s*:\s*parallax/.test(motionCss), 'No scenery parallax or scroll snapping');
+assert(!motionJs.includes('window.scrollTo('), 'Motion must not force the guest scroll position');
+assert(motionCss.includes('garden-name-shine'), 'One-time Section 1 highlight is missing');
+assert(motionJs.includes('blessing.hidden = isOpen'), 'Blessing toggle cannot be closed');
+new Function(motionJs); // parse separately; the simulated opening harness only imports app.js.
+
 console.log('PASS: Section 1 opening, natural phone scrolling, no artwork gap and preserved editable wedding details.');
 console.log('Next: verify touch scrolling and artwork seams in the mobile browser at 320/390/430px.');
