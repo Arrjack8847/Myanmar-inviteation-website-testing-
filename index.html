@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="hero-quality.css" />
   <link rel="stylesheet" href="flow-quality.css" />
   <link rel="stylesheet" href="event-reading.css" />
+  <link rel="stylesheet" href="scene-motion.css" />
 </head>
 <body class="not-opened">
   <div class="demo-bar" aria-label="Prototype notice"><span class="demo-indicator"></span> LOCAL DESIGN DEMO <span class="demo-separator">·</span> SAMPLE DETAILS</div>
@@ -110,6 +111,14 @@
             </p>
             <p class="heritage-date" data-date-text>20 JUNE 2027</p>
             <p class="heritage-footer-note">YOUR PRESENCE IS OUR GREATEST JOY</p>
+            <button class="heritage-blessing-button" id="blessingToggle" type="button"
+                    aria-expanded="false" aria-controls="invitationBlessing">
+              <span aria-hidden="true">✦</span> Reveal a blessing
+            </button>
+            <div class="heritage-blessing" id="invitationBlessing" hidden>
+              <p lang="my">မေတ္တာတရားနှင့် ပျော်ရွှင်မှုများ အမြဲပြည့်ဝပါစေ။</p>
+              <p>May your days together be filled with love, joy and cherished memories.</p>
+            </div>
           </div>
         </article>
         <p class="fine-print heritage-demo-note">Demo invitation: replace the couple, date and parents' names with confirmed details before sharing with guests.</p>
@@ -145,14 +154,19 @@
               </div>
             </article>
           </div>
+          <a class="event-panel-hotspot event-panel-hotspot--ceremony" href="#ceremonyDetails"
+             aria-label="View full wedding ceremony information"></a>
+          <a class="event-panel-hotspot event-panel-hotspot--reception" href="#receptionDetails"
+             aria-label="View full wedding reception information"></a>
         </div>
+        <p class="event-panel-hint">Tap either gold frame to explore the celebration details <span aria-hidden="true">↓</span></p>
 
         <div class="event-reading-section" aria-labelledby="eventReadingTitle">
           <p class="event-reading-eyebrow">THE CELEBRATION</p>
           <h3 id="eventReadingTitle" class="event-reading-title">Ceremony &amp; <em>Reception</em> Details</h3>
           <p class="event-reading-caption">All the details for our special day</p>
           <div class="event-reading-grid">
-            <article class="event-reading-card" data-event="ceremony" aria-labelledby="ceremonyTitle">
+            <article class="event-reading-card" id="ceremonyDetails" data-event="ceremony" aria-labelledby="ceremonyTitle">
               <p class="event-reading-type" lang="my">မင်္ဂလာအခမ်းအနား</p>
               <h4 id="ceremonyTitle">Wedding Ceremony</h4>
               <time class="event-reading-date" data-event-field="date">20 JUNE 2027</time>
@@ -162,7 +176,7 @@
               <a class="event-reading-directions" data-event-link hidden target="_blank" rel="noopener noreferrer" aria-label="Open directions to the wedding ceremony venue">GET DIRECTIONS <span aria-hidden="true">↗</span></a>
               <p class="event-reading-pending" data-event-pending>Directions will appear once the venue is confirmed</p>
             </article>
-            <article class="event-reading-card" data-event="reception" aria-labelledby="receptionTitle">
+            <article class="event-reading-card" id="receptionDetails" data-event="reception" aria-labelledby="receptionTitle">
               <p class="event-reading-type" lang="my">မင်္ဂလာဧည့်ခံပွဲ</p>
               <h4 id="receptionTitle">Wedding Reception</h4>
               <time class="event-reading-date" data-event-field="date">Date to be confirmed</time>
@@ -256,5 +270,6 @@
   </main>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="app.js" defer></script>
+  <script src="scene-motion.js" defer></script>
 </body>
 </html>
