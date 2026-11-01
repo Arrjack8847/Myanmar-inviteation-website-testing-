@@ -83,6 +83,20 @@ Both events remain customizable via `WEDDING_EVENTS` in `app.js`. Unconfirmed lo
 
 Preview: `http://localhost:4173/index.html?heroPreview=1#details`.
 
+## Option A — Cinematic animation overlays (Sections 1–3)
+
+This iteration adds restrained motion **without splitting the three original garden illustrations into dozens of pieces**. All approved PNG/WebP masters stay completely static, and guests still scroll freely from one scene to the next.
+
+- **Section 1:** the original butterfly/envelope and one-time leaf gust remain; a short warm gold highlight passes once across the HTML wedding-name presentation after the opening completes. There is **no continuous background movement**.
+- **Section 2:** the invitation heading, family names and body wording reveal once as they enter the viewport. A small accessible **Reveal a blessing** control opens and closes Burmese and English blessing text. The paper and flowers never move.
+- **Section 3:** the live headings and readable ceremony/reception cards gently enter once. Each of the two **painted event frames is now a large touch-friendly link** to its corresponding full information card. The original gold artwork remains in one piece.
+
+Implementation: `scene-motion.css` and `scene-motion.js` load after the existing styles and `app.js`. They use CSS `opacity`/`transform`, `IntersectionObserver` and native HTML anchors/buttons—no external animation packages or page scroll snapping. Reveals are **one-time**, not tied to repeated scroll position changes. If JavaScript, IntersectionObserver or animation support is unavailable, the ordinary wedding information remains visible. `prefers-reduced-motion:reduce` disables motion and preserves controls.
+
+The wedding data stays in the established `DEMO`, `WEDDING_EVENTS` and event rendering flows. Calendar downloads and ambient looping butterflies are deliberately **not included** in this phase; those require additional product decisions and testing.
+
+Run `node tests/smoke.cjs`, `node tests/hero-interaction.cjs`, and the GitHub Actions Playwright mobile QA. The browser suite verifies text reveals, blessing toggle, ceremony-frame navigation, reduced-motion accessibility, unbroken artwork/scrolling and responsive phone layouts.
+
 ## Readable ceremony and reception information — mobile accessibility update
 
 The approved Section 3 garden illustration stays **one unchanged painted master** (with WebP/PNG compatibility). On a 320px phone, each gilt event panel is only about 114px high: earlier iterations squeezed venue names, addresses and unconfirmed-direction messages to approximately 9–11px and overlaid the bottom carvings.
