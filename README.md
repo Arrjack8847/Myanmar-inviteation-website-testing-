@@ -148,6 +148,20 @@ The styled content and responsive countdown are in `story.css`. Preview Section 
 
 `http://localhost:4173/index.html?heroPreview=1#countdown`
 
+## Faster mobile artwork loading — verified original-source optimization
+
+The three complete garden illustrations previously totalled **9,115,641 bytes** of PNG files (8.69 MiB). Three visually equivalent high-quality WebP copies (quality 94, method 6) now total **1,751,712 bytes** (1.67 MiB), a **80.8% reduction** in illustration transfer size.
+
+- Section 1: 3,054,729 → 574,742 bytes
+- Section 2: 3,029,677 → 592,776 bytes
+- Section 3: 3,031,235 → 584,194 bytes
+
+The browser uses `<picture>` with a `source type="image/webp"` for Sections 1 and 3, and CSS `image-set()` for the Section 2 illustrated border. The original approved PNGs are **never deleted or modified** and remain the compatibility fallback. All wedding wording is still editable HTML, and the environment remains one static illustration per section.
+
+The artwork build is reproducible with `python scripts/optimize_artwork.py` (Pillow 11.3.0). The script guards the original source Git hashes and dimensions; `.github/workflows/build-optimized-art.yml` generates/commits the optimized images when instructed. Node smoke tests validate the optimized image signatures and file sizes; Playwright checks that mobile Chromium selects the WebP sources.
+
+This improves image transfer; it does not by itself establish a full Lighthouse score, pixel-perfect painted joins, or final iOS Safari approval.
+
 ## Assets
 
 - `art/golden_autumn_heritage_master_v4.png` — sole garden image on the first section
