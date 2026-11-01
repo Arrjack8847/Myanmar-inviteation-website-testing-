@@ -34,9 +34,9 @@
   -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 5%,#000 100%);
   mask-image:linear-gradient(to bottom,transparent 0,#000 5%,#000 100%);
 }
-/* Original pixels 1116-1536: lower filigree and garden path. */
+/* Original pixels 960-1536: intact lower filigree and garden path. */
 .story-illustrated-cap--bottom {
-  aspect-ratio:1024 / 420;
+  aspect-ratio:1024 / 576;
   background-position:center bottom;
   -webkit-mask-image:linear-gradient(to bottom,#000 0,#000 91%,transparent 100%);
   mask-image:linear-gradient(to bottom,#000 0,#000 91%,transparent 100%);
@@ -50,7 +50,7 @@
   color:#663f49;
   background:
     radial-gradient(ellipse 90% 40% at 50% 0%,#fff8e8 0%,transparent 100%),
-    linear-gradient(90deg,#e6bb8e 0%,#fae5c7 7%,#fff0d6 16%,#fff0d6 84%,#fae5c7 93%,#e6bb8e);
+    linear-gradient(90deg,#8f4b47 0%,#d49b70 4%,#f4d8ac 7%,#fff0d6 16%,#fff0d6 84%,#f4d8ac 93%,#c38962 96%,#8f4b47);
 }
 /* Narrow continuous carved rails connect the caps; no bitmap flower is stretched. */
 .story-illustrated-body::before,
