@@ -16,6 +16,6 @@ Its generated images live in `skins/moonlit-amethyst/`:
 and preserves alpha/transparency. The code and artwork generation are
 isolated from customer/event content.
 
-Select `moonlit-amethyst` in `wedding-config.js` (or preview
-`?skin=moonlit-amethyst`), once the generated pack has been verified
-and registered in `skin-packs.js`.
+Select `moonlit-amethyst` in `wedding-config.js` for a customer-specific
+copy, or preview the registered design at `?skin=moonlit-amethyst`.
+Both skin options are available in the merged V4 `main` branch.

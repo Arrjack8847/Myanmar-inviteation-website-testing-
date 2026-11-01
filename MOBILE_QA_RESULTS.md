@@ -33,7 +33,8 @@ After inspecting the screenshot artifacts, `tests/browser-flow.cjs` was updated 
 
 ## Running locally
 ```powershell
-git pull --ff-only origin feat/hires-garden-preview-20261101
+git switch main
+git pull --ff-only origin main
 node tests/smoke.cjs
 node tests/hero-interaction.cjs
 node server.js
@@ -49,4 +50,4 @@ node tests/browser-flow.cjs
 The test also runs automatically on branch pushes from `.github/workflows/mobile-browser-qa.yml`; screenshots are stored as a 7-day GitHub Actions artifact. The preview `flow-review.html` provides interactive measurements without any local package installation.
 
 ## Release limitations
-Actual physical iOS Safari/Android testing, dynamic enlarged Burmese copy, text contrast, independent assistive technology, performance/Lighthouse, and publication of the Section 3 image locally in this repository are NOT yet complete. Keep the draft PR unmerged.
+V4 was merged into `main` as PR #2. The public URL also passed independent Chromium QA in [run 41308183787](https://github.com/Arrjack8847/Myanmar-inviteation-website-testing-/actions/runs/41308183787). Physical iOS Safari/Android checks, enlarged Burmese copy, text contrast, independent assistive-technology review and performance/Lighthouse remain additional verification tasks. These limitations do not undo the tested browser results.
