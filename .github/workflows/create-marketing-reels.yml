@@ -2,7 +2,7 @@ name: Generate invitation reel demos
 on:
   push:
     branches:
-      - feat/hires-garden-preview-20261101
+      - main
     paths:
       - scripts/render-reel.cjs
   workflow_dispatch:
