@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="scene-motion.css" />
   <link rel="stylesheet" href="garden-ambient.css" />
   <link rel="stylesheet" href="skin-themes.css" />
+  <link rel="stylesheet" href="story-art-v5.css" />
 </head>
 <body class="not-opened">
   <div class="demo-bar" aria-label="Prototype notice"><span class="demo-indicator"></span> LOCAL DESIGN DEMO <span class="demo-separator">·</span> SAMPLE DETAILS</div>
@@ -207,16 +208,21 @@
       </section>
 
       <section class="content-section countdown-section story-countdown-section" id="countdown" aria-labelledby="storyTitle">
+        <!-- The artwork's top/bottom caps retain native proportions.
+             The parchment middle expands for real Burmese/English stories. -->
+        <div class="story-illustrated-frame" aria-label="Illustrated love-story garden">
+          <div class="story-illustrated-cap story-illustrated-cap--top" aria-hidden="true"></div>
+          <div class="story-illustrated-body">
         <div class="story-intro">
           <p class="eyebrow">EVERY LOVE HAS A STORY</p>
           <h2 class="section-heading" id="storyTitle">Our <em>love story</em></h2>
           <p class="story-intro-burmese" lang="my">တို့နှစ်ဦး၏ အချစ်ဇာတ်လမ်း</p>
           <img class="story-ornament" src="31_gold_ornamental_divider.png" alt="" loading="lazy" />
-          <p class="story-lede" data-story-intro>The moments that make your story uniquely yours.</p>
         </div>
 
         <div class="story-paper" aria-label="Personalizable love story">
           <div class="story-paper-inner">
+            <p class="story-lede" data-story-intro>The moments that make your story uniquely yours.</p>
             <img class="story-corner story-corner--tl" src="32_gold_corner_ornament.png" alt="" loading="lazy" />
             <img class="story-corner story-corner--tr" src="32_gold_corner_ornament.png" alt="" loading="lazy" />
             <p class="story-caption">A LOVE WORTH CELEBRATING</p>
@@ -252,6 +258,9 @@
             <img class="story-corner story-corner--bl" src="32_gold_corner_ornament.png" alt="" loading="lazy" />
             <img class="story-corner story-corner--br" src="32_gold_corner_ornament.png" alt="" loading="lazy" />
           </div>
+        </div>
+          </div>
+          <div class="story-illustrated-cap story-illustrated-cap--bottom" aria-hidden="true"></div>
         </div>
 
         <div class="countdown-panel" aria-labelledby="countdownTitle">
