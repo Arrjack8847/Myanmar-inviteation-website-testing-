@@ -49,7 +49,10 @@
     <section class="hero" id="home" aria-label="Welcome to the wedding invitation">
       <div class="hero-scene" aria-hidden="true">
         <!-- One cohesive master illustration; do not split the gateway, trees or flowers. -->
-        <img class="hero-master" src="art/golden_autumn_heritage_master_v4.png" alt="" width="853" height="1844" fetchpriority="high" decoding="async" />
+        <picture>
+          <source type="image/webp" srcset="art/golden_autumn_heritage_master_v4.webp" />
+          <img class="hero-master" src="art/golden_autumn_heritage_master_v4.png" alt="" width="853" height="1844" fetchpriority="high" decoding="async" />
+        </picture>
         <!-- Only temporary leaves from the butterfly opening; not scroll/parallax layers. -->
         <div class="leaf-field" id="leafField"></div>
       </div>
@@ -116,7 +119,10 @@
         <!-- One complete illustration, with BOTH carved event frames painted into it.
              The verified original PNG is stored locally in art/ and has matching source hash. -->
         <div class="ceremony-master-scene">
-          <img class="ceremony-master-art" src="art/section3_ceremony_reception_master.png" width="1086" height="1448" loading="lazy" decoding="async" alt="" />
+          <picture>
+            <source type="image/webp" srcset="art/section3_ceremony_reception_master.webp" />
+            <img class="ceremony-master-art" src="art/section3_ceremony_reception_master.png" width="1086" height="1448" loading="lazy" decoding="async" alt="" />
+          </picture>
 
           <div class="celebration-events" aria-label="Wedding ceremony and reception information">
             <article class="celebration-event" data-event="ceremony" aria-labelledby="ceremonyTitle">
