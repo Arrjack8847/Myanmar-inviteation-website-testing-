@@ -142,6 +142,28 @@
 .story-countdown-section .story-disclaimer {
   width:min(calc(100% - 28px),600px);
 }
+/* Extend the SAME approved ceremony garden behind the final venue cards
+ * before meeting the storybook's path. This is artwork overlap, not extra
+ * page height or a duplicate event panel.
+ */
+html[data-skin="golden-autumn"] .details-section .event-reading-section {
+  padding-bottom:clamp(74px,18vw,112px);
+}
+html[data-skin="golden-autumn"] .details-section .event-reading-section::after {
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:clamp(74px,18vw,112px);
+  pointer-events:none;
+  z-index:0;
+  background:url("art/section3_ceremony_reception_master.webp") center bottom / 100% auto no-repeat;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 85%);
+  mask-image:linear-gradient(to bottom,transparent 0,#000 85%);
+}
+html[data-skin="golden-autumn"] .details-section .event-reading-section > * {
+  position:relative;
+  z-index:1;
+}
 /* Moonlit needs its own coordinated painting. Until approved, retain an
  * accessible lavender parchment; never display Golden's autumn roses. */
 html[data-skin="moonlit-amethyst"] .story-illustrated-frame {
