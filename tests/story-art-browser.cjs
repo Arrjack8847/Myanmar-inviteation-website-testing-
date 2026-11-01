@@ -66,7 +66,17 @@ async function run(skin,width){
         countdownValues:[...document.querySelectorAll('.countdown-box strong')].map(el=>el.textContent.trim()),
         bottomPadding:parseFloat(getComputedStyle(document.querySelector('.story-countdown-section')).paddingBottom),
         demoNoteClipped:getComputedStyle(document.querySelector('.story-disclaimer')).clipPath,
-        closingFade:getComputedStyle(document.querySelector('#closing'),'::before').backgroundImage
+        closingFade:getComputedStyle(document.querySelector('#closing'),'::before').backgroundImage,
+        closingHorizon:getComputedStyle(document.querySelector('.closing-garden-horizon')).backgroundImage,
+        closingHorizonRect:document.querySelector('.closing-garden-horizon').getBoundingClientRect().toJSON(),
+        closingFloralLeft:getComputedStyle(document.querySelector('.closing-floral--left')).backgroundImage,
+        closingFloralPointer:getComputedStyle(document.querySelector('.closing-floral--left')).pointerEvents,
+        closingHorizonPointer:getComputedStyle(document.querySelector('.closing-garden-horizon')).pointerEvents,
+        closingHead:document.getElementById('closingTitle').textContent,
+        closingShare:!!document.getElementById('shareButton'),
+        closingScrollLink:document.querySelector('#closing .back-to-top')?.getAttribute('href'),
+        gap56:Math.round(document.getElementById('closing').getBoundingClientRect().top-
+             document.getElementById('countdown').getBoundingClientRect().bottom)
       };
     });
     assert.equal(art.dataCount,3,'All 3 editable story chapters must remain');
@@ -84,6 +94,13 @@ async function run(skin,width){
     assert(art.bottomPadding<=1,'Empty Section 5 footer band must be removed');
     assert(art.demoNoteClipped.includes('50%'),'Demo disclaimer must remain screen-reader accessible without a visual spacer');
     assert(art.closingFade.includes('linear-gradient'),'Closing must soften the garden-to-dusk edge');
+    assert(Math.abs(art.gap56)<=2,'Countdown-to-closing contains empty band: '+art.gap56+'px');
+    assert(art.closingShare&&art.closingScrollLink==='#home','Closing actions should still work');
+    assert(art.closingHead.includes('With all our'),'Closing wedding text lost');
+    assert(art.closingFloralPointer==='none'&&art.closingHorizonPointer==='none','Decorative closing art must never intercept taps');
+    assert(art.closingHorizonRect.width<=width+2,'Closing illustration must not overflow phone width');
+    assert(art.closingHorizon.includes(skin==='moonlit-amethyst'?'moonlit-amethyst/events.webp':'section3_ceremony_reception_master.webp'),
+      'Closing must reuse the correct garden painting for '+skin);
     if(skin==='golden-autumn'){
       assert(art.artSource.includes('4ba5ed04'),'Golden artwork must load');
       assert(art.repeat.includes('round'),'Floral sides must repeat rather than stretch');
@@ -100,6 +117,17 @@ async function run(skin,width){
       });
       await page.locator('.countdown-panel').screenshot({
         path:path.join(dir,'countdown-garden-'+skin+'-390.png'),
+        animations:'disabled',
+        timeout:30000
+      });
+      await page.locator('#closing').screenshot({
+        path:path.join(dir,'closing-garden-'+skin+'-390.png'),
+        animations:'disabled',
+        timeout:30000
+      });
+      await page.evaluate(()=>document.getElementById('closing').scrollIntoView({behavior:'instant',block:'start'}));
+      await page.screenshot({
+        path:path.join(dir,'closing-viewport-'+skin+'-390.png'),
         animations:'disabled',
         timeout:30000
       });
