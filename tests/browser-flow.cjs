@@ -259,6 +259,57 @@ async function testSize(size) {
     assert(longContent.cardOverflow<=2&&longContent.pageOverflow<=2&&longContent.textOverflow<=2,
       'Long customer details overflow the mobile layout: '+JSON.stringify(longContent));
 
+    // Option A: visibility-triggered HTML animation, while full scene art
+    // and touch scrolling remain unmodified and accessible.
+    const invitationIntro=page.locator('#invitation .invitation-section-intro');
+    await invitationIntro.scrollIntoViewIfNeeded();
+    await page.waitForFunction(
+      ()=>document.querySelector('#invitation .invitation-section-intro')?.classList.contains('is-visible'),
+      {timeout:2600}
+    );
+    const motionState=await page.evaluate(()=>({
+      enabled:document.documentElement.classList.contains('motion-enabled'),
+      imageAnimated:getComputedStyle(document.querySelector('.hero-master')).animationName,
+      revealCount:document.querySelectorAll('.motion-reveal').length
+    }));
+    assert(motionState.enabled&&motionState.revealCount>=8,
+      'Motion system should enhance live text only: '+JSON.stringify(motionState));
+    assert(motionState.imageAnimated==='none','The painted garden must never animate');
+
+    const blessingToggle=page.locator('#blessingToggle');
+    await blessingToggle.scrollIntoViewIfNeeded();
+    assert.equal(await blessingToggle.getAttribute('aria-expanded'),'false');
+    assert.equal(await page.locator('#invitationBlessing').isVisible(),false);
+    await blessingToggle.click();
+    assert.equal(await blessingToggle.getAttribute('aria-expanded'),'true','Blessing must open on tap');
+    assert.equal(await page.locator('#invitationBlessing').isVisible(),true,'Blessing wording should appear');
+    await blessingToggle.click();
+    assert.equal(await blessingToggle.getAttribute('aria-expanded'),'false','Blessing must close on second tap');
+    assert.equal(await page.locator('#invitationBlessing').isVisible(),false,'Blessing should collapse cleanly');
+
+    for(const event of ['ceremony','reception']) {
+      const link=page.locator('.event-panel-hotspot--'+event);
+      await link.scrollIntoViewIfNeeded();
+      const touchAction=await link.evaluate(el=>getComputedStyle(el).touchAction);
+      assert(touchAction.includes('pan-y'),'Tapping event artwork must not disable finger scrolling');
+      await link.click();
+      await page.waitForFunction(id=>location.hash==='#'+id,event+'Details',{timeout:2800});
+      await page.waitForTimeout(550);
+      const placement=await page.locator('#'+event+'Details').evaluate(el=>el.getBoundingClientRect().top);
+      assert(placement>-130&&placement<175,
+        'Tapping the painted '+event+' frame should reach readable details: '+placement);
+    }
+    await page.emulateMedia({reducedMotion:'reduce'});
+    await page.waitForFunction(
+      ()=>!document.documentElement.classList.contains('motion-enabled'),
+      {timeout:1800}
+    );
+    const reducedState=await page.evaluate(()=>[...document.querySelectorAll('.motion-reveal')].every(el=>{
+      const style=getComputedStyle(el);
+      return style.opacity==='1'&&style.transform==='none';
+    }));
+    assert(reducedState,'Reduced motion must leave all invitation details visible');
+
     console.log('PASS',size.width+'x'+size.height,JSON.stringify({...metrics,scrollDelta:Math.round(after-before),touchScrollDelta:Math.round(touchAfter-touchBefore)}));
   }finally{await context.close();}
 }
