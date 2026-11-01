@@ -3,6 +3,7 @@ name: Golden Autumn mobile browser QA
 on:
   push:
     branches:
+      - main
       - feat/hires-garden-preview-20261101
   workflow_dispatch:
 
