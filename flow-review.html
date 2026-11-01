@@ -24,6 +24,9 @@
     .measurements{list-style:none;padding:0;margin:0 0 12px}
     .measurements li{font-size:12px;line-height:1.6;padding:8px 0;border-bottom:1px solid #67505b}
     .pass{color:#bde7b1}.fail{color:#ffb1ae}.pending{color:#d7bca3}
+    button[aria-current="location"]{box-shadow:inset 0 0 0 2px #f8dcb0;background:#78525b}
+    .seam-note{padding:10px 12px;background:#46353a;border-left:3px solid #d7b17a;border-radius:6px}
+
     code{color:#ffe8ba;overflow-wrap:anywhere}
     a{color:#ffdfab}
   </style>
@@ -47,6 +50,14 @@
         <button type="button" data-target="invitation">2 — Family</button>
         <button type="button" data-target="details">3 — Events</button>
         <button type="button" id="runChecks">Check layout</button>
+      </div>
+      <h2>Inspect the painted joins</h2>
+      <div class="buttons" role="group" aria-label="Inspect where the artwork sections meet">
+        <button type="button" data-seam="home:invitation">Garden → Family join</button>
+        <button type="button" data-seam="invitation:details">Family → Events join</button>
+      </div>
+      <p class="note seam-note" id="seamNote" aria-live="polite">Select either join to center the original artwork boundary within the phone. The thin CSS fade is not proof of a seamless painting.</p>
+      <div class="buttons">
       </div>
       <h2>Rendered-page checks</h2>
       <ul class="measurements" id="results" aria-live="polite">
@@ -105,6 +116,28 @@
       const target=frame.contentDocument.getElementById(button.dataset.target);
       target?.scrollIntoView({behavior:'smooth',block:'start'});
       setTimeout(check,450);
+    }));
+    const seamNote=document.getElementById('seamNote');
+    document.querySelectorAll('[data-seam]').forEach(button=>button.addEventListener('click',()=>{
+      try{
+        const win=frame.contentWindow;
+        const [beforeId,afterId]=button.dataset.seam.split(':');
+        const before=win.document.getElementById(beforeId);
+        const after=win.document.getElementById(afterId);
+        if(!before||!after)throw Error('Artwork section missing');
+        // Center the REAL painted section boundary; do not alter scroll
+        // snapping, image positions, the approved pixels or wedding details.
+        const midpoint=(before.getBoundingClientRect().bottom+
+                        after.getBoundingClientRect().top)/2+win.scrollY;
+        const y=Math.max(0,midpoint-win.innerHeight*.48);
+        win.scrollTo({top:y,behavior:'instant'});
+        document.querySelectorAll('[data-seam]').forEach(b=>
+          b.setAttribute('aria-current',b===button?'location':'false'));
+        seamNote.textContent=beforeId==='home'
+          ? 'Inspect the gateway pathway meeting the ornate family invitation. The 18px overlap removes a layout gap but the two painted sources are not yet pixel-matched.'
+          : 'Inspect the family invitation footer meeting the gold-framed event master. The 22px overlap softens the change, but the painted scenery is not a continuous source.';
+        check();
+      }catch(error){seamNote.textContent='Cannot inspect join: '+String(error.message);}
     }));
     document.getElementById('runChecks').addEventListener('click',check);
   </script>
