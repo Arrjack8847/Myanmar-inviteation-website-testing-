@@ -63,6 +63,7 @@ function measure() {
     paperClientHeight:paper.clientHeight,
     art1Loaded:allImgs[0].complete && allImgs[0].naturalWidth>0,
     art3Loaded:allImgs[1].complete && allImgs[1].naturalWidth>0,
+    art3Local:scene.getAttribute('src')==='art/section3_ceremony_reception_master.png',
     art2Set:section2Style.borderImageSource.includes('section2_family_invitation_master.png'),
     art1Fit:getComputedStyle(master).objectFit,
     bodyScroll:getComputedStyle(document.body).overflowY
@@ -112,10 +113,28 @@ async function testSize(size) {
     assert(metrics.art1Loaded,'Approved gateway master failed to load');
     assert(metrics.art2Set,'Section 2 illustration was not applied');
     assert(metrics.art3Loaded,'Section 3 original illustration failed to load');
+    assert(metrics.art3Local,'Section 3 must use its local verified source, not another repository');
     assert(metrics.art1Fit==='cover','Hero must fill the phone without wide side gutters');
     assert.deepEqual(errors,[],'Uncaught JS errors: '+errors.join('; '));
 
     await page.screenshot({path:path.join(output,`gateway-${size.width}x${size.height}.png`)});
+    // Visual sign-off artifacts: center the viewport on each IMAGE JOIN,
+    // not only on the beginning of a section. This lets reviewers evaluate
+    // whether the independently painted flowers/pathway feel continuous.
+    for(const [name,from,to] of [
+      ['garden-family','home','invitation'],
+      ['family-events','invitation','details']
+    ]){
+      const seamY=await page.evaluate(({from,to})=>{
+        const a=document.getElementById(from),b=document.getElementById(to);
+        return (a.getBoundingClientRect().bottom+b.getBoundingClientRect().top)/2+scrollY;
+      },{from,to});
+      await page.evaluate(y=>window.scrollTo({top:Math.max(0,y-innerHeight*.47),behavior:'instant'}),seamY);
+      await page.waitForTimeout(260);
+      await page.screenshot({path:path.join(output,`seam-${name}-${size.width}x${size.height}.png`)});
+    }
+    await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+
     // A swipe over the invitation must advance the document itself.
     // Place the pointer on the invitation, then wheel. This specifically
     // catches nested scrolling panes that consume swipes instead of moving
