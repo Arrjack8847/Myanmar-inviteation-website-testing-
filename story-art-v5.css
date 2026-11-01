@@ -156,9 +156,13 @@ html[data-skin="golden-autumn"] .details-section .event-reading-section::after {
   height:clamp(74px,18vw,112px);
   pointer-events:none;
   z-index:0;
-  background:url("art/section3_ceremony_reception_master.webp") center bottom / 100% auto no-repeat;
-  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 85%);
-  mask-image:linear-gradient(to bottom,transparent 0,#000 85%);
+  background:
+    linear-gradient(to bottom,#f5e2c8 0%,rgba(245,226,200,0) 96%),
+    url("art/section3_ceremony_reception_master.webp") center bottom / 100% auto no-repeat;
+  /* Bridge only the flowers at the left and right. The central cobblestone
+     should not be repeated twice before the next illustrated chapter. */
+  -webkit-mask-image:linear-gradient(to right,#000 0%,#000 15%,transparent 35%,transparent 65%,#000 85%,#000 100%);
+  mask-image:linear-gradient(to right,#000 0%,#000 15%,transparent 35%,transparent 65%,#000 85%,#000 100%);
 }
 html[data-skin="golden-autumn"] .details-section .event-reading-section > * {
   position:relative;
