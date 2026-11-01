@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Golden Autumn Heritage — Continuous Scroll QA</title>
+  <style>
+    :root{color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+    *{box-sizing:border-box}
+    body{margin:0;background:#231e25;color:#faead9}
+    header{padding:25px 18px 15px;text-align:center}
+    h1{font:normal clamp(23px,4vw,32px)/1.2 Georgia,serif;margin:0 0 8px}
+    header p{color:#d9c9bf;line-height:1.6;margin:0}
+    .workspace{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:22px;padding:10px 16px 36px}
+    .controls{background:#352d35;border:1px solid #6a5052;border-radius:15px;padding:15px;flex:0 1 370px;min-width:min(100%,280px)}
+    h2{font-size:15px;margin:0 0 12px}
+    .note{color:#d9c9bf;font-size:12px;line-height:1.6}
+    .buttons{display:flex;gap:7px;flex-wrap:wrap;margin:9px 0 15px}
+    button{background:#61434d;color:#fff0de;border:1px solid #a17d6c;padding:10px 12px;border-radius:9px;font:600 12px system-ui;cursor:pointer}
+    button:hover,button[aria-pressed=true]{background:#cba879;color:#281f29}
+    button:focus-visible{outline:3px solid #fff4bf;outline-offset:3px}
+    .device-wrap{max-width:100%;overflow:auto;padding:5px 4px 20px}
+    iframe{display:block;width:390px;height:844px;max-width:none;border:3px solid #e5bc83;border-radius:24px;background:#e6b69b;box-shadow:0 24px 64px #0009}
+    .measurements{list-style:none;padding:0;margin:0 0 12px}
+    .measurements li{font-size:12px;line-height:1.6;padding:8px 0;border-bottom:1px solid #67505b}
+    .pass{color:#bde7b1}.fail{color:#ffb1ae}.pending{color:#d7bca3}
+    button[aria-current="location"]{box-shadow:inset 0 0 0 2px #f8dcb0;background:#78525b}
+    .seam-note{padding:10px 12px;background:#46353a;border-left:3px solid #d7b17a;border-radius:6px}
+
+    code{color:#ffe8ba;overflow-wrap:anywhere}
+    a{color:#ffdfab}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Continuous Garden — Mobile Flow QA</h1>
+    <p>Test the actual local invitation in a phone-size window. No simulated artwork or rebuilt page.</p>
+  </header>
+  <div class="workspace">
+    <aside class="controls" aria-label="Mobile review controls">
+      <h2>Phone viewport</h2>
+      <div class="buttons" role="group" aria-label="Select phone dimensions">
+        <button type="button" data-width="320" data-height="568" aria-pressed="false">320 × 568</button>
+        <button type="button" data-width="390" data-height="844" aria-pressed="true">390 × 844</button>
+        <button type="button" data-width="430" data-height="932" aria-pressed="false">430 × 932</button>
+      </div>
+      <h2>Jump to a section</h2>
+      <div class="buttons" role="group" aria-label="Jump inside the phone preview">
+        <button type="button" data-target="home">1 — Garden</button>
+        <button type="button" data-target="invitation">2 — Family</button>
+        <button type="button" data-target="details">3 — Events</button>
+        <button type="button" id="runChecks">Check layout</button>
+      </div>
+      <h2>Inspect the painted joins</h2>
+      <div class="buttons" role="group" aria-label="Inspect where the artwork sections meet">
+        <button type="button" data-seam="home:invitation">Garden → Family join</button>
+        <button type="button" data-seam="invitation:details">Family → Events join</button>
+      </div>
+      <p class="note seam-note" id="seamNote" aria-live="polite">Select either join to center the original artwork boundary within the phone. The thin CSS fade is not proof of a seamless painting.</p>
+      <div class="buttons">
+      </div>
+      <h2>Rendered-page checks</h2>
+      <ul class="measurements" id="results" aria-live="polite">
+        <li class="pending">Loading the website…</li>
+      </ul>
+      <p class="note">A green result means the checked geometry is within limits; it does not prove the painted edges are visually identical. Scroll naturally in the phone at the right to inspect artwork seams and readable text.</p>
+      <p class="note"><a href="./index.html?heroPreview=1#home">Open the full invitation</a></p>
+    </aside>
+    <div class="device-wrap">
+      <iframe title="Golden Autumn Heritage mobile scroll preview" id="phone"
+        src="./index.html?heroPreview=1#home" loading="eager"></iframe>
+    </div>
+  </div>
+  <script>
+    'use strict';
+    const frame=document.getElementById('phone');
+    const results=document.getElementById('results');
+    const sizeButtons=[...document.querySelectorAll('[data-width]')];
+    const label=(good,words,measure)=>'<li class="'+(good?'pass':'fail')+'">'+(good?'✓ ':'✕ ')+words+': '+measure+'</li>';
+    function check(){
+      try{
+        const win=frame.contentWindow,doc=win.document;
+        if(!doc.querySelector('.hero-master'))throw new Error('Waiting for the website');
+        const home=doc.getElementById('home'),invitation=doc.getElementById('invitation'),details=doc.getElementById('details');
+        if(!home||!invitation||!details)throw new Error('One or more sections are missing');
+        const pageY=node=>node.getBoundingClientRect().top+win.scrollY;
+        const pageBottom=node=>node.getBoundingClientRect().bottom+win.scrollY;
+        const gap12=Math.round(pageY(invitation)-pageBottom(home));
+        const gap23=Math.round(pageY(details)-pageBottom(invitation));
+        const docWidth=Math.max(doc.documentElement.scrollWidth,doc.body.scrollWidth);
+        const horizontalOverflow=Math.max(0,docWidth-win.innerWidth);
+        const totalHeight=doc.documentElement.scrollHeight;
+        const style=win.getComputedStyle(invitation);
+        const nested=win.getComputedStyle(doc.querySelector('.heritage-invitation-inner')).overflowY;
+        const naturalHeight=style.height==='auto'||Math.abs(invitation.scrollHeight-invitation.getBoundingClientRect().height)<2;
+        const checks=[
+          label(Math.abs(gap12)<=42,'Garden → family join',gap12+' px'),
+          label(Math.abs(gap23)<=42,'Family → events join',gap23+' px'),
+          label(horizontalOverflow<=2,'Horizontal overflow',horizontalOverflow+' px'),
+          label(totalHeight>win.innerHeight,'Vertical page scrolling',totalHeight+' px'),
+          label(nested!=='auto'&&nested!=='scroll','No nested invitation scroll','overflow-y: '+nested),
+          label(naturalHeight,'Family section uses its content height',Math.round(invitation.getBoundingClientRect().height)+' px')
+        ];
+        results.innerHTML=checks.join('');
+      }catch(error){results.innerHTML='<li class="pending">'+String(error.message).replace(/[<>&]/g,'')+'</li>';}
+    }
+    function afterLayout(){frame.contentWindow.requestAnimationFrame(()=>frame.contentWindow.requestAnimationFrame(check));}
+    frame.addEventListener('load',()=>{afterLayout();frame.contentWindow.addEventListener('resize',afterLayout);});
+    sizeButtons.forEach(button=>button.addEventListener('click',()=>{
+      frame.style.width=button.dataset.width+'px';
+      frame.style.height=button.dataset.height+'px';
+      sizeButtons.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+      setTimeout(check,150);
+    }));
+    document.querySelectorAll('[data-target]').forEach(button=>button.addEventListener('click',()=>{
+      const target=frame.contentDocument.getElementById(button.dataset.target);
+      target?.scrollIntoView({behavior:'smooth',block:'start'});
+      setTimeout(check,450);
+    }));
+    const seamNote=document.getElementById('seamNote');
+    document.querySelectorAll('[data-seam]').forEach(button=>button.addEventListener('click',()=>{
+      try{
+        const win=frame.contentWindow;
+        const [beforeId,afterId]=button.dataset.seam.split(':');
+        const before=win.document.getElementById(beforeId);
+        const after=win.document.getElementById(afterId);
+        if(!before||!after)throw Error('Artwork section missing');
+        // Center the REAL painted section boundary; do not alter scroll
+        // snapping, image positions, the approved pixels or wedding details.
+        const midpoint=(before.getBoundingClientRect().bottom+
+                        after.getBoundingClientRect().top)/2+win.scrollY;
+        const y=Math.max(0,midpoint-win.innerHeight*.48);
+        win.scrollTo({top:y,behavior:'instant'});
+        document.querySelectorAll('[data-seam]').forEach(b=>
+          b.setAttribute('aria-current',b===button?'location':'false'));
+        seamNote.textContent=beforeId==='home'
+          ? 'Inspect the gateway pathway meeting the ornate family invitation. The 18px overlap removes a layout gap but the two painted sources are not yet pixel-matched.'
+          : 'Inspect the family invitation footer meeting the gold-framed event master. The 22px overlap softens the change, but the painted scenery is not a continuous source.';
+        check();
+      }catch(error){seamNote.textContent='Cannot inspect join: '+String(error.message);}
+    }));
+    document.getElementById('runChecks').addEventListener('click',check);
+  </script>
+</body>
+</html>

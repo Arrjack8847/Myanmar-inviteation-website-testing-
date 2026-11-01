@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Golden Autumn Heritage — Single-Image Hero Review</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;color:#f6e8d2;background:radial-gradient(ellipse at top,#59434b,#211e25 60%);min-height:100vh}
+header{text-align:center;padding:28px 16px 12px}
+.eyebrow{font-size:10px;letter-spacing:.22em;color:#dcb990}
+h1{font:normal clamp(23px,5vw,32px)/1.25 Georgia,serif;margin:10px auto}
+header p{max-width:560px;line-height:1.6;margin:8px auto;color:#dbc6b5;font-size:13px}
+main{display:flex;flex-direction:column;align-items:center;padding:12px 12px 40px;gap:16px}
+.preview{width:390px;height:844px;max-width:calc(100vw - 32px);position:relative;background:#dbab96;border:3px solid #c7a273;border-radius:24px;overflow:hidden;box-shadow:0 25px 65px #0009}
+.preview iframe{display:block;width:100%;height:100%;border:0;background:#dbab96}
+.controls{width:min(520px,100%);background:#372e36;border:1px solid #775d55;padding:14px;border-radius:12px;display:flex;flex-wrap:wrap;gap:9px;align-items:center;justify-content:center}
+.controls span{flex:1 0 100%;text-align:center;color:#e9d3ba;font-size:12px}
+button{border:1px solid #a98b66;border-radius:9px;background:#513b42;color:#ffeacf;padding:10px 15px;cursor:pointer}
+button[aria-pressed="true"]{background:#d8b384;color:#29202a}
+button:focus-visible,input:focus-visible{outline:2px solid #fff2c2;outline-offset:3px}
+.name-controls{gap:9px 12px;text-align:left}
+.name-controls label{font-size:12px;color:#ecd1b3;min-width:84px}
+.name-controls input{flex:1 1 calc(100% - 108px);min-width:0;min-height:39px;padding:8px 10px;border:1px solid #ab8c70;border-radius:8px;background:#fff4e5;color:#4b303a;font:15px system-ui,sans-serif}
+.name-controls button{flex:1 1 145px}
+
+.note{max-width:530px;font-size:12px;color:#d6c3b1;line-height:1.65;margin:0}
+a{color:#fbd19a}
+</style>
+</head>
+<body>
+<header>
+<div class="eyebrow">GOLDEN AUTUMN HERITAGE · V4</div>
+<h1>Unified Garden — Mobile Review</h1>
+<p>One complete illustration, with optional live wedding names on top.
+No separate moving scenery and no scroll-driven animation.</p>
+</header>
+<main>
+<div class="controls" role="group" aria-label="Screen size">
+ <span>Choose real phone viewport</span>
+ <button type="button" data-width="320" data-height="568" aria-pressed="false">320 × 568</button>
+ <button type="button" data-width="390" data-height="844" aria-pressed="true">390 × 844</button>
+ <button type="button" data-width="430" data-height="932" aria-pressed="false">430 × 932</button>
+</div>
+<div class="controls name-controls" aria-label="Editable sample couple names">
+ <span>Preview real guest names in the painted gateway</span>
+ <label for="previewFirstName">First name</label>
+ <input id="previewFirstName" type="text" maxlength="40" value="Thiri" autocomplete="off" />
+ <label for="previewSecondName">Second name</label>
+ <input id="previewSecondName" type="text" maxlength="40" value="Min" autocomplete="off" />
+ <button type="button" id="longNames">Try longer names</button>
+ <button type="button" id="resetNames">Restore sample</button>
+</div>
+<div class="preview" id="preview">
+ <iframe id="heroFrame" src="./index.html?heroPreview=1#home" title="Full unified hero with the wedding names" loading="eager"></iframe>
+</div>
+<div class="controls" role="group" aria-label="Artwork and text display">
+ <span>Inspect the artwork alone or with the wedding details</span>
+ <button type="button" id="withText" aria-pressed="true">With wedding text</button>
+ <button type="button" id="artOnly" aria-pressed="false">Artwork only</button>
+</div>
+<p class="note">The first scene now fills each phone viewport edge-to-edge. To preserve the original illustration proportions, some top and bottom scenery may crop on shorter screens; check the gateway crest, both pillars, bottom flowers, and editable name placement at every size. Check the gateway crest, pillars, foreground and live text at every width. <a href="./index.html">Open the full invitation</a>.</p>
+</main>
+<script>
+'use strict';
+const panel=document.getElementById('preview');
+const frame=document.getElementById('heroFrame');
+const widths=[...document.querySelectorAll('[data-width]')];
+const firstInput=document.getElementById('previewFirstName');
+const secondInput=document.getElementById('previewSecondName');
+function applyNames(){
+ // The iframe is same-origin; alter only its live text nodes for preview.
+ // The illustrated artwork and the wedding configuration remain untouched.
+ const doc=frame.contentDocument;
+ if(!doc)return;
+ for(const [kind,value] of [['first',firstInput.value.trim()||'Thiri'],['second',secondInput.value.trim()||'Min']]){
+   doc.querySelectorAll('[data-name="'+kind+'"]').forEach(node=>{node.textContent=value;});
+ }
+}
+frame.addEventListener('load',applyNames);
+firstInput.addEventListener('input',applyNames);
+secondInput.addEventListener('input',applyNames);
+document.getElementById('longNames').addEventListener('click',()=>{
+ firstInput.value='Mya Thazin Aung';
+ secondInput.value='Min Khant Kyaw';
+ applyNames();
+});
+document.getElementById('resetNames').addEventListener('click',()=>{
+ firstInput.value='Thiri';
+ secondInput.value='Min';
+ applyNames();
+});
+const withText=document.getElementById('withText');
+const artOnly=document.getElementById('artOnly');
+widths.forEach(button=>button.addEventListener('click',()=>{
+ const w=Number(button.dataset.width);
+ panel.style.width=Math.min(w,window.innerWidth-32)+'px';
+ panel.style.height=button.dataset.height+'px';
+ widths.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+}));
+function setArtworkOnly(isArtOnly){
+ frame.src=isArtOnly?'./index.html?artReview=1#home':'./index.html?heroPreview=1#home';
+ artOnly.setAttribute('aria-pressed',String(isArtOnly));
+ withText.setAttribute('aria-pressed',String(!isArtOnly));
+}
+withText.addEventListener('click',()=>setArtworkOnly(false));
+artOnly.addEventListener('click',()=>setArtworkOnly(true));
+</script>
+</body>
+</html>

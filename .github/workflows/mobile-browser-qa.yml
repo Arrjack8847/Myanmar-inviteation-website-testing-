@@ -1,0 +1,50 @@
+name: Golden Autumn mobile browser QA
+
+on:
+  push:
+    branches:
+      - main
+      - feat/hires-garden-preview-20261101
+  workflow_dispatch:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout invitation
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Repository source and artwork checks
+        run: node tests/smoke.cjs
+
+      - name: Validate interchangeable artwork skins
+        run: node tests/skin-system.cjs
+
+      - name: Keyboard and opening interaction checks
+        run: node tests/hero-interaction.cjs
+
+      - name: Install browser test runner
+        run: npm install --no-save --no-package-lock playwright@1.56.0
+
+      - name: Install Chromium and dependencies
+        run: npx playwright install --with-deps chromium
+
+      - name: Run real-browser mobile flow checks
+        run: node tests/browser-flow.cjs
+
+      - name: Save screenshots (even after a failure)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-autumn-mobile-screenshots
+          path: qa-screenshots/
+          if-no-files-found: ignore
+          retention-days: 7

@@ -1,0 +1,46 @@
+/* Skin-specific color accents; primary original paintings never move.
+ * The live HTML overlays remain readable across light/day and cool/night art.
+ */
+html[data-skin="moonlit-amethyst"] {color-scheme:light;}
+html[data-skin="moonlit-amethyst"] .hero {
+  background:linear-gradient(#4d456b,#272743);
+}
+html[data-skin="moonlit-amethyst"] .hero .hero-words {
+  background:radial-gradient(ellipse at center,#f5eef0de 0%,#f1e5f0ae 45%,transparent 85%);
+  color:#42344f;text-shadow:0 1px 8px #fff2f6d9;
+}
+html[data-skin="moonlit-amethyst"] .hero .hero-words h2,
+html[data-skin="moonlit-amethyst"] .hero .hero-date,
+html[data-skin="moonlit-amethyst"] .hero .hero-smalltitle,
+html[data-skin="moonlit-amethyst"] .hero .hero-eyebrow,
+html[data-skin="moonlit-amethyst"] .hero .hero-subtitle{color:#45364e;}
+html[data-skin="moonlit-amethyst"] .hero .hero-topline {
+  background:#e8e3f1a8;border-color:#c9c0dc77;color:#413651;
+}
+html[data-skin="moonlit-amethyst"] .garden-flow {
+  background:linear-gradient(180deg,#675c82,#bdb3ce 18%,#dcd0d8 67%,#9082a8);
+}
+html[data-skin="moonlit-amethyst"] .details-section,
+html[data-skin="moonlit-amethyst"] .invitation-section{
+  background:transparent;
+}
+html[data-skin="moonlit-amethyst"] .event-reading-section {
+  background:linear-gradient(180deg,#e8dceb,#f9f4f8 55%,#e4dcea);
+}
+html[data-skin="moonlit-amethyst"] .event-reading-card {
+  background:linear-gradient(145deg,#fffafa,#eee8f5);
+  border-color:#9b89b9;
+}
+html[data-skin="moonlit-amethyst"] .cover {
+  background:radial-gradient(ellipse at center,#64577c,#28223c);
+}
+html[data-skin="moonlit-amethyst"] .scroll-cue {
+  background:rgba(38,34,65,.86);border-color:#dad0f2;
+}
+html[data-skin="moonlit-amethyst"] .hero-butterfly-hint{
+  background:rgba(238,228,249,.95);color:#40324f;
+}
+@media(prefers-reduced-motion:reduce){
+  html[data-skin="moonlit-amethyst"] .garden-ambient-leaf,
+  html[data-skin="moonlit-amethyst"] .garden-ambient-flower{animation:none!important;}
+}

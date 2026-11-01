@@ -8,11 +8,21 @@
   <title>Golden Autumn Heritage — Interactive Invitation Preview</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="artwork.css" />
+  <link rel="stylesheet" href="invitation.css" />
+  <link rel="stylesheet" href="events.css" />
+  <link rel="stylesheet" href="events-art.css" />
+  <link rel="stylesheet" href="story.css" />
+  <link rel="stylesheet" href="hero-quality.css" />
+  <link rel="stylesheet" href="flow-quality.css" />
+  <link rel="stylesheet" href="event-reading.css" />
+  <link rel="stylesheet" href="scene-motion.css" />
+  <link rel="stylesheet" href="garden-ambient.css" />
+  <link rel="stylesheet" href="skin-themes.css" />
 </head>
 <body class="not-opened">
   <div class="demo-bar" aria-label="Prototype notice"><span class="demo-indicator"></span> LOCAL DESIGN DEMO <span class="demo-separator">·</span> SAMPLE DETAILS</div>
 
-  <div class="cover" id="openingCover" role="dialog" aria-modal="true" aria-label="Open the wedding invitation">
+  <div class="cover" id="openingCover" role="dialog" aria-modal="true" aria-labelledby="openingTitle">
     <div class="cover-aura" aria-hidden="true"></div>
     <div class="cover-leaves" aria-hidden="true">
       <img src="23_leaf_golden_teak.png" class="cover-leaf c1" alt="" />
@@ -21,55 +31,53 @@
       <img src="26_leaf_golden_bodhi.png" class="cover-leaf c4" alt="" />
       <img src="27_leaf_orange_bodhi.png" class="cover-leaf c5" alt="" />
     </div>
-    <div class="cover-topline"><span class="star">✧</span> GOLDEN AUTUMN HERITAGE <span class="star">✧</span></div>
-    <div class="envelope" aria-hidden="true">
-      <div class="envelope-top"></div><div class="envelope-bottom"></div>
+    <div class="cover-topline"><span class="star">✧</span> <span class="skin-name">GOLDEN AUTUMN HERITAGE</span> <span class="star">✧</span></div>
+    <button class="envelope" type="button" aria-label="Tap the butterfly to open the invitation">
+      <span class="envelope-top"></span><span class="envelope-bottom"></span>
       <img class="opening-card-art" src="29_opening_invitation_card.png" alt="" />
-      <div class="envelope-trim"></div>
-      <div class="wax-seal"><img class="wax-seal-art" src="30_wax_seal.png" alt="" /></div>
-      <div class="butterfly butterfly--cover" id="butterfly" aria-hidden="true">
+      <span class="envelope-trim"></span>
+      <span class="wax-seal"><img class="wax-seal-art" src="30_wax_seal.png" alt="" /></span>
+      <span class="butterfly butterfly--cover" id="butterfly" aria-hidden="true">
         <img class="wing wing--left" src="21_butterfly_left_wing.png" alt="" />
         <img class="wing wing--right" src="22_butterfly_right_wing.png" alt="" />
         <img class="butterfly-body" src="20_butterfly_body.png" alt="" />
-      </div>
-    </div>
-    <div class="cover-copy"><span class="overline">A STORY WRITTEN IN GOLDEN LIGHT</span><h1>An invitation<br /><em>to remember</em></h1><p>A little moment of magic awaits.</p></div>
+      </span>
+    </button>
+    <div class="cover-copy"><span class="overline">A STORY WRITTEN IN GOLDEN LIGHT</span><h1 id="openingTitle">An invitation<br /><em>to remember</em></h1><p>A little moment of magic awaits.</p></div>
     <button id="openInvitation" class="open-button" type="button"><span class="open-button-icon">✦</span> OPEN INVITATION <span aria-hidden="true">↗</span></button>
     <p class="cover-hint">Touch the butterfly or open the invitation</p>
     <button class="skip-button" id="skipOpening" type="button">Skip opening</button>
   </div>
 
-  <main id="mainContent">
+  <main id="mainContent" inert>
     <section class="hero" id="home" aria-label="Welcome to the wedding invitation">
       <div class="hero-scene" aria-hidden="true">
-        <img class="scene-art scene-sky" src="01_sunset_sky.png" alt="" decoding="async" />
-        <img class="scene-art scene-distant" src="02_distant_tree_line.png" alt="" decoding="async" />
-        <img class="scene-art scene-trees" src="03_framing_autumn_trees.png" alt="" decoding="async" />
-        <img class="scene-art scene-landscape" src="09_garden_landscape.png" alt="" decoding="async" />
-        <img class="scene-art scene-path" src="10_ceremonial_pathway.png" alt="" decoding="async" />
-        <img class="scene-art scene-foundation scene-gateway" src="07_gateway_foundation.png" alt="" decoding="async" />
-        <img class="scene-art scene-pillar-left scene-gateway" src="04_gateway_left_pillar.png" alt="" decoding="async" />
-        <img class="scene-art scene-pillar-right scene-gateway" src="05_gateway_right_pillar.png" alt="" decoding="async" />
-        <img class="scene-art scene-arch scene-gateway" src="06_gateway_upper_arch.png" alt="" decoding="async" />
-        <img class="scene-art scene-crest scene-gateway" src="08_gateway_carved_crest.png" alt="" decoding="async" />
-        <img class="scene-art scene-bushes" src="11_foreground_bushes.png" alt="" decoding="async" />
-        <img class="scene-art scene-upper-flower scene-flower-left" src="12_flower_cluster_upper_left.png" alt="" decoding="async" />
-        <img class="scene-art scene-upper-flower scene-flower-right" src="13_flower_cluster_upper_right.png" alt="" decoding="async" />
-        <img class="scene-art scene-vine scene-vine-left" src="14_left_climbing_vine.png" alt="" decoding="async" />
-        <img class="scene-art scene-vine scene-vine-right" src="15_right_climbing_vine.png" alt="" decoding="async" />
-        <img class="scene-art scene-bouquet scene-bouquet-left" src="16_bouquet_bottom_left.png" alt="" decoding="async" />
-        <img class="scene-art scene-bouquet scene-bouquet-right" src="17_bouquet_bottom_right.png" alt="" decoding="async" />
-        <img class="scene-art scene-hanging-sprig" src="18_hanging_flower_sprig.png" alt="" decoding="async" />
-        <img class="scene-art scene-front-flowers" src="19_foreground_flower_overlay.png" alt="" decoding="async" />
-        <div class="sunbeam"></div>
+        <!-- One cohesive master illustration; do not split the gateway, trees or flowers. -->
+        <picture>
+          <source type="image/webp" srcset="art/golden_autumn_heritage_master_v4.webp" />
+          <img class="hero-master" src="art/golden_autumn_heritage_master_v4.png" alt="" width="853" height="1844" fetchpriority="high" decoding="async" />
+        </picture>
+        <!-- Only temporary leaves from the butterfly opening; not scroll/parallax layers. -->
         <div class="leaf-field" id="leafField"></div>
-        <div class="scene-vignette"></div>
+        <div class="garden-ambient" id="gardenAmbient" aria-hidden="true"></div>
       </div>
-      <div class="hero-topline"><span>❦</span> GOLDEN AUTUMN HERITAGE <span>❦</span></div>
+      <div class="hero-topline"><span>❦</span> <span class="skin-name">GOLDEN AUTUMN HERITAGE</span> <span>❦</span></div>
+      <!-- Optional replayable magic: independent transparent butterfly, never
+           animated scenery. Native button stays keyboard and touch accessible. -->
+      <button class="hero-butterfly-button" id="heroButterfly" type="button"
+              aria-label="Watch the butterfly take a short flight">
+        <span class="hero-butterfly" aria-hidden="true">
+          <img class="hero-butterfly-wing hero-butterfly-wing--left" src="21_butterfly_left_wing.png" alt="" width="39" height="58" loading="lazy" decoding="async" />
+          <img class="hero-butterfly-wing hero-butterfly-wing--right" src="22_butterfly_right_wing.png" alt="" width="39" height="58" loading="lazy" decoding="async" />
+          <img class="hero-butterfly-body" src="20_butterfly_body.png" alt="" width="26" height="63" loading="lazy" decoding="async" />
+        </span>
+        <span class="hero-butterfly-hint" aria-hidden="true">TAP FOR MAGIC</span>
+      </button>
+
       <div class="hero-words" id="heroWords">
         <p class="hero-eyebrow">TOGETHER WITH THEIR FAMILIES</p>
         <p class="hero-smalltitle">THE WEDDING OF</p>
-        <h2><span data-name="first">Thiri</span><span class="ampersand">&</span><span data-name="second">Min</span></h2>
+        <h2 tabindex="-1" id="heroTitle"><span data-name="first">Thiri</span><span class="ampersand">&</span><span data-name="second">Min</span></h2>
         <img src="31_gold_ornamental_divider.png" class="divider-art" alt="" />
         <p class="hero-date" data-date-text>20 JUNE 2027</p>
         <p class="hero-subtitle">A celebration of love, family & forever</p>
@@ -79,49 +87,187 @@
 
     <div class="garden-flow">
       <section class="content-section invitation-section" id="invitation" aria-labelledby="invitationTitle">
-        <div class="section-ornament">✦ &nbsp; ❦ &nbsp; ✦</div>
-        <p class="eyebrow">WITH LOVE & BLESSINGS</p>
-        <h2 class="section-heading" id="invitationTitle">A joyful <em>invitation</em></h2>
-        <img class="divider-art" src="31_gold_ornamental_divider.png" alt="" />
-        <div class="paper-message">
-          <img class="paper-corner paper-corner--tl" src="32_gold_corner_ornament.png" alt="" /><img class="paper-corner paper-corner--tr" src="32_gold_corner_ornament.png" alt="" />
-          <p>With the blessings of our beloved families, we warmly invite you to join us as we begin our journey together.</p>
-          <p class="burmese" lang="my">ကျွန်ုပ်တို့၏ မင်္ဂလာအခမ်းအနားသို့ ကြွရောက်ချီးမြှင့်ပေးပါရန် လေးစားစွာ ဖိတ်ကြားအပ်ပါသည်။</p>
-          <p>Your presence will make our celebration truly special.</p>
-          <img class="paper-corner paper-corner--bl" src="32_gold_corner_ornament.png" alt="" /><img class="paper-corner paper-corner--br" src="32_gold_corner_ornament.png" alt="" />
-        </div>
-        <p class="fine-print">Sample invitation wording — customizable for each couple.</p>
+        <!-- One approved illustrated invitation master; the artwork is applied in CSS
+             as a scalable nine-slice of the SAME image to protect ornate corners
+             while allowing variable-length Burmese and English text. -->
+        <article class="heritage-invitation" aria-label="Family wedding invitation">
+          <div class="heritage-invitation-inner">
+            <header class="invitation-section-intro">
+              <p class="heritage-burmese-title" lang="my">မင်္ဂလာဖိတ်စာ</p>
+              <p class="heritage-english-title">A WEDDING INVITATION</p>
+              <h2 class="section-heading" id="invitationTitle">With love, <em>together</em></h2>
+            </header>
+
+            <p class="heritage-invitation-intro burmese" lang="my">
+              မိသားစုနှစ်ဖက်၏ မေတ္တာနှင့် ကောင်းချီးမင်္ဂလာများဖြင့်
+            </p>
+
+            <div class="heritage-families" aria-label="The two families">
+              <div class="heritage-family">
+                <p class="heritage-family-label">FAMILY OF</p>
+                <strong class="heritage-family-person" data-name="first">Thiri</strong>
+                <span class="heritage-family-parents" data-family="first">Parents' names to be added</span>
+              </div>
+              <span class="heritage-family-join" aria-hidden="true">&amp;</span>
+              <div class="heritage-family">
+                <p class="heritage-family-label">FAMILY OF</p>
+                <strong class="heritage-family-person" data-name="second">Min</strong>
+                <span class="heritage-family-parents" data-family="second">Parents' names to be added</span>
+              </div>
+            </div>
+
+            <p class="heritage-invitation-main burmese" lang="my">
+              ကျွန်ုပ်တို့၏ မင်္ဂလာအခမ်းအနားသို့ လူကြီးမင်းတို့အား
+              ကြွရောက်ချီးမြှင့်ပေးပါရန် လေးစားစွာ ဖိတ်ကြားအပ်ပါသည်။
+            </p>
+            <p class="heritage-invitation-translation">
+              With the love and blessings of our families, we warmly invite you
+              to honor us with your presence on our special day.
+            </p>
+            <p class="heritage-date" data-date-text>20 JUNE 2027</p>
+            <p class="heritage-footer-note">YOUR PRESENCE IS OUR GREATEST JOY</p>
+            <button class="heritage-blessing-button" id="blessingToggle" type="button"
+                    aria-expanded="false" aria-controls="invitationBlessing">
+              <span aria-hidden="true">✦</span> <span class="heritage-blessing-label">Reveal a blessing</span>
+            </button>
+            <div class="heritage-blessing" id="invitationBlessing" hidden>
+              <p lang="my">မေတ္တာတရားနှင့် ပျော်ရွှင်မှုများ အမြဲပြည့်ဝပါစေ။</p>
+              <p>May your days together be filled with love, joy and cherished memories.</p>
+            </div>
+          </div>
+        </article>
+        <p class="fine-print heritage-demo-note">Demo invitation: replace the couple, date and parents' names with confirmed details before sharing with guests.</p>
       </section>
 
       <section class="content-section details-section" id="details" aria-labelledby="detailsTitle">
-        <div class="section-ornament">✦ &nbsp; ❦ &nbsp; ✦</div>
-        <p class="eyebrow">SAVE THE DATE</p>
-        <h2 class="section-heading" id="detailsTitle">Our special <em>day</em></h2>
-        <img class="divider-art" src="31_gold_ornamental_divider.png" alt="" />
-        <div class="event-card">
-          <p class="event-card-label">THE WEDDING CEREMONY</p>
-          <div class="date-number">20</div>
-          <p class="event-month">JUNE 2027</p>
-          <div class="event-rule"></div>
-          <div class="detail-row"><span class="detail-icon">◷</span><span>4:30 PM <small>MYANMAR TIME</small></span></div>
-          <div class="detail-row"><span class="detail-icon">⌖</span><span>Yangon, Myanmar <small>Venue added for each customer</small></span></div>
-          <a class="outline-button" href="https://www.google.com/maps/search/?api=1&amp;query=Yangon%2C%20Myanmar" target="_blank" rel="noopener noreferrer">EXPLORE YANGON <span aria-hidden="true">↗</span></a>
-          <p class="event-note">Demo location only — this is not a real wedding venue.</p>
+        <h2 class="scene-accessible-title" id="detailsTitle">Wedding Ceremony &amp; Reception</h2>
+        <!-- One complete illustration, with BOTH carved event frames painted into it.
+             The verified original PNG is stored locally in art/ and has matching source hash. -->
+        <div class="ceremony-master-scene">
+          <picture>
+            <source type="image/webp" srcset="art/section3_ceremony_reception_master.webp" />
+            <img class="ceremony-master-art" src="art/section3_ceremony_reception_master.png" width="1086" height="1448" loading="lazy" decoding="async" alt="" />
+          </picture>
+
+          <!-- A visual summary on the original hand-painted frames. The entire
+               actionable event information is presented in readable cards below. -->
+          <div class="celebration-events" aria-hidden="true">
+            <article class="celebration-event" data-event="ceremony">
+              <div class="celebration-event-inner">
+                <h3>Wedding <em>Ceremony</em></h3>
+                <p class="celebration-event-myanmar" lang="my">မင်္ဂလာအခမ်းအနား</p>
+                <time class="celebration-event-date" data-event-field="date">20 JUNE 2027</time>
+                <p class="celebration-event-time" data-event-field="time">4:30 PM · MYANMAR TIME</p>
+              </div>
+            </article>
+            <article class="celebration-event" data-event="reception">
+              <div class="celebration-event-inner">
+                <h3>Wedding <em>Reception</em></h3>
+                <p class="celebration-event-myanmar" lang="my">မင်္ဂလာဧည့်ခံပွဲ</p>
+                <time class="celebration-event-date" data-event-field="date">Date to be confirmed</time>
+                <p class="celebration-event-time" data-event-field="time">Time to be confirmed</p>
+              </div>
+            </article>
+          </div>
+          <a class="event-panel-hotspot event-panel-hotspot--ceremony" href="#ceremonyDetails"
+             aria-label="View full wedding ceremony information"></a>
+          <a class="event-panel-hotspot event-panel-hotspot--reception" href="#receptionDetails"
+             aria-label="View full wedding reception information"></a>
         </div>
+        <p class="event-panel-hint">Tap either gold frame to explore the celebration details <span aria-hidden="true">↓</span></p>
+
+        <div class="event-reading-section" aria-labelledby="eventReadingTitle">
+          <p class="event-reading-eyebrow">THE CELEBRATION</p>
+          <h3 id="eventReadingTitle" class="event-reading-title">Ceremony &amp; <em>Reception</em> Details</h3>
+          <p class="event-reading-caption">All the details for our special day</p>
+          <div class="event-reading-grid">
+            <article class="event-reading-card" id="ceremonyDetails" data-event="ceremony" aria-labelledby="ceremonyTitle">
+              <p class="event-reading-type" lang="my">မင်္ဂလာအခမ်းအနား</p>
+              <h4 id="ceremonyTitle">Wedding Ceremony</h4>
+              <time class="event-reading-date" data-event-field="date">20 JUNE 2027</time>
+              <p class="event-reading-time" data-event-field="time">4:30 PM · MYANMAR TIME</p>
+              <p class="event-reading-venue" data-event-field="venue">Venue to be confirmed</p>
+              <p class="event-reading-address" data-event-field="address">Yangon, Myanmar — sample city only</p>
+              <a class="event-reading-directions" data-event-link hidden target="_blank" rel="noopener noreferrer" aria-label="Open directions to the wedding ceremony venue">GET DIRECTIONS <span aria-hidden="true">↗</span></a>
+              <p class="event-reading-pending" data-event-pending>Directions will appear once the venue is confirmed</p>
+            </article>
+            <article class="event-reading-card" id="receptionDetails" data-event="reception" aria-labelledby="receptionTitle">
+              <p class="event-reading-type" lang="my">မင်္ဂလာဧည့်ခံပွဲ</p>
+              <h4 id="receptionTitle">Wedding Reception</h4>
+              <time class="event-reading-date" data-event-field="date">Date to be confirmed</time>
+              <p class="event-reading-time" data-event-field="time">Time to be confirmed</p>
+              <p class="event-reading-venue" data-event-field="venue">Reception venue to be confirmed</p>
+              <p class="event-reading-address" data-event-field="address">Venue and address to be added</p>
+              <a class="event-reading-directions" data-event-link hidden target="_blank" rel="noopener noreferrer" aria-label="Open directions to the reception venue">GET DIRECTIONS <span aria-hidden="true">↗</span></a>
+              <p class="event-reading-pending" data-event-pending>Directions will appear once the venue is confirmed</p>
+            </article>
+          </div>
+        </div>
+        <p class="celebration-disclaimer">Sample celebration details only. Confirm all dates, times, and venues before sharing this invitation with guests.</p>
       </section>
 
-      <section class="content-section countdown-section" id="countdown" aria-labelledby="countdownTitle">
-        <div class="section-ornament">✦ &nbsp; ❦ &nbsp; ✦</div>
-        <p class="eyebrow">THE MOMENT DRAWS NEAR</p>
-        <h2 class="section-heading" id="countdownTitle">Counting down <em>to forever</em></h2>
-        <p class="countdown-intro">Until our beautiful day begins</p>
-        <div class="countdown-grid" aria-label="Countdown until the sample wedding date">
-          <div class="countdown-box"><strong id="days">--</strong><span>DAYS</span></div>
-          <div class="countdown-box"><strong id="hours">--</strong><span>HOURS</span></div>
-          <div class="countdown-box"><strong id="minutes">--</strong><span>MINUTES</span></div>
-          <div class="countdown-box"><strong id="seconds">--</strong><span>SECONDS</span></div>
+      <section class="content-section countdown-section story-countdown-section" id="countdown" aria-labelledby="storyTitle">
+        <div class="story-intro">
+          <p class="eyebrow">EVERY LOVE HAS A STORY</p>
+          <h2 class="section-heading" id="storyTitle">Our <em>love story</em></h2>
+          <p class="story-intro-burmese" lang="my">တို့နှစ်ဦး၏ အချစ်ဇာတ်လမ်း</p>
+          <img class="story-ornament" src="31_gold_ornamental_divider.png" alt="" loading="lazy" />
+          <p class="story-lede" data-story-intro>The moments that make your story uniquely yours.</p>
         </div>
-        <p class="fine-print">Sample date for preview purposes.</p>
+
+        <div class="story-paper" aria-label="Personalizable love story">
+          <div class="story-paper-inner">
+            <img class="story-corner story-corner--tl" src="32_gold_corner_ornament.png" alt="" loading="lazy" />
+            <img class="story-corner story-corner--tr" src="32_gold_corner_ornament.png" alt="" loading="lazy" />
+            <p class="story-caption">A LOVE WORTH CELEBRATING</p>
+
+            <div class="story-chapters">
+              <article class="story-chapter">
+                <span class="story-chapter-marker" aria-hidden="true">I</span>
+                <div class="story-chapter-content">
+                  <p class="story-chapter-kicker">CHAPTER ONE</p>
+                  <h3 data-story-title="0">The Beginning</h3>
+                  <p data-story-text="0">Add how the couple met or how their story first began.</p>
+                </div>
+              </article>
+              <article class="story-chapter">
+                <span class="story-chapter-marker" aria-hidden="true">II</span>
+                <div class="story-chapter-content">
+                  <p class="story-chapter-kicker">CHAPTER TWO</p>
+                  <h3 data-story-title="1">Our Cherished Moments</h3>
+                  <p data-story-text="1">Share a favorite memory or a moment that means a lot to them.</p>
+                </div>
+              </article>
+              <article class="story-chapter">
+                <span class="story-chapter-marker" aria-hidden="true">III</span>
+                <div class="story-chapter-content">
+                  <p class="story-chapter-kicker">CHAPTER THREE</p>
+                  <h3 data-story-title="2">A New Chapter</h3>
+                  <p data-story-text="2">Add a personal message about celebrating their next chapter together.</p>
+                </div>
+              </article>
+            </div>
+            <img class="story-ornament story-paper-ornament" src="31_gold_ornamental_divider.png" alt="" loading="lazy" />
+            <p class="story-endnote">AND SO THE STORY CONTINUES...</p>
+            <img class="story-corner story-corner--bl" src="32_gold_corner_ornament.png" alt="" loading="lazy" />
+            <img class="story-corner story-corner--br" src="32_gold_corner_ornament.png" alt="" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="countdown-panel" aria-labelledby="countdownTitle">
+          <p class="eyebrow">THE MOMENT DRAWS NEAR</p>
+          <h2 class="section-heading" id="countdownTitle">Counting down <em>to forever</em></h2>
+          <p class="countdown-intro" id="countdownStatus">Until our beautiful day begins</p>
+          <p class="countdown-date" data-date-text>20 JUNE 2027</p>
+          <div class="countdown-grid" role="timer" aria-label="Time remaining until the sample wedding date">
+            <div class="countdown-box"><strong id="days">--</strong><span>DAYS</span></div>
+            <div class="countdown-box"><strong id="hours">--</strong><span>HOURS</span></div>
+            <div class="countdown-box"><strong id="minutes">--</strong><span>MINUTES</span></div>
+            <div class="countdown-box"><strong id="seconds">--</strong><span>SECONDS</span></div>
+          </div>
+          <p class="countdown-footnote">Our sample wedding countdown · Myanmar time (UTC+06:30)</p>
+        </div>
+        <p class="fine-print story-disclaimer">Love story text and date are demonstration placeholders. Replace them with details approved by the couple before sharing.</p>
       </section>
 
       <section class="content-section closing-section" id="closing" aria-labelledby="closingTitle">
@@ -130,7 +276,7 @@
         <p class="eyebrow">A NEW CHAPTER BEGINS</p>
         <h2 class="section-heading" id="closingTitle">With all our <em>love</em></h2>
         <p class="closing-body">Every cherished moment is made more beautiful by those we share it with. We hope to celebrate with you.</p>
-        <p class="closing-signature">Thiri <span>&</span> Min</p>
+        <p class="closing-signature"><span class="closing-name" data-name="first">Thiri</span> <span aria-hidden="true">&amp;</span> <span class="closing-name" data-name="second">Min</span></p>
         <img src="31_gold_ornamental_divider.png" class="divider-art" alt="" />
         <button type="button" class="open-button share-button" id="shareButton">COPY INVITATION LINK <span aria-hidden="true">↗</span></button>
         <a class="back-to-top" href="#home">BACK TO THE GARDEN ↑</a>
@@ -138,6 +284,11 @@
     </div>
   </main>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="wedding-config.js" defer></script>
   <script src="app.js" defer></script>
+  <script src="skin-packs.js" defer></script>
+  <script src="skin-loader.js" defer></script>
+  <script src="scene-motion.js" defer></script>
+  <script src="garden-ambient.js" defer></script>
 </body>
 </html>

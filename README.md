@@ -1,47 +1,57 @@
-# Golden Autumn Heritage — PNG-integrated interactive prototype
+# Golden Autumn Heritage — mobile wedding invitation
 
-A **mobile-first Myanmar-inspired digital wedding invitation prototype** featuring romantic golden-hour lighting, an original carved gateway, animated butterfly, drifting leaves, and interactive wedding content.
+An original Myanmar-inspired, mobile-first invitation website built with
+plain **HTML, CSS and JavaScript**. This repository contains a **demo** with
+sample names and dates, not a finalized customer's event.
 
-The **32 original prototype PNGs** supplied in this repository are now referenced by the page. The website uses live HTML text, CSS layering and JavaScript animation rather than flattening the scene into a single image.
+## Live features
+- Tap-to-open envelope with a fluttering butterfly and one-time wind gust
+- Responsive painted gateway with editable, automatically fitted names
+- Soft continuous *transparent overlay* leaves and swaying floral accents
+- Original painted backgrounds stay intact and still (no scene parallax)
+- Family wedding invitation, Burmese and English copy
+- Two event panels, readable ceremony/reception information and approved maps
+- Story chapters, real countdown based on the configured date, share button
+- Full reduced-motion, touch-scroll and keyboard opening handling
+- Two coordinated artwork skins using identical animation mechanics
 
-## What's integrated
+**Skins:** `golden-autumn` (the original) and `moonlit-amethyst` (a cool
+palette variation generated from our own approved master paintings). The
+second skin is not a separate, newly hand-illustrated environment.
 
-- **01–03**: Sunset backdrop, distant trees and foreground autumn framing
-- **04–08**: Five-part ivory and antique-gold gateway (pillars, arch, foundation, crest)
-- **09–11**: Garden, ceremonial path and foreground bushes
-- **12–19**: Eight independently positioned floral and vine components
-- **20–22**: Butterfly body and separate animated wings
-- **23–28**: Six individual PNG leaves reused for gust and ambient drift
-- **29–30**: Invitation artwork and decorative wax seal on the opening envelope
-- **31–32**: Gold divider and reusable corner ornament
-
-The **PNG files are stored in the repository root** because that's where they were uploaded. The earlier SVG proofs remain in `assets/` for comparison but the updated page no longer relies on them.
-
-## Local testing on Windows
-
-Requires Node.js 18+; no npm install or build tools.
-
+## Run
 ```powershell
 git clone https://github.com/Arrjack8847/Myanmar-inviteation-website-testing-.git
 cd Myanmar-inviteation-website-testing-
+git switch feat/hires-garden-preview-20261101
 node tests/smoke.cjs
+node tests/skin-system.cjs
+node tests/hero-interaction.cjs
 node server.js
 ```
+Open `http://localhost:4173` for the demo and
+`http://localhost:4173/skins-gallery.html` to compare the two skins.
 
-Open **http://localhost:4173** in Chrome or Edge, then:
+## Prepare a customer order
+Edit **`wedding-config.js`** and change `skin`, `couple`, `story` and
+`events`. The single editable file overrides demo defaults in
+`app.js`. Confirm all names, map links and dates with the couple.
+See `CLIENT_RELEASE_CHECKLIST.md` before publishing.
 
-1. Press **Open Invitation** or tap the envelope; verify the butterfly and scattered leaves.
-2. Reload and press **Skip opening**; verify the hero is immediately visible.
-3. View the ivory-and-gold gateway, trees, pathway and animated floral edges.
-4. Scroll to family invitation, ceremony details, countdown and closing.
-5. Test the 320px–430px mobile layout and a reduced-motion setting.
+## Development & verification
+- `art-review.html`: source artwork and typography at three phone sizes
+- `flow-review.html`: check exactly where painted scene edges meet
+- `tests/browser-flow.cjs`: real Chromium touch and width regression suite
+- `tests/skin-system.cjs`: verify each registered skin and file dimensions
+- `.github/workflows/mobile-browser-qa.yml`: test each branch push
+- `.github/workflows/create-marketing-reels.yml`: render two vertical demos
+- `MARKETING_LAUNCH.md`: launch script, captions and customer workflow
 
-The `start-local.bat` launcher also starts the local server.
+## Release policy
+Sample details and imagery are for demonstration only. Keep the customer's
+site/deployment separate and do not publish an invitation until the couple
+approves names, dates, wording and venue links. Run mobile browser QA and
+inspect a real iPhone/Android as well. A Vercel deployment requires the
+repository's GitHub connection in the destination Vercel account.
 
-## Current status and limitations
-
-- This is **an integrated design prototype, not a finished sales release**. Image dimensions are relatively small (many artworks under 350 px across), so large displays can show softness.
-- **Thiri & Min**, **20 June 2027**, and **Yangon** are fictional demonstration details. The map is not an actual wedding venue.
-- No customer checkout, backend, RSVP, or live domain exists.
-- Do not share `localhost` as a public invitation link. A public deployment requires a separate step.
-- Customize example names and date in `app.js` (the `DEMO` object); other example details currently live in `index.html`.
+`README_HISTORY.md` contains earlier prototype implementation notes.

@@ -1,0 +1,341 @@
+/* Golden Autumn Heritage — Section 2, formal family invitation.
+   Static, mobile-first paper design, designed to complement the unified garden.
+   No parallax, scroll timelines or decorative external libraries. */
+.invitation-section {
+  max-width: 100%;
+  min-height: 0;
+  padding: clamp(75px, 10vw, 118px) 18px clamp(88px, 11vw, 128px);
+  background:
+    radial-gradient(ellipse 78% 20% at 50% 0%, #fff0dba8 0%, transparent 100%),
+    linear-gradient(180deg, #ecdbca 0%, #efe0cc 30%, #e5cdb7 100%);
+  isolation: isolate;
+}
+.invitation-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .16;
+  background: repeating-linear-gradient(115deg, transparent 0 32px, #fff9f1 33px, transparent 34px);
+  z-index: -1;
+}
+.invitation-section-intro {
+  position: relative;
+  max-width: 580px;
+  margin: 0 auto 37px;
+}
+.invitation-section-intro .eyebrow {
+  font-size: 10px;
+  line-height: 1.65;
+  letter-spacing: .21em;
+  color: #976e57;
+}
+.invitation-section-intro .section-heading {
+  color: #5c3540;
+  font-size: clamp(38px, 7.7vw, 56px);
+}
+.invitation-section-intro .section-heading em { color: #a37459; }
+.invitation-section-lead {
+  font-family: var(--display);
+  font-size: 17px;
+  font-style: italic;
+  color: #866659;
+  line-height: 1.7;
+  margin: 17px auto 0;
+}
+.heritage-invitation {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 648px);
+  margin: 0 auto;
+  padding: 11px;
+  border: 1px solid #bf9e70;
+  background: #f2e6d3;
+  box-shadow: 0 17px 49px #68443536, 0 3px 12px #78513d13;
+}
+.heritage-invitation::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid #d7b99380;
+  pointer-events: none;
+}
+.heritage-invitation-inner {
+  position: relative;
+  padding: clamp(54px, 9vw, 74px) clamp(16px, 6vw, 49px) 56px;
+  border: 1px solid #bc945e9e;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 95% 58% at 50% 8%, #fffdf6dc 0%, transparent 98%),
+    linear-gradient(154deg, #fff8e9 0%, #f8ecd9 43%, #f4e5d0 100%);
+}
+.heritage-invitation-inner::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid #d6b98c70;
+  pointer-events: none;
+}
+.heritage-corner {
+  position: absolute;
+  z-index: 2;
+  width: clamp(35px, 8vw, 53px);
+  height: clamp(35px, 8vw, 53px);
+  object-fit: contain;
+  pointer-events: none;
+  opacity: .79;
+}
+.heritage-corner--tl { top: 12px; left: 12px; }
+.heritage-corner--tr { top: 12px; right: 12px; transform: scaleX(-1); }
+.heritage-corner--bl { bottom: 12px; left: 12px; transform: scaleY(-1); }
+.heritage-corner--br { bottom: 12px; right: 12px; transform: scale(-1); }
+.heritage-burmese-title {
+  font-family: 'Noto Sans Myanmar', 'Myanmar Text', 'Pyidaungsu', sans-serif;
+  font-size: clamp(20px, 5.3vw, 28px);
+  font-weight: 600;
+  line-height: 1.9;
+  margin: 0;
+  color: #71444a;
+}
+.heritage-english-title {
+  font: 700 10px/1.8 var(--body);
+  letter-spacing: .21em;
+  color: #977056;
+  margin: 0 0 17px;
+}
+.heritage-divider {
+  display: block;
+  width: min(204px, 70%);
+  max-height: 34px;
+  object-fit: contain;
+  margin: 0 auto 22px;
+  opacity: .80;
+}
+.heritage-invitation-intro {
+  margin: 0 auto 16px;
+  max-width: 470px;
+  font-size: 15px;
+  line-height: 2.1;
+}
+.heritage-families {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) 30px minmax(0,1fr);
+  gap: 12px;
+  align-items: center;
+  max-width: 515px;
+  margin: 28px auto 27px;
+  padding: 22px 0;
+  border-top: 1px solid #c5a77a6b;
+  border-bottom: 1px solid #c5a77a6b;
+}
+.heritage-family { min-width: 0; }
+.heritage-family-label {
+  font: 700 9px/1.5 var(--body);
+  letter-spacing: .19em;
+  color: #987354;
+  margin: 0 0 6px;
+}
+.heritage-family-person {
+  display: block;
+  font: 400 clamp(25px, 5.1vw, 34px)/1.12 var(--display);
+  color: #623941;
+  overflow-wrap: anywhere;
+}
+.heritage-family-parents {
+  display: block;
+  max-width: 220px;
+  margin: 10px auto 0;
+  font: italic 12px/1.55 var(--display);
+  color: #98776a;
+  overflow-wrap: anywhere;
+}
+.heritage-family-join {
+  font: italic 31px/1 var(--display);
+  color: #b28a60;
+  align-self: center;
+}
+.heritage-invitation-main {
+  margin: 16px auto 20px;
+  max-width: 480px;
+  font-size: clamp(15px, 3.7vw, 18px);
+  font-weight: 500;
+  line-height: 2.15;
+  color: #744d49;
+  overflow-wrap: break-word;
+}
+.heritage-invitation-translation {
+  max-width: 430px;
+  margin: 4px auto 25px;
+  font: italic 15px/1.85 var(--display);
+  color: #8c645a;
+}
+.heritage-divider--closing { width: min(150px, 55%); margin: 17px auto 12px; }
+.heritage-date {
+  font: 400 clamp(18px, 4vw, 22px)/1.5 var(--display);
+  color: #765145;
+  letter-spacing: .13em;
+  margin: 4px auto 6px;
+}
+.heritage-footer-note {
+  font: 700 9px/1.6 var(--body);
+  color: #a07b58;
+  letter-spacing: .17em;
+  margin: 7px 0 0;
+}
+.heritage-demo-note {
+  max-width: 520px;
+  padding: 0 14px;
+  margin: 19px auto 0;
+}
+@media (max-width: 440px) {
+  .heritage-invitation { padding: 7px; }
+  .heritage-invitation-inner { padding: 52px 17px 45px; }
+  .heritage-invitation-inner::after { inset: 8px; }
+  .heritage-corner--tl { top: 7px; left: 7px; }
+  .heritage-corner--tr { top: 7px; right: 7px; }
+  .heritage-corner--bl { bottom: 7px; left: 7px; }
+  .heritage-corner--br { bottom: 7px; right: 7px; }
+  .heritage-families { grid-template-columns: minmax(0,1fr); gap: 13px; padding: 20px 0; margin: 20px auto 23px; }
+  .heritage-family-join { font-size: 24px; }
+  .heritage-family-person { font-size: 31px; }
+  .heritage-family-parents { margin-top: 6px; }
+  .heritage-invitation-main { line-height: 2.08; }
+  .heritage-invitation-translation { font-size: 14px; }
+  .invitation-section-intro { margin-bottom: 28px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .heritage-invitation, .heritage-invitation * { animation: none !important; }
+}
+
+/* Reuse DEMO names in the closing signature without inheriting its ampersand styling. */
+.closing-signature .closing-name { font-size: inherit; color: inherit; }
+
+/* === V4 Section 2 approved artwork integration =================================
+   The artwork comes from ONE original master PNG. Nine-slice rendering is used
+   only to extend its plain parchment middle for variable-length Burmese copy:
+   the painted top gateway, bottom garden, and four flower corners are retained.
+   We do NOT assemble separate rose/gateway assets, stretch the whole image, or
+   animate scenery while scrolling.
+*/
+.invitation-section {
+  padding: 0 12px 24px;
+  min-height: 0;
+  background:
+    linear-gradient(180deg,#b9836c 0%,#e5b39a 9%,#efd8be 38%,#e3ba9f 86%,#c89170 100%);
+}
+.invitation-section::before { content: none; }
+.invitation-section .heritage-invitation {
+  box-sizing: border-box;
+  display:block;
+  width:min(100%, 660px);
+  min-width:0;
+  margin:0 auto;
+  padding:0;
+  /* Source dimensions 1086x1448: top 355, side 120, bottom 470 source pixels.
+     At narrow widths preserve these edge regions, expanding only blank paper. */
+  border-style:solid;
+  border-color:transparent;
+  border-width:
+    clamp(100px, 32.7vw, 215px)
+    clamp(29px, 11vw, 73px)
+    clamp(132px, 43.2vw, 286px);
+  border-image-source:url("art/section2_family_invitation_master.png");
+  border-image-slice:355 120 470 120 fill;
+  border-image-width:1;
+  border-image-repeat:stretch;
+  background:#f8e9d4;
+  box-shadow:none;
+  filter:none;
+}
+.invitation-section .heritage-invitation::before {content:none;}
+.invitation-section .heritage-invitation-inner {
+  position:relative;
+  padding:0 8px 5px;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+  overflow:visible;
+}
+.invitation-section .heritage-invitation-inner::after {content:none;}
+.invitation-section .invitation-section-intro {
+  max-width:100%;
+  margin:0 auto 17px;
+}
+.invitation-section .invitation-section-intro .section-heading {
+  font:normal clamp(29px,6.6vw,45px)/1.15 var(--display);
+  letter-spacing:-.045em;
+  color:#5d3940;
+  margin:6px auto 3px;
+}
+.invitation-section .heritage-burmese-title {
+  font-size:clamp(18px,4.6vw,25px);
+  margin:0;
+  line-height:1.7;
+}
+.invitation-section .heritage-english-title {
+  font-size:9px;
+  line-height:1.55;
+  letter-spacing:.14em;
+  margin:0;
+}
+.invitation-section .heritage-invitation-intro {
+  max-width:100%;
+  margin:0 auto 8px;
+  font-size:clamp(13px,3.1vw,16px);
+  line-height:1.95;
+}
+.invitation-section .heritage-families {
+  margin:13px auto 15px;
+  padding:14px 0;
+  gap:9px;
+  border-color:#b89e7a6b;
+}
+.invitation-section .heritage-family-parents {
+  font-size:clamp(11px,2.8vw,13px);
+  line-height:1.5;
+}
+.invitation-section .heritage-invitation-main {
+  font-size:clamp(13px,3.2vw,17px);
+  margin:10px auto;
+  line-height:1.95;
+}
+.invitation-section .heritage-invitation-translation {
+  font-size:clamp(13px,3vw,15px);
+  line-height:1.55;
+  margin:10px auto 16px;
+}
+.invitation-section .heritage-date {
+  font-size:clamp(14px,3.6vw,20px);
+  letter-spacing:.09em;
+  margin:10px auto 4px;
+}
+.invitation-section .heritage-footer-note {
+  font-size:8px;
+  letter-spacing:.12em;
+  margin:5px auto 0;
+}
+.invitation-section .heritage-demo-note {
+  color:#664641;
+  max-width:440px;
+  font-size:10px;
+  padding:0 12px;
+  margin:12px auto 0;
+  text-shadow:0 1px 3px #fff4e7b0;
+}
+@media (max-width:440px) {
+  .invitation-section {padding:0 8px 20px;}
+  .invitation-section .heritage-invitation {
+    border-width:
+      clamp(87px,32.7vw,144px)
+      clamp(26px,11vw,49px)
+      clamp(117px,43.2vw,190px);
+  }
+  .invitation-section .heritage-invitation-inner {padding:0 4px 2px;}
+  .invitation-section .heritage-families {padding:11px 0;margin:10px auto 12px;}
+  .invitation-section .heritage-family-label {font-size:8px;}
+  .invitation-section .heritage-family-person {font-size:clamp(25px,7vw,30px);}
+  .invitation-section .heritage-family-join {font-size:20px;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .invitation-section .heritage-invitation {animation:none!important;transition:none!important;}
+}

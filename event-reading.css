@@ -1,0 +1,174 @@
+/* Golden Autumn Heritage — readable event information
+ *
+ * The original 1086×1448 master image includes two beautiful painted panels,
+ * each only ~114px high on a 320px phone. Rather than shrinking directions and
+ * addresses to 9px or clipping them, those panels now show concise, live
+ * date/time summaries. Actual venue/directions are readable HTML below.
+ *
+ * One native document scrollbar; no moving scenery or extra artwork PNGs.
+ */
+
+.details-section .celebration-event-inner {
+  justify-content: center;
+  gap: 2px;
+  overflow: hidden;
+  padding: 3px 5px;
+}
+.details-section .celebration-event h3 {
+  font-size: clamp(19px, 5.15vw, 31px);
+  line-height: 1.07;
+  margin: 0 0 1px;
+}
+.details-section .celebration-event-myanmar {
+  font-size: clamp(11px, 2.9vw, 15px);
+  line-height: 1.5;
+  margin: 0;
+}
+.details-section .celebration-event-date {
+  font-size: clamp(12px, 3.1vw, 17px);
+  line-height: 1.25;
+  margin: 2px 0 0;
+}
+.details-section .celebration-event-time {
+  font-size: clamp(11px, 2.8vw, 15px);
+  line-height: 1.24;
+  margin: 0;
+}
+/* The pictured panel contains visual summary text only.
+   The complete content and links follow in accessible reading cards. */
+.details-section .celebration-events {pointer-events:none;}
+
+.details-section .event-reading-section {
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+  width: min(100%,660px);
+  max-width: 100%;
+  margin: 0 auto;
+  padding: clamp(27px,7vw,45px) clamp(16px,5vw,32px) 46px;
+  background:
+    radial-gradient(ellipse 70% 16% at 50% 0%,#f9e6c5 0%,transparent 100%),
+    linear-gradient(180deg,#f2dbbc 0%,#fcf1dd 54%,#f5e2c8 100%);
+  color:#633f46;
+  text-align: center;
+}
+.details-section .event-reading-section::before {
+  content:'';
+  display:block;
+  width: min(145px,42%);
+  height:1px;
+  margin:0 auto 18px;
+  background:linear-gradient(90deg,transparent,#b48652,transparent);
+}
+.details-section .event-reading-eyebrow {
+  font:600 10px/1.4 var(--body);
+  letter-spacing:.18em;
+  color:#986c53;
+  margin:0 0 8px;
+}
+.details-section .event-reading-title {
+  margin:0;
+  font:normal clamp(27px,6.3vw,38px)/1.15 var(--display);
+  color:#69454d;
+}
+.details-section .event-reading-title em {color:#a67b55;}
+.details-section .event-reading-caption {
+  margin:10px auto 27px;
+  font:italic clamp(14px,3.7vw,16px)/1.45 var(--display);
+  color:#92705e;
+}
+.details-section .event-reading-grid {
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:20px;
+  width:100%;
+  margin:0;
+}
+.details-section .event-reading-card {
+  box-sizing:border-box;
+  min-width:0;
+  width:100%;
+  padding:26px clamp(16px,5vw,30px) 25px;
+  border:1px solid #c49d67;
+  outline:1px solid #e9d2ac;
+  outline-offset:-6px;
+  border-radius:17px;
+  background:
+    radial-gradient(circle at 50% 0%,#fffdf3 0%,transparent 65%),
+    linear-gradient(150deg,#fff6e4,#f4e4ca);
+  box-shadow:0 10px 28px #6d41391b;
+  text-align:center;
+  overflow-wrap:anywhere;
+}
+.details-section .event-reading-type {
+  margin:0 0 6px;
+  font:normal 15px/1.8 'Noto Sans Myanmar','Myanmar Text','Pyidaungsu',sans-serif;
+  color:#9a7157;
+}
+.details-section .event-reading-card h4 {
+  margin:0 0 15px;
+  font:normal clamp(24px,5.8vw,31px)/1.2 var(--display);
+  color:#66434c;
+}
+.details-section .event-reading-date {
+  display:block;
+  margin:0 0 7px;
+  font:600 clamp(15px,3.8vw,18px)/1.4 var(--display);
+  letter-spacing:.05em;
+  color:#865947;
+}
+.details-section .event-reading-time {
+  margin:0 auto 20px;
+  color:#8a6659;
+  font:normal clamp(14px,3.5vw,16px)/1.45 var(--body);
+}
+.details-section .event-reading-venue {
+  margin:0 auto 7px;
+  color:#63454a;
+  font:600 clamp(16px,4.1vw,19px)/1.4 var(--display);
+}
+.details-section .event-reading-address {
+  margin:0 auto 17px;
+  color:#786058;
+  font:normal clamp(14px,3.5vw,16px)/1.55 var(--body);
+}
+.details-section .event-reading-directions {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  box-sizing:border-box;
+  max-width:100%;
+  min-height:44px;
+  padding:11px 20px;
+  border-radius:100px;
+  background:#72434b;
+  border:1px solid #946d65;
+  color:#fff1dc;
+  text-decoration:none;
+  font:700 12px/1.4 var(--body);
+  letter-spacing:.08em;
+}
+.details-section .event-reading-directions[hidden] {display:none!important;}
+.details-section .event-reading-directions:focus-visible {
+  outline:3px solid #9a633f;
+  outline-offset:4px;
+}
+.details-section .event-reading-pending {
+  margin:0 auto;
+  font:italic 14px/1.55 var(--display);
+  color:#886e61;
+}
+.details-section .event-reading-pending[hidden] {display:none!important;}
+@media(min-width:600px){
+  .details-section .event-reading-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    align-items:stretch;
+    gap:16px;
+  }
+}
+@media(max-width:350px){
+  .details-section .celebration-event h3 {font-size:18px;}
+  .details-section .celebration-event-myanmar {font-size:11px;}
+  .details-section .celebration-event-date {font-size:12px;}
+  .details-section .celebration-event-time {font-size:10.5px;}
+}
