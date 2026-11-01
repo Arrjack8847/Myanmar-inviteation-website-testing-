@@ -20,6 +20,30 @@ window.INVITATION_SKINS = {
       floral:'18_hanging_flower_sprig.png',
       divider:'31_gold_ornamental_divider.png',
       corner:'32_gold_corner_ornament.png'
+    },
+    'moonlit-amethyst': {
+      label:'Moonlit Amethyst',
+      hero:{png:'skins/moonlit-amethyst/gateway.png',webp:'skins/moonlit-amethyst/gateway.webp'},
+      family:{png:'skins/moonlit-amethyst/family.png',webp:'skins/moonlit-amethyst/family.webp'},
+      events:{png:'skins/moonlit-amethyst/events.png',webp:'skins/moonlit-amethyst/events.webp'},
+      floral:'skins/moonlit-amethyst/floral.png',
+      envelope:'skins/moonlit-amethyst/envelope.png',
+      seal:'skins/moonlit-amethyst/seal.png',
+      butterfly:{
+        left:'skins/moonlit-amethyst/butterfly-left.png',
+        right:'skins/moonlit-amethyst/butterfly-right.png',
+        body:'skins/moonlit-amethyst/butterfly-body.png'
+      },
+      leaves:[
+        'skins/moonlit-amethyst/leaf-1.png',
+        'skins/moonlit-amethyst/leaf-2.png',
+        'skins/moonlit-amethyst/leaf-3.png',
+        'skins/moonlit-amethyst/leaf-4.png',
+        'skins/moonlit-amethyst/leaf-5.png',
+        'skins/moonlit-amethyst/leaf-6.png'
+      ],
+      divider:'skins/moonlit-amethyst/divider.png',
+      corner:'skins/moonlit-amethyst/corner.png'
     }
   }
 };

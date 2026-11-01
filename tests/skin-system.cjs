@@ -13,6 +13,7 @@ assert(catalog?.packs?.[catalog.defaultId],'Missing default art pack');
 for(const [id,pack] of Object.entries(catalog.packs)){
   assert(/^[a-z0-9][a-z0-9-]*$/.test(id),'Invalid skin id: '+id);
   assert(Array.isArray(pack.leaves)&&pack.leaves.length===6,'Need six leaf assets');
+  assert(pack.floral && fs.existsSync(path.join(root,pack.floral)), 'Missing floral overlay for '+id);
   const paths=[
     pack.hero.png,pack.hero.webp,pack.family.png,pack.family.webp,
     pack.events.png,pack.events.webp,pack.envelope,pack.seal,

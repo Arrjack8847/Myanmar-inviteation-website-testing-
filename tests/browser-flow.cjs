@@ -262,6 +262,42 @@ async function testSize(size) {
       await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
       await page.screenshot({path:path.join(output,'full-page-390.png'),fullPage:true});
     }
+    // Verify the second skin uses all three coordinated paintings without
+    // changing the original mechanics or HTML event information.
+    if(size.width===390){
+      const alt=await context.newPage();
+      const altErrors=[];
+      alt.on('pageerror',e=>altErrors.push(e.message));
+      try{
+        await alt.goto(url+'/index.html?heroPreview=1&skin=moonlit-amethyst',{waitUntil:'load'});
+        await alt.waitForFunction(()=>document.body.classList.contains('has-opened'));
+        await alt.waitForTimeout(500);
+        const variant=await alt.evaluate(()=>{
+          const gateway=document.querySelector('.hero-master');
+          const events=document.querySelector('.ceremony-master-art');
+          const family=document.querySelector('.heritage-invitation');
+          return{
+            id:document.documentElement.dataset.skin,
+            gateway:gateway.currentSrc,events:events.currentSrc,
+            family:getComputedStyle(family).borderImageSource,
+            loaded:gateway.naturalWidth>0&&events.naturalWidth>0,
+            name:document.querySelector('.hero-topline .skin-name')?.textContent,
+            horizontal:document.documentElement.scrollWidth-innerWidth,
+            ambientCount:document.querySelectorAll('.garden-ambient-leaf').length
+          };
+        });
+        assert.equal(variant.id,'moonlit-amethyst');
+        assert(variant.gateway.endsWith('/skins/moonlit-amethyst/gateway.webp'));
+        assert(variant.events.endsWith('/skins/moonlit-amethyst/events.webp'));
+        assert(variant.family.includes('skins/moonlit-amethyst/family.webp'));
+        assert(variant.loaded && variant.horizontal<=2);
+        assert.equal(variant.ambientCount,6);
+        assert(variant.name.includes('MOONLIT AMETHYST'));
+        assert.deepEqual(altErrors,[],'Second skin JS errors');
+        await alt.screenshot({path:path.join(output,'moonlit-amethyst-390.png')});
+      }finally{await alt.close();}
+    }
+
     // Verify that real customer data longer than the placeholders expands the
     // readable cards instead of squeezing fonts, clipping text, or creating a
     // horizontal scroll trap. This occurs AFTER all screenshot captures.

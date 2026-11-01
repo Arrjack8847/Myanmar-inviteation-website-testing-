@@ -4,8 +4,10 @@ The V4 invitation now has a central artwork manifest (`skin-packs.js`) and
 a small adapter (`skin-loader.js`). The approved Golden Autumn is the
 default and remains fully visible without JavaScript.
 
-**Current status:** Only the Golden Autumn artwork pack exists. This is
-skin-switching infrastructure, not a claim that a second design is finished.
+**Current status:** Two registered options exist: Golden Autumn Heritage
+(original) and Moonlit Amethyst (a coordinated color-graded variant of our
+own three master paintings). The second variant shares the composition;
+it is not a separately illustrated scenery redesign.
 
 ## Creating a new skin without changing the mechanics
 
