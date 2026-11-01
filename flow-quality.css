@@ -229,3 +229,15 @@ main { touch-action: pan-y pinch-zoom; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+/* Performance: browsers that support MIME-aware CSS image-set load the much
+   smaller approved Section 2 WebP. Earlier declarations in this stylesheet
+   and invitation.css remain a PNG fallback for older browser engines. */
+@supports (border-image-source: image-set(url("art/section2_family_invitation_master.webp") type("image/webp"), url("art/section2_family_invitation_master.png") type("image/png"))) {
+  .invitation-section .heritage-invitation {
+    border-image-source: image-set(
+      url("art/section2_family_invitation_master.webp") type("image/webp"),
+      url("art/section2_family_invitation_master.png") type("image/png")
+    );
+  }
+}
