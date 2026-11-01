@@ -117,6 +117,34 @@ async function testSize(size) {
     await page.waitForTimeout(900);
     const after=await page.evaluate(()=>window.scrollY);
     assert(after>before+30,`Document scroll blocked over the parchment: ${before} → ${after}`);
+
+    // Simulate a literal finger dragging upward over the parchment, not just
+    // a desktop wheel. On Chromium this should pan the document rather than
+    // being eaten by an independent child scroller.
+    await page.evaluate(()=>{
+      const el=document.getElementById('invitation');
+      window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-34,behavior:'instant'});
+    });
+    await page.waitForTimeout(180);
+    const touchBefore=await page.evaluate(()=>window.scrollY);
+    const cdp=await context.newCDPSession(page);
+    const x=Math.round(size.width/2);
+    const y=Math.round(Math.min(size.height-80,Math.max(250,size.height*.68)));
+    await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x,y,id:1}]});
+    for(let step=1;step<=12;step++){
+      await cdp.send('Input.dispatchTouchEvent',{
+        type:'touchMove',
+        touchPoints:[{x,y:y-step*16,id:1}]
+      });
+      await page.waitForTimeout(16);
+    }
+    await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+    await page.waitForTimeout(450);
+    const touchAfter=await page.evaluate(()=>window.scrollY);
+    assert(touchAfter>touchBefore+25,
+      `Mobile touch swipe was blocked: ${touchBefore} → ${touchAfter}`);
+    await cdp.detach();
+
     // Align each section to the viewport TOP for reproducible screenshots.
     // scrollIntoViewIfNeeded() only ensured partial visibility and sometimes
     // captured half of the previous illustrated section in the screenshot.
@@ -133,7 +161,7 @@ async function testSize(size) {
       await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
       await page.screenshot({path:path.join(output,'full-page-390.png'),fullPage:true});
     }
-    console.log('PASS',size.width+'x'+size.height,JSON.stringify({...metrics,scrollDelta:Math.round(after-before)}));
+    console.log('PASS',size.width+'x'+size.height,JSON.stringify({...metrics,scrollDelta:Math.round(after-before),touchScrollDelta:Math.round(touchAfter-touchBefore)}));
   }finally{await context.close();}
 }
 
