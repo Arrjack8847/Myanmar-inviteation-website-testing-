@@ -38,6 +38,24 @@ const masterPath=path.join(root,'art','golden_autumn_heritage_master_v4.png');
 const masterImage=fs.readFileSync(masterPath);
 assert(masterImage.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10])), 'V4 master is not a PNG');
 assert(masterImage.readUInt32BE(16)>=800 && masterImage.readUInt32BE(20)>=1700, 'V4 master is unexpectedly small');
+/* Original painted files remain intact; optimized WebP copies are separate.
+   Source dimensions and substantially reduced byte size are required. */
+for(const name of [
+  'golden_autumn_heritage_master_v4',
+  'section2_family_invitation_master',
+  'section3_ceremony_reception_master'
+]){
+  const png=fs.readFileSync(path.join(root,'art',name+'.png'));
+  const webp=fs.readFileSync(path.join(root,'art',name+'.webp'));
+  assert.equal(webp.toString('ascii',0,4),'RIFF',name+' optimized file is not RIFF');
+  assert.equal(webp.toString('ascii',8,12),'WEBP',name+' optimized file is not WebP');
+  assert(webp.length < png.length*.30, name+' WebP is unexpectedly large');
+}
+assert(html.includes('srcset="art/golden_autumn_heritage_master_v4.webp"'), 'Gateway WebP preferred source missing');
+assert(html.includes('srcset="art/section3_ceremony_reception_master.webp"'), 'Ceremony WebP preferred source missing');
+assert(html.includes('src="art/golden_autumn_heritage_master_v4.png"'), 'Gateway PNG fallback missing');
+assert(html.includes('src="art/section3_ceremony_reception_master.png"'), 'Ceremony PNG fallback missing');
+
 const review=read('art-review.html');
 assert(review.includes('index.html?heroPreview=1'), 'Review page must display the actual hero and master artwork');
 assert(review.includes('index.html?artReview=1'), 'Review page not linked to static scene preview');
@@ -162,6 +180,8 @@ assert(!/ScrollTrigger|scroll-snap-type/.test(heroCSS), 'Section 1 must not use 
 /* Screenshot regression: natural content heights and ordinary page swipes.
    The old forced-height stylesheet must not load at all. */
 const flowCSS=read('flow-quality.css');
+assert(flowCSS.includes('art/section2_family_invitation_master.webp'), 'Section 2 WebP optimization not enabled');
+assert(flowCSS.includes('border-image-source: image-set('), 'Section 2 needs MIME-aware CSS artwork selection');
 assert(!html.includes('href="screen-fit.css"'), 'Obsolete fixed-height CSS must not load');
 assert(html.includes('href="flow-quality.css"'), 'Continuous-scroll corrections missing');
 assert(html.indexOf('href="flow-quality.css"') > html.indexOf('href="hero-quality.css"'), 'Natural flow overrides must load last');
