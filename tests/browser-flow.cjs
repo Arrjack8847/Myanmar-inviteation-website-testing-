@@ -235,6 +235,30 @@ async function testSize(size) {
       await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
       await page.screenshot({path:path.join(output,'full-page-390.png'),fullPage:true});
     }
+    // Verify that real customer data longer than the placeholders expands the
+    // readable cards instead of squeezing fonts, clipping text, or creating a
+    // horizontal scroll trap. This occurs AFTER all screenshot captures.
+    const longContent=await page.evaluate(()=>{
+      const card=document.querySelector('.event-reading-card[data-event="ceremony"]');
+      const venue=card.querySelector('[data-event-field="venue"]');
+      const address=card.querySelector('[data-event-field="address"]');
+      const originalHeight=card.getBoundingClientRect().height;
+      venue.textContent='Grand Celebration Hall of Golden Autumn Heritage and Family Gathering';
+      address.textContent='A confirmed venue address with a long building name, full street description, township, city, state, landmark information and detailed arrival instructions for invited guests';
+      const newHeight=card.getBoundingClientRect().height;
+      return {
+        originalHeight,
+        newHeight,
+        cardOverflow:card.scrollWidth-card.clientWidth,
+        pageOverflow:document.documentElement.scrollWidth-innerWidth,
+        textOverflow:Math.max(venue.scrollWidth-venue.clientWidth,address.scrollWidth-address.clientWidth)
+      };
+    });
+    assert(longContent.newHeight>longContent.originalHeight+10,
+      'Long venue details should expand the card instead of being clipped: '+JSON.stringify(longContent));
+    assert(longContent.cardOverflow<=2&&longContent.pageOverflow<=2&&longContent.textOverflow<=2,
+      'Long customer details overflow the mobile layout: '+JSON.stringify(longContent));
+
     console.log('PASS',size.width+'x'+size.height,JSON.stringify({...metrics,scrollDelta:Math.round(after-before),touchScrollDelta:Math.round(touchAfter-touchBefore)}));
   }finally{await context.close();}
 }
