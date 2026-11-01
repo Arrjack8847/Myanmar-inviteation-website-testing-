@@ -38,6 +38,13 @@ for(const id of ['countdownTitle','days','hours','minutes','seconds']){
 assert(css.includes('html[data-skin="moonlit-amethyst"] .story-illustrated-frame'),
  'Do not expose golden-only artwork in unapproved Moonlit skin');
 assert(css.includes('prefers-reduced-motion:reduce'),'Reduced-motion support missing');
+const bridgeCSS=read('story-closing-bridge.css');
+assert(html.includes('href="story-closing-bridge.css"'),'Story-to-closing transition stylesheet missing');
+assert(html.includes('class="closing-edge-continuation"'),'Scenery continuation element missing');
+assert(bridgeCSS.includes('scaleY(-1)'),'Continuation must reflect the same artwork edge');
+assert(bridgeCSS.includes('4ba5ed04-e01d-4bed-a71e-42f2bdf5f8a5.png'),'Bridge must use existing story painting, not unrelated imagery');
+assert(bridgeCSS.includes('mask-image:'),'Continuity bridge needs alpha falloff');
+assert(bridgeCSS.includes('html[data-skin="moonlit-amethyst"]'),'Do not show Golden foliage in Moonlit variant');
 const closingCss=read('closing-garden.css');
 assert(html.includes('href="closing-garden.css"'),'Closing Garden stylesheet missing');
 const closing=html.split('<section class="content-section closing-section"')[1]||'';
