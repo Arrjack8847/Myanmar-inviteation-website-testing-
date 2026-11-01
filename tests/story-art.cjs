@@ -57,4 +57,9 @@ assert(closingCss.includes('section3_ceremony_reception_master.webp'),'Approved 
 assert(closingCss.includes('skins/moonlit-amethyst/events.webp'),'Approved Moonlit garden source not reused');
 assert(closingCss.includes('pointer-events:none'),'Decorative closing art may not capture taps');
 assert(closingCss.includes('prefers-reduced-motion:reduce'),'Closing motion must respect user preference');
-console.log('PASS story, countdown, closing garden, editable content, and skin separation');
+const polish=read('final-garden-polish.css');
+assert(html.includes('href="final-garden-polish.css"'),'Final garden visual polish is not linked');
+assert(polish.includes('html[data-skin="moonlit-amethyst"]'),'Polish must use its own Moonlit palette');
+assert(polish.includes('.event-reading-card'),'Accessible ceremony card styling missing');
+assert(!polish.includes('height:190px'),'Cards must not be artificially fixed-height');
+console.log('PASS story, countdown, closing garden, editable content, skin separation and venue-polish contract');
