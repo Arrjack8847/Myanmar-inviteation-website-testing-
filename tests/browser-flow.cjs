@@ -284,6 +284,42 @@ async function testSize(size) {
     assert(longContent.cardOverflow<=2&&longContent.pageOverflow<=2&&longContent.textOverflow<=2,
       'Long customer details overflow the mobile layout: '+JSON.stringify(longContent));
 
+
+    // Reusable invitation QA: actual customer names can be much longer than
+    // the short default pair. The name fit may reduce only text size; it must
+    // keep all letters readable within the hero and never cause horizontal drag.
+    await page.evaluate(()=>{
+      document.querySelectorAll('[data-name="first"]').forEach(node=>{node.textContent='Mya Thazin Aung';});
+      document.querySelectorAll('[data-name="second"]').forEach(node=>{node.textContent='Min Khant Kyaw';});
+      window.scrollTo({top:0,behavior:'instant'});
+    });
+    await page.waitForTimeout(250);
+    const longNames=await page.evaluate(()=>{
+      const words=document.getElementById('heroWords');
+      const heading=document.getElementById('heroTitle');
+      const hero=document.getElementById('home');
+      const cue=document.querySelector('.scroll-cue');
+      const w=words.getBoundingClientRect(),h=hero.getBoundingClientRect(),q=cue.getBoundingClientRect();
+      return {
+        wordsHeight:w.height,
+        safeHeight:Math.round(hero.clientHeight*.33),
+        insideHero:w.top>=h.top+25&&w.bottom<h.bottom-45,
+        clearOfScrollCue:w.bottom<q.top-8,
+        horizontalOverflow:document.documentElement.scrollWidth-innerWidth,
+        spanOverflow:[...heading.children].map(n=>n.scrollWidth-n.clientWidth),
+        displayedSize:parseFloat(getComputedStyle(heading).fontSize),
+        names:heading.innerText
+      };
+    });
+    assert(longNames.names.includes('Mya Thazin Aung')&&longNames.names.includes('Min Khant Kyaw'),
+      'Personalized names disappeared: '+JSON.stringify(longNames));
+    assert(longNames.insideHero&&longNames.clearOfScrollCue,
+      'Long personalized names overlap the hero controls: '+JSON.stringify(longNames));
+    assert(longNames.horizontalOverflow<=2&&longNames.spanOverflow.every(n=>n<=2),
+      'Long personalized names overflow mobile width: '+JSON.stringify(longNames));
+    assert(longNames.displayedSize>=21,'Name fit must preserve minimum readable type');
+    await page.screenshot({path:path.join(output,`long-names-${size.width}x${size.height}.png`)});
+
     // Option A: visibility-triggered HTML animation, while full scene art
     // and touch scrolling remain unmodified and accessible.
     const invitationIntro=page.locator('#invitation .invitation-section-intro');

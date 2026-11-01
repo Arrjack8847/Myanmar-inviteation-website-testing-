@@ -19,7 +19,12 @@ main{display:flex;flex-direction:column;align-items:center;padding:12px 12px 40p
 .controls span{flex:1 0 100%;text-align:center;color:#e9d3ba;font-size:12px}
 button{border:1px solid #a98b66;border-radius:9px;background:#513b42;color:#ffeacf;padding:10px 15px;cursor:pointer}
 button[aria-pressed="true"]{background:#d8b384;color:#29202a}
-button:focus-visible{outline:2px solid #fff2c2;outline-offset:3px}
+button:focus-visible,input:focus-visible{outline:2px solid #fff2c2;outline-offset:3px}
+.name-controls{gap:9px 12px;text-align:left}
+.name-controls label{font-size:12px;color:#ecd1b3;min-width:84px}
+.name-controls input{flex:1 1 calc(100% - 108px);min-width:0;min-height:39px;padding:8px 10px;border:1px solid #ab8c70;border-radius:8px;background:#fff4e5;color:#4b303a;font:15px system-ui,sans-serif}
+.name-controls button{flex:1 1 145px}
+
 .note{max-width:530px;font-size:12px;color:#d6c3b1;line-height:1.65;margin:0}
 a{color:#fbd19a}
 </style>
@@ -38,6 +43,15 @@ No separate moving scenery and no scroll-driven animation.</p>
  <button type="button" data-width="390" data-height="844" aria-pressed="true">390 × 844</button>
  <button type="button" data-width="430" data-height="932" aria-pressed="false">430 × 932</button>
 </div>
+<div class="controls name-controls" aria-label="Editable sample couple names">
+ <span>Preview real guest names in the painted gateway</span>
+ <label for="previewFirstName">First name</label>
+ <input id="previewFirstName" type="text" maxlength="40" value="Thiri" autocomplete="off" />
+ <label for="previewSecondName">Second name</label>
+ <input id="previewSecondName" type="text" maxlength="40" value="Min" autocomplete="off" />
+ <button type="button" id="longNames">Try longer names</button>
+ <button type="button" id="resetNames">Restore sample</button>
+</div>
 <div class="preview" id="preview">
  <iframe id="heroFrame" src="./index.html?heroPreview=1#home" title="Full unified hero with the wedding names" loading="eager"></iframe>
 </div>
@@ -53,6 +67,30 @@ No separate moving scenery and no scroll-driven animation.</p>
 const panel=document.getElementById('preview');
 const frame=document.getElementById('heroFrame');
 const widths=[...document.querySelectorAll('[data-width]')];
+const firstInput=document.getElementById('previewFirstName');
+const secondInput=document.getElementById('previewSecondName');
+function applyNames(){
+ // The iframe is same-origin; alter only its live text nodes for preview.
+ // The illustrated artwork and the wedding configuration remain untouched.
+ const doc=frame.contentDocument;
+ if(!doc)return;
+ for(const [kind,value] of [['first',firstInput.value.trim()||'Thiri'],['second',secondInput.value.trim()||'Min']]){
+   doc.querySelectorAll('[data-name="'+kind+'"]').forEach(node=>{node.textContent=value;});
+ }
+}
+frame.addEventListener('load',applyNames);
+firstInput.addEventListener('input',applyNames);
+secondInput.addEventListener('input',applyNames);
+document.getElementById('longNames').addEventListener('click',()=>{
+ firstInput.value='Mya Thazin Aung';
+ secondInput.value='Min Khant Kyaw';
+ applyNames();
+});
+document.getElementById('resetNames').addEventListener('click',()=>{
+ firstInput.value='Thiri';
+ secondInput.value='Min';
+ applyNames();
+});
 const withText=document.getElementById('withText');
 const artOnly=document.getElementById('artOnly');
 widths.forEach(button=>button.addEventListener('click',()=>{

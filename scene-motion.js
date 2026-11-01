@@ -5,6 +5,47 @@
 'use strict';
 
 (function initializeGardenMotion() {
+  // Personalized Burmese/English names can be significantly longer than the
+  // demo's names. Fit only the live HTML heading inside the painted arch.
+  // Never stretch/crop the artwork or alter the couple's actual text.
+  const heroTitle = document.getElementById('heroTitle');
+  const heroWords = document.getElementById('heroWords');
+  const heroSection = document.getElementById('home');
+  if (heroTitle && heroWords && heroSection) {
+    let pendingFit = false;
+    const fitHeroNames = () => {
+      pendingFit = false;
+      heroTitle.style.removeProperty('font-size');
+      const preferred = parseFloat(getComputedStyle(heroTitle).fontSize);
+      if (!Number.isFinite(preferred)) return;
+      const maximumWordsHeight = Math.min(heroSection.clientHeight * .33, 255);
+      // A readable lower bound avoids making longer names microscopic.
+      for (let font = preferred; font > 21; font -= 1) {
+        const titleOverflow = heroTitle.scrollWidth > heroTitle.clientWidth + 2;
+        const spanOverflow = [...heroTitle.children].some(el => el.scrollWidth > el.clientWidth + 2);
+        if (!titleOverflow && !spanOverflow && heroWords.offsetHeight <= maximumWordsHeight) break;
+        heroTitle.style.fontSize = Math.max(21, font - 1) + 'px';
+      }
+    };
+    const queueHeroFit = () => {
+      if (pendingFit) return;
+      pendingFit = true;
+      requestAnimationFrame(fitHeroNames);
+    };
+    queueHeroFit();
+    document.fonts?.ready.then(queueHeroFit);
+    if (typeof ResizeObserver !== 'undefined') {
+      const sizeObserver = new ResizeObserver(queueHeroFit);
+      sizeObserver.observe(heroSection);
+    } else {
+      window.addEventListener('resize', queueHeroFit, {passive:true});
+    }
+    if (typeof MutationObserver !== 'undefined') {
+      const nameObserver = new MutationObserver(queueHeroFit);
+      nameObserver.observe(heroTitle, {subtree:true,childList:true,characterData:true});
+    }
+  }
+
   const toggle = document.getElementById('blessingToggle');
   const blessing = document.getElementById('invitationBlessing');
   const blessingLabel = toggle?.querySelector('.heritage-blessing-label');
