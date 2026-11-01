@@ -50,6 +50,32 @@
   -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 12%,#000 52%,transparent 100%);
   mask-image:linear-gradient(to bottom,transparent 0%,#000 12%,#000 52%,transparent 100%);
 }
+/* Transition bridge: show only the very bottom cobblestones of the
+ * same approved ceremony painting, then fade them into the twilight view.
+ * This prevents the closing from abruptly restarting with sky immediately
+ * after the storybook's cobblestone pathway. No extra document height.
+ */
+#closing .closing-garden-path {
+  position:absolute;
+  z-index:1;
+  top:0;left:50%;
+  transform:translateX(-50%);
+  width:min(100%,660px);
+  height:clamp(84px,28vw,185px);
+  pointer-events:none;
+  background-image:url("art/section3_ceremony_reception_master.webp");
+  background-size:230% auto;
+  background-position:center bottom;
+  background-repeat:no-repeat;
+  opacity:.88;
+  filter:brightness(.91) saturate(.86);
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 16%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 0%,#000 16%,transparent 100%);
+}
+html[data-skin="moonlit-amethyst"] #closing .closing-garden-path {
+  background-image:url("skins/moonlit-amethyst/events.webp");
+  filter:brightness(.94) saturate(.79);
+}
 /* The haze makes the garden feel like late evening but does not cover
  * the original illustrated horizon with an unrelated flat panel. */
 #closing .closing-garden-haze {
