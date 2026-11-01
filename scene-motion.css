@@ -268,3 +268,32 @@ body.has-opened .hero .hero-words::after {
   .hero .hero-butterfly-button.is-flying .hero-butterfly,
   .hero .hero-butterfly-button.is-flying .hero-butterfly-wing {animation:none!important;}
 }
+
+/* Screenshot review: the written "TAP FOR MAGIC" hint crossed the wedding
+   title on 390px phones. Keep the butterfly visible, but reveal the extra
+   hint only for pointer-hover or keyboard focus. The accessible name remains. */
+.hero .hero-butterfly-hint {
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .18s ease,visibility .18s ease;
+  background:rgba(255,242,213,.94);
+  border:1px solid rgba(151,103,62,.38);
+  border-radius:99px;
+  padding:5px 7px;
+  width:max-content;
+  max-width:114px;
+}
+@media(hover:hover) and (pointer:fine){
+  .hero .hero-butterfly-button:hover .hero-butterfly-hint {
+    opacity:1;
+    visibility:visible;
+  }
+}
+.hero .hero-butterfly-button:focus-visible .hero-butterfly-hint {
+  opacity:1;
+  visibility:visible;
+}
+@media(prefers-reduced-motion:reduce){
+  .hero .hero-butterfly-hint {transition:none;}
+}
