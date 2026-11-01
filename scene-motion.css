@@ -1,0 +1,146 @@
+/* Golden Autumn Heritage / Option A — tasteful motion without altering art.
+ * All three painted masters remain static. Only live type, decorative sheen
+ * and explicit taps have motion. Hidden states activate only when JS is ready.
+ */
+
+/* The gold highlight travels across the wedding names ONCE after opening.
+   It isn't a looping sunbeam, flower movement or an extra full-scene layer. */
+.hero .hero-words::after {
+  content: '';
+  position: absolute;
+  inset: 7% 3%;
+  z-index: 3;
+  pointer-events: none;
+  border-radius: 42%;
+  opacity: 0;
+  background: linear-gradient(108deg,transparent 33%,rgba(255,242,196,.05) 40%,rgba(255,240,183,.38) 49%,rgba(255,242,196,.04) 60%,transparent 69%);
+  transform: translateX(-105%);
+}
+body.has-opened .hero .hero-words::after {
+  animation: garden-name-shine 1.25s .24s ease-out 1 both;
+}
+@keyframes garden-name-shine {
+  0% {transform:translateX(-105%); opacity:0;}
+  24% {opacity:.7;}
+  75% {opacity:.7;}
+  100% {transform:translateX(105%); opacity:0;}
+}
+
+/* The observer only tags editable HTML. The illustration itself never moves. */
+.motion-enabled .motion-reveal {
+  opacity: 0;
+  transform: translate3d(0, 12px, 0);
+  transition: opacity 560ms cubic-bezier(.22,.75,.26,1),
+              transform 640ms cubic-bezier(.2,.8,.25,1);
+  transition-delay: var(--scene-reveal-delay,0ms);
+}
+.motion-enabled .motion-reveal.is-visible {
+  opacity:1;
+  transform:none;
+}
+.invitation-section .heritage-blessing-button {
+  display: inline-flex;
+  gap: 8px;
+  align-items:center;
+  justify-content:center;
+  min-height: 44px;
+  max-width:100%;
+  margin: 13px auto 2px;
+  padding: 10px 16px;
+  border: 1px solid #b79268;
+  border-radius: 99px;
+  background: rgba(255,248,227,.8);
+  color:#69454a;
+  font:600 clamp(12px,3vw,14px)/1.35 var(--body);
+  cursor:pointer;
+  touch-action:manipulation;
+  box-shadow:0 3px 10px #714e411c;
+}
+.invitation-section .heritage-blessing-button:hover,
+.invitation-section .heritage-blessing-button[aria-expanded="true"] {
+  background:#fff5db;
+  border-color:#9c744f;
+}
+.invitation-section .heritage-blessing-button:focus-visible {
+  outline:3px solid #83553e;
+  outline-offset:3px;
+}
+.invitation-section .heritage-blessing {
+  max-width: 430px;
+  padding: 10px 9px 2px;
+  margin: 5px auto 0;
+  text-align:center;
+  color:#77564e;
+}
+.invitation-section .heritage-blessing[hidden] {display:none!important;}
+.invitation-section .heritage-blessing:not([hidden]) {
+  animation: garden-blessing-enter .42s ease-out 1 both;
+}
+.invitation-section .heritage-blessing p {margin:6px auto;font:italic 14px/1.6 var(--display);}
+.invitation-section .heritage-blessing p[lang="my"] {
+  font:normal 14px/1.9 'Noto Sans Myanmar','Myanmar Text','Pyidaungsu',sans-serif;
+}
+@keyframes garden-blessing-enter {
+  from {opacity:0;transform:translateY(7px);}
+  to {opacity:1;transform:translateY(0);}
+}
+
+/* Transparent focusable links sit over the TWO existing painted event frames.
+   Vertical finger gestures still pan the document via touch-action:pan-y. */
+.details-section .event-panel-hotspot {
+  display:block;
+  position:absolute;
+  box-sizing:border-box;
+  left:15.4%;
+  width:69.2%;
+  z-index:5;
+  border:2px solid transparent;
+  border-radius:12px;
+  background:transparent;
+  -webkit-tap-highlight-color:rgba(203,158,95,.23);
+  touch-action:pan-y pinch-zoom;
+  transition:background .18s ease,border-color .18s ease;
+}
+.details-section .event-panel-hotspot--ceremony {top:15%;height:26.8%;}
+.details-section .event-panel-hotspot--reception {top:47.7%;height:27.2%;}
+@media(hover:hover) and (pointer:fine){
+  .details-section .event-panel-hotspot:hover {
+    border-color:rgba(164,115,66,.58);
+    background:rgba(255,236,192,.11);
+  }
+}
+.details-section .event-panel-hotspot:focus-visible {
+  outline:3px solid #72454a;
+  outline-offset:1px;
+  background:rgba(255,238,194,.17);
+}
+.details-section .event-panel-hotspot:active {
+  background:rgba(255,238,194,.18);
+}
+.details-section .event-panel-hint {
+  box-sizing:border-box;
+  width:min(100%,660px);
+  margin:0 auto;
+  padding: 11px 12px 12px;
+  background:#f2dabb;
+  color:#7c5b52;
+  text-align:center;
+  font:italic clamp(12px,3vw,14px)/1.5 var(--display);
+}
+.details-section #ceremonyDetails,
+.details-section #receptionDetails {
+  scroll-margin-top: 0;
+}
+
+@media(max-width:420px){
+  .details-section .event-panel-hotspot--ceremony {top:15.2%;height:26.4%;}
+  .details-section .event-panel-hotspot--reception {top:48%;height:26.4%;}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero .hero-words::after,
+  body.has-opened .hero .hero-words::after,
+  .invitation-section .heritage-blessing:not([hidden]) { animation:none!important; }
+  .motion-enabled .motion-reveal,
+  .motion-enabled .motion-reveal.is-visible { opacity:1!important;transform:none!important;transition:none!important; }
+  .details-section .event-panel-hotspot {transition:none;}
+}
