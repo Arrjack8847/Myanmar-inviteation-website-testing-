@@ -53,3 +53,11 @@ Preview:
 ## Screenshot regression recorded (November 1, 2026)
 
 A phone simulator screenshot showed a **narrow contained illustration with obvious peach side bars**, a **black programmatic-focus outline around the names**, and **undersized, constrained wedding text**. Changes in `hero-quality.css` now use mobile `object-fit:cover;object-position:center 47%`, an improved arch text width/font, and suppress focus outlines on the *noninteractive, programmatically focused* heading only (real interactive focus outlines remain). Validate after pulling; screenshot still needs a side-by-side browser check.
+
+## Latest real-mobile-scroll QA (November 1)
+
+GitHub Actions runs the full website in headless Chromium at **320×568, 390×844, and 430×932** via `tests/browser-flow.cjs`. Completed run at `f8a919d174` reported **success** with real `touchStart/touchMove/touchEnd` gestures over the invitation. This provides stronger evidence than prior source-only checks. Screenshots are saved in the action's `golden-autumn-mobile-screenshots` artifact.
+
+A visual review of these phone screenshots revealed that the **Scroll to Explore** cue was not visible immediately after opening the garden, because its old transition delayed opacity. A new patch in `hero-quality.css` makes it visible quickly with a 48px high contrast touch target, and `tests/browser-flow.cjs` now checks its opacity, visible bounds, tap target size and destination at all three phone sizes. Verify that the newer Actions run passes before marking that regression resolved.
+
+These checks do **not** replace real iOS Safari screenshots, the user's visual approval of cross-section painted seams, or mobile Lighthouse performance scores. Do not claim 10/10 without those.
