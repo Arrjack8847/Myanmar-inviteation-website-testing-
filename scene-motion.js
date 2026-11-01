@@ -20,6 +20,25 @@
     });
   }
 
+  // The small resting butterfly is a user-triggered replay, not ambient
+  // scenery. Ignore rapid double taps, and never steal keyboard focus.
+  const butterfly = document.getElementById('heroButterfly');
+  if (butterfly) {
+    butterfly.addEventListener('click', () => {
+      if (butterfly.classList.contains('is-flying') ||
+          butterfly.classList.contains('is-still-magic')) return;
+
+      if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+        butterfly.classList.add('is-still-magic');
+        window.setTimeout(() => butterfly.classList.remove('is-still-magic'), 550);
+        return;
+      }
+
+      butterfly.classList.add('is-flying');
+      window.setTimeout(() => butterfly.classList.remove('is-flying'), 1750);
+    });
+  }
+
   const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)');
   if (reduced?.matches || !('IntersectionObserver' in window)) return;
 
