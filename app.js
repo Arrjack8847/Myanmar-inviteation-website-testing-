@@ -13,6 +13,11 @@ const DEMO = {
   weddingDateISO: '2027-06-20T16:30:00+06:30',
   displayDate: '20 JUNE 2027',
 };
+const CUSTOMER = window.WEDDING_CUSTOMIZATION || {};
+// Explicit safe fields, populated before the derived event and countdown data.
+for (const key of ['firstName','secondName','firstFamily','secondFamily','weddingDateISO','displayDate']) {
+  if (typeof CUSTOMER.couple?.[key] === 'string') DEMO[key] = CUSTOMER.couple[key];
+}
 
 // Optional sample story: every chapter below is an explicit writing prompt,
 // NOT a claim about any couple. Replace with approved details before publishing.
@@ -33,6 +38,15 @@ const LOVE_STORY = {
     }
   ]
 };
+if (typeof CUSTOMER.story?.introduction === 'string') LOVE_STORY.introduction = CUSTOMER.story.introduction;
+if (Array.isArray(CUSTOMER.story?.chapters)) {
+  for (const [index,chapter] of CUSTOMER.story.chapters.entries()) {
+    if (!LOVE_STORY.chapters[index] || !chapter) continue;
+    for (const key of ['title','text']) {
+      if (typeof chapter[key] === 'string') LOVE_STORY.chapters[index][key] = chapter[key];
+    }
+  }
+}
 
 function renderLoveStory() {
   const intro = document.querySelector('[data-story-intro]');
@@ -67,6 +81,14 @@ const WEDDING_EVENTS = {
     mapUrl: ''
   }
 };
+for (const kind of ['ceremony','reception']) {
+  const custom = CUSTOMER.events?.[kind];
+  if (!custom) continue;
+  for (const key of ['dateLabel','dateISO','time','venue','address','mapUrl']) {
+    if (typeof custom[key] === 'string') WEDDING_EVENTS[kind][key] = custom[key];
+  }
+  if (typeof custom.venueConfirmed === 'boolean') WEDDING_EVENTS[kind].venueConfirmed = custom.venueConfirmed;
+}
 
 // Only trusted Google Maps or Waze links may become clickable directions.
 // The event's venueConfirmed flag must also be explicitly enabled.

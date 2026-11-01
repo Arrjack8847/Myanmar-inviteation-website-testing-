@@ -1,0 +1,48 @@
+/* Motion overlays live above the artwork, behind the live names.
+ * Deliberately subtle, phone-first and reduced-motion respectful. */
+.hero-scene .garden-ambient {
+  position:absolute;inset:0;z-index:4;
+  overflow:hidden;pointer-events:none;contain:layout paint;
+}
+.garden-ambient-leaf {
+  position:absolute;left:var(--x);top:var(--y);
+  width:clamp(13px,3.5vw,22px);height:32px;object-fit:contain;
+  opacity:0;filter:drop-shadow(0 2px 2px #65483740);
+  animation:garden-ambient-drift var(--duration) ease-in-out var(--delay) infinite alternate;
+  will-change:transform,opacity;
+}
+.garden-ambient-flower {
+  position:absolute;top:var(--top);width:clamp(42px,13vw,67px);
+  height:90px;object-fit:contain;opacity:0;
+  transform-origin:top center;mix-blend-mode:multiply;
+  animation:garden-ambient-sway 10s ease-in-out var(--delay) infinite alternate;
+  will-change:transform;
+}
+.garden-ambient-flower.is-left{left:-4%}
+.garden-ambient-flower.is-right{right:-4%;transform:scaleX(-1)}
+.has-opened .garden-ambient-leaf{opacity:.46}
+.has-opened .garden-ambient-flower{opacity:.34}
+@keyframes garden-ambient-drift{
+  0%{transform:translate3d(0,6px,0) rotate(-13deg);opacity:.15}
+  50%{opacity:.52}
+  100%{transform:translate3d(var(--drift),-12px,0) rotate(20deg);opacity:.24}
+}
+@keyframes garden-ambient-sway{
+  from{transform:rotate(-2deg) translate3d(0,0,0)}
+  to{transform:rotate(3deg) translate3d(3px,-5px,0)}
+}
+.garden-ambient-flower.is-right {animation-name:garden-ambient-sway-right}
+@keyframes garden-ambient-sway-right{
+  from{transform:scaleX(-1) rotate(-2deg)}
+  to{transform:scaleX(-1) rotate(3deg) translate3d(-3px,-4px,0)}
+}
+.art-review-mode .garden-ambient{display:none!important}
+@media(max-width:350px){
+  .garden-ambient-flower{width:40px;opacity:.2}
+  .garden-ambient-leaf{width:13px}
+}
+@media(prefers-reduced-motion:reduce){
+  .garden-ambient-leaf,.garden-ambient-flower{
+    animation:none!important;will-change:auto!important;opacity:0!important
+  }
+}

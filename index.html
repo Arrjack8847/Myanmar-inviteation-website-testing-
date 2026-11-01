@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="flow-quality.css" />
   <link rel="stylesheet" href="event-reading.css" />
   <link rel="stylesheet" href="scene-motion.css" />
+  <link rel="stylesheet" href="garden-ambient.css" />
 </head>
 <body class="not-opened">
   <div class="demo-bar" aria-label="Prototype notice"><span class="demo-indicator"></span> LOCAL DESIGN DEMO <span class="demo-separator">·</span> SAMPLE DETAILS</div>
@@ -29,7 +30,7 @@
       <img src="26_leaf_golden_bodhi.png" class="cover-leaf c4" alt="" />
       <img src="27_leaf_orange_bodhi.png" class="cover-leaf c5" alt="" />
     </div>
-    <div class="cover-topline"><span class="star">✧</span> GOLDEN AUTUMN HERITAGE <span class="star">✧</span></div>
+    <div class="cover-topline"><span class="star">✧</span> <span class="skin-name">GOLDEN AUTUMN HERITAGE</span> <span class="star">✧</span></div>
     <button class="envelope" type="button" aria-label="Tap the butterfly to open the invitation">
       <span class="envelope-top"></span><span class="envelope-bottom"></span>
       <img class="opening-card-art" src="29_opening_invitation_card.png" alt="" />
@@ -57,8 +58,9 @@
         </picture>
         <!-- Only temporary leaves from the butterfly opening; not scroll/parallax layers. -->
         <div class="leaf-field" id="leafField"></div>
+        <div class="garden-ambient" id="gardenAmbient" aria-hidden="true"></div>
       </div>
-      <div class="hero-topline"><span>❦</span> GOLDEN AUTUMN HERITAGE <span>❦</span></div>
+      <div class="hero-topline"><span>❦</span> <span class="skin-name">GOLDEN AUTUMN HERITAGE</span> <span>❦</span></div>
       <!-- Optional replayable magic: independent transparent butterfly, never
            animated scenery. Native button stays keyboard and touch accessible. -->
       <button class="hero-butterfly-button" id="heroButterfly" type="button"
@@ -281,9 +283,11 @@
     </div>
   </main>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="wedding-config.js" defer></script>
   <script src="app.js" defer></script>
   <script src="skin-packs.js" defer></script>
   <script src="skin-loader.js" defer></script>
   <script src="scene-motion.js" defer></script>
+  <script src="garden-ambient.js" defer></script>
 </body>
 </html>

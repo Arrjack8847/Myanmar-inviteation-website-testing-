@@ -3,13 +3,14 @@
 (function loadSkin() {
   const catalog=window.INVITATION_SKINS;
   if(!catalog?.packs)return;
-  const requested=new URLSearchParams(location.search).get('skin');
+  const requested=new URLSearchParams(location.search).get('skin') || window.WEDDING_CUSTOMIZATION?.skin;
   const id=Object.prototype.hasOwnProperty.call(catalog.packs,requested)
     ? requested : catalog.defaultId;
   const skin=catalog.packs[id];
   if(!skin)return;
   window.INVITATION_ACTIVE_SKIN=skin;
   document.documentElement.dataset.skin=id;
+  document.querySelectorAll('.skin-name').forEach(node=>{node.textContent=skin.label.toUpperCase();});
   // The original image paths stay in the HTML/CSS, even without JavaScript.
   if(id===catalog.defaultId)return;
   function swap(selector,src){

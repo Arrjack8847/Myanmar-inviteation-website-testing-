@@ -17,6 +17,7 @@ window.INVITATION_SKINS = {
         '23_leaf_golden_teak.png','24_leaf_copper_teak.png','25_leaf_burgundy_teak.png',
         '26_leaf_golden_bodhi.png','27_leaf_orange_bodhi.png','28_leaf_small_russet.png'
       ],
+      floral:'18_hanging_flower_sprig.png',
       divider:'31_gold_ornamental_divider.png',
       corner:'32_gold_corner_ornament.png'
     }
