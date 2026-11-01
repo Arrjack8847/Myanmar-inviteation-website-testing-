@@ -98,6 +98,8 @@ async function testSize(size) {
   try{
     await page.goto(url+'/index.html?heroPreview=1#home',{waitUntil:'load',timeout:30000});
     await page.waitForFunction(()=>document.body.classList.contains('has-opened'));
+    assert.equal(await page.locator('html').getAttribute('data-skin'), 'golden-autumn',
+      'Approved default skin must load without altering the rendered invitation');
     // Guests should see a clear, touch-friendly way to continue immediately
     // after the cover, not a button hidden by a delayed opacity transition.
     await page.waitForTimeout(400);

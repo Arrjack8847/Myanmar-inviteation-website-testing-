@@ -24,6 +24,9 @@ jobs:
       - name: Repository source and artwork checks
         run: node tests/smoke.cjs
 
+      - name: Validate interchangeable artwork skins
+        run: node tests/skin-system.cjs
+
       - name: Keyboard and opening interaction checks
         run: node tests/hero-interaction.cjs
 
