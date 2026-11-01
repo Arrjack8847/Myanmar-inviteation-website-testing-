@@ -89,7 +89,10 @@ To reduce cascading-layout bugs, the old `screen-fit.css` is **no longer loaded*
 
 Open `http://localhost:4173/flow-review.html` to inspect the **actual website** at 320 × 568, 390 × 844 or 430 × 932, jump between the three painted scenes, and run automatic page-geometry checks. The page reports the measured space/overlap at both joins, any horizontal overflow, whether the whole document scrolls, and whether the invitation still has an unwanted nested scrollbar. It requires no npm packages.
 
-The browser review page is a **local diagnostic**; passing geometry checks does not establish that the independently painted illustrations are pixel-perfect at the joins. Continue inspecting actual phone screenshots before publishing.
+The browser review page is a **local diagnostic**; passing geometry checks does not establish that the independently painted illustrations are pixel-perfect at the joins.
+
+The automated Chromium workflow also captures `seam-garden-family-<width>x<height>.png` and `seam-family-events-<width>x<height>.png` in its screenshot artifact, showing the real join rather than only the top of the section. Matching physical artwork edges perfectly still requires an approved revision to the original paintings; CSS is deliberately limited to subtle, static edge fading.
+ Continue inspecting actual phone screenshots before publishing.
 
 ## Continuous scrolling — Sections 1, 2 and 3 (latest repair)
 
@@ -100,7 +103,7 @@ The corrective **`flow-quality.css`** stylesheet is loaded **last**, after `hero
 - **Section 1** remains a single-viewport gateway scene. Its complete static painting and live HTML names remain unchanged. The visible scroll cue stays above the transition.
 - **Section 2** now grows to fit its actual bilingual family-invitation content. No fixed section height, no filler band, no extra inner scroll. The approved one-piece nine-slice gold floral artwork is unchanged.
 - **Section 3** begins immediately after Section 2, sized at the artwork's native 1086:1448 aspect ratio. Its two event panels remain editable live HTML; the complete illustration is unchanged.
-- On browsers supporting CSS masking, **small 18–28px feathered overlaps** soften the Section 1 → 2 and Section 2 → 3 handoffs. This helps but does **not** guarantee pixel-perfect seams between separately painted images. On browsers without mask support, the sections still join directly with no empty spacer.
+- On browsers supporting CSS masking, **responsive 14–26px feathered overlaps** soften the Section 1 → 2 and Section 2 → 3 handoffs without parallax. This helps but does **not** guarantee pixel-perfect seams between separately painted images. On browsers without mask support, the sections still join directly with no empty spacer.
 - Normal **touch swipes scroll the whole page**, with no scroll snapping, parallax, fixed-height image sections or nested scrolling traps.
 
 **Trade-off:** Section 2 is no longer guaranteed to fit in exactly one screen on short phones. Showing all real names, Burmese wording and dates without clipping is more important. The website scrolls naturally like a long invitation.
