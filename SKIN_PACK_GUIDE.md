@@ -11,7 +11,7 @@ it is not a separately illustrated scenery redesign.
 
 ## Creating a new skin without changing the mechanics
 
-1. Upload your new artwork to `skins/YOUR-ID/` in this branch.
+1. Upload your new artwork to `skins/YOUR-ID/` on a new feature branch.
 2. Copy the `golden-autumn` object in `skin-packs.js`, give it a new ID,
    and point its image paths at the uploaded files.
 3. Keep all scene geometry and animation classes unchanged.
@@ -36,7 +36,7 @@ not an image-only swap.
 ## What stays independent of the skin
 
 The guest names, parent names, story, countdown, dates, and locations remain
-editable through `app.js`. The cover reveal, butterfly flight, leaf gust,
+personalized through `wedding-config.js` without editing `app.js`. The cover reveal, butterfly flight, leaf gust,
 scrolling, page layout and interaction event handlers stay shared.
 `?skin=unknown` safely falls back to the original instead of resolving a
 URL as an arbitrary image path. The original HTML artwork is also a fallback
