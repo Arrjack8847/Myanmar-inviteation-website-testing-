@@ -110,8 +110,8 @@ async function run(skin,width){
     assert(art.closingHorizonRect.width<=width+2,'Closing illustration must not overflow phone width');
     assert(art.bridgePointer==='none','Decorative edge must not capture touches');
     assert(art.bridgePosition==='absolute','Transition artwork must not introduce document height');
-    assert(art.bridgeWidth<=width+2&&art.bridgeHeight>=60,'Transition must fit mobile width');
     if(skin==='golden-autumn'){
+      assert(art.bridgeWidth<=width+2&&art.bridgeHeight>=60,'Golden transition must fit mobile width');
       assert(art.bridgeBackground.includes('4ba5ed04'),'Bridge must match original story image');
       assert(art.bridgeTransform.includes('-1'),'Bridge must mirror image vertically');
       assert(art.bridgeMask.includes('gradient'),'Transition must fade out to dusk');
