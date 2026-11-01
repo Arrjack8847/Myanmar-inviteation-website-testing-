@@ -96,7 +96,7 @@
   min-height: 0;
   /* Keep live headings below the upper crest and story closing copy above
      the lower filigree, even for longer Myanmar/English paragraphs. */
-  padding: clamp(36px, 8.2vw, 58px) 0 clamp(90px, 26vw, 145px);
+  padding: clamp(60px, 15vw, 90px) 0 clamp(90px, 26vw, 145px);
   margin: 0;
   border: 0;
   /* The original source already contains a readable parchment texture.
@@ -116,6 +116,11 @@
   max-width: 100%;
   margin: 0 auto clamp(20px, 5vw, 33px);
   padding: 0;
+}
+#countdown .story-intro .eyebrow {
+  font-size: clamp(8px, 2.15vw, 10px);
+  letter-spacing: .12em;
+  overflow-wrap: anywhere;
 }
 #countdown .story-intro .section-heading {
   font-size: clamp(30px, 7.1vw, 48px);
