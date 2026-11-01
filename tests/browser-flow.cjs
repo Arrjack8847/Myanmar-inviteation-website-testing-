@@ -115,6 +115,27 @@ async function testSize(size) {
     assert(cue.width>=150&&cue.height>=44,'Scroll cue tap target is too small: '+JSON.stringify(cue));
     assert(cue.visible,'Scroll cue must fit inside the first phone viewport');
     assert.equal(cue.href,'#invitation','Scroll cue should take guests to the family invitation');
+    // Resting butterfly is static until explicitly tapped, and cannot trap
+    // swipes or restart its flight repeatedly on rapid taps.
+    const replay=page.locator('#heroButterfly');
+    const butterflyRest=await replay.evaluate(button=>{
+      const r=button.getBoundingClientRect();
+      return {
+        width:r.width, height:r.height,
+        inViewport:r.left>=0&&r.right<=innerWidth&&r.top>=0&&r.bottom<=innerHeight,
+        animation:getComputedStyle(button.querySelector('.hero-butterfly')).animationName
+      };
+    });
+    assert(butterflyRest.inViewport && butterflyRest.width>=44 && butterflyRest.height>=44,
+      'Replay butterfly must be an accessible phone touch target: '+JSON.stringify(butterflyRest));
+    assert(butterflyRest.animation==='none','Resting butterfly must not animate automatically');
+    await replay.click();
+    assert.equal(await replay.evaluate(el=>el.classList.contains('is-flying')),true,
+      'Tapping the butterfly must trigger one short flight');
+    await replay.evaluate(button=>button.click()); // double-tap should be ignored
+    await page.waitForTimeout(1850);
+    assert.equal(await replay.evaluate(el=>el.classList.contains('is-flying')),false,
+      'Short butterfly flight must end and return to resting state');
     await page.locator('.ceremony-master-art').scrollIntoViewIfNeeded();
     await page.waitForTimeout(600);
     await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
@@ -309,6 +330,18 @@ async function testSize(size) {
       return style.opacity==='1'&&style.transform==='none';
     }));
     assert(reducedState,'Reduced motion must leave all invitation details visible');
+    // Even guests with reduced motion can use the butterfly control, receiving
+    // a static highlight instead of forced flying or wing flapping.
+    await replay.scrollIntoViewIfNeeded();
+    await replay.click();
+    assert.equal(await replay.evaluate(el=>el.classList.contains('is-still-magic')),true,
+      'Reduced-motion butterfly tap must receive non-moving feedback');
+    assert.equal(await replay.evaluate(el=>el.classList.contains('is-flying')),false,
+      'Reduced-motion butterfly must not fly');
+    await page.waitForTimeout(650);
+    assert.equal(await replay.evaluate(el=>el.classList.contains('is-still-magic')),false,
+      'Static butterfly feedback must reset');
+
 
     console.log('PASS',size.width+'x'+size.height,JSON.stringify({...metrics,scrollDelta:Math.round(after-before),touchScrollDelta:Math.round(touchAfter-touchBefore)}));
   }finally{await context.close();}
