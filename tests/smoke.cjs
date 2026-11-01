@@ -85,11 +85,16 @@ assert(js.includes('event.venueConfirmed ? approvedMapUrl(event.mapUrl)'), 'Dire
 assert(js.includes('renderWeddingEvents();'), 'Event rendering not called');
 assert(read('events.css').includes('.celebration-events'), 'Event card styling missing');
 
-/* Section 3: the artwork is one complete illustrated source from the user's
-   testing-version-2 upload. The live text floats inside its two original
-   frames, not inside duplicated rectangular/card borders. */
-const section3MasterUrl='https://raw.githubusercontent.com/Arrjack8847/testing-version-2/66f9366ae4037238345f232e4185be4b44aaf697/1d9dbc80-eada-40a7-b1be-7182c2cffbbe.png';
-assert(eventsSection.includes(section3MasterUrl), 'Uploaded section 3 source missing');
+/* Section 3: exact, verified original illustration is now in THIS repository.
+   Keep its complete two-panel frame and live event wording unchanged. */
+const section3MasterPath='art/section3_ceremony_reception_master.png';
+assert(eventsSection.includes('src="'+section3MasterPath+'"'), 'Section 3 must use the local original image');
+assert(!eventsSection.includes('raw.githubusercontent.com'), 'Section 3 must not depend on an external raw image');
+const section3Data=fs.readFileSync(path.join(root,section3MasterPath));
+assert(section3Data.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10])), 'Section 3 image must be a PNG');
+assert.equal(section3Data.readUInt32BE(16),1086,'Section 3 source width changed unexpectedly');
+assert.equal(section3Data.readUInt32BE(20),1448,'Section 3 source height changed unexpectedly');
+assert.equal(section3Data.length,3031235,'Section 3 image bytes differ from the verified original');
 assert.equal((eventsSection.match(/class="ceremony-master-art"/g)||[]).length, 1, 'Section 3 must render exactly one master image');
 assert.equal((eventsSection.match(/class="celebration-event"/g)||[]).length, 2, 'Expected exactly two live overlays for the two painted panels');
 assert(!eventsSection.includes('class="celebration-event-number"'), 'Do not reintroduce floating extra artwork ornaments');
