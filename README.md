@@ -77,9 +77,7 @@ Open `http://localhost:4173/index.html?heroPreview=1#invitation` to skip the cov
 
 Section 3 now displays a **single, complete original image**, with its two ivory-and-gold frames and surrounding autumn garden painted together. The existing HTML ceremony and reception details overlay the two empty panels. The flowers, carvings, lanterns, stone path and sunset are not reassembled from separate assets.
 
-**Upload location:** the approved 1086×1448 image was uploaded to the public repository `Arrjack8847/testing-version-2` as `1d9dbc80-eada-40a7-b1be-7182c2cffbbe.png` at commit `66f9366ae4037238345f232e4185be4b44aaf697`, rather than the Golden Autumn Heritage V4 repo. The image bytes were checked against the generated Section 3 artwork (matching Git blob `fca0d987ac2e13686dfd08463401a6c5f24e023e`).
-
-Until that PNG is copied to this repository, `index.html` loads a **fixed-commit** public raw GitHub URL for the artwork. This is a **temporary external dependency**: the remote file must remain publicly accessible during previews. Before production, upload that exact PNG to `art/section3_ceremony_reception_master.png` in this repository and change the `<img class="ceremony-master-art">` source to the local path.
+**Local source now verified:** `art/section3_ceremony_reception_master.png` is in this repository. It is a byte-for-byte copy of the approved 1086×1448 original uploaded to `Arrjack8847/testing-version-2`. Git blob SHA: `fca0d987ac2e13686dfd08463401a6c5f24e023e`; size 3,031,235 bytes. V4 now uses its **local** asset path at runtime, so an outage or deletion in the separate repository cannot break the ceremony illustration. The verified copy was installed by `.github/workflows/vendor-section3-art.yml`.
 
 Both events remain customizable via `WEDDING_EVENTS` in `app.js`. Unconfirmed locations show a pending notice and never offer invented directions. Actual long Burmese/venue text and visual joins at 320/390/430px must still be reviewed on a phone. Styling and responsive panel overlays are in `events-art.css`.
 
@@ -162,4 +160,4 @@ Earlier individual garden and gateway assets remain in the repository as unused 
 
 Names **Thiri & Min**, date **20 June 2027**, and Yangon event information are **fictional placeholders**. Change couple names/date in the `DEMO` object and event details in `WEDDING_EVENTS` in `app.js`.
 
-This remains a local, un-deployed prototype: no RSVP database, payment system or public domain. The master artwork is relatively large; image compression and real-device QA are recommended before production.
+This remains a local, un-deployed prototype: no RSVP database, payment system or public domain. The original scene images are relatively large; image compression, painted-edge refinement and real-device QA are recommended before production.
