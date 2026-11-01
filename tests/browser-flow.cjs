@@ -65,6 +65,8 @@ function measure() {
     art3Loaded:allImgs[1].complete && allImgs[1].naturalWidth>0,
     art3Local:scene.getAttribute('src')==='art/section3_ceremony_reception_master.png',
     art2Set:section2Style.borderImageSource.includes('section2_family_invitation_master.png'),
+    art2MaskActive:getComputedStyle(art2).maskImage!=='none',
+    art3MaskActive:getComputedStyle(document.querySelector('.ceremony-master-scene')).maskImage!=='none',
     art1Fit:getComputedStyle(master).objectFit,
     bodyScroll:getComputedStyle(document.body).overflowY
   };
@@ -112,6 +114,8 @@ async function testSize(size) {
     assert(metrics.eventOverflow!=='auto'&&metrics.eventOverflow!=='scroll','Nested event scrollbar traps touch swipes');
     assert(metrics.art1Loaded,'Approved gateway master failed to load');
     assert(metrics.art2Set,'Section 2 illustration was not applied');
+    assert(metrics.art2MaskActive,'Responsive garden → invitation seam mask is missing');
+    assert(metrics.art3MaskActive,'Responsive invitation → events seam mask is missing');
     assert(metrics.art3Loaded,'Section 3 original illustration failed to load');
     assert(metrics.art3Local,'Section 3 must use its local verified source, not another repository');
     assert(metrics.art1Fit==='cover','Hero must fill the phone without wide side gutters');
