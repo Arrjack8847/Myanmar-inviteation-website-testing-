@@ -1,0 +1,57 @@
+name: Vendor the verified Section 3 artwork
+
+on:
+  push:
+    branches:
+      - feat/hires-garden-preview-20261101
+    paths:
+      - '.github/workflows/vendor-section3-art.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  vendor-section-3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout V4 branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Obtain original user-uploaded art by immutable source commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p art
+          curl --fail --location --retry 3 \
+            'https://raw.githubusercontent.com/Arrjack8847/testing-version-2/66f9366ae4037238345f232e4185be4b44aaf697/1d9dbc80-eada-40a7-b1be-7182c2cffbbe.png' \
+            -o art/section3_ceremony_reception_master.png
+          ACTUAL="$(git hash-object art/section3_ceremony_reception_master.png)"
+          EXPECTED='fca0d987ac2e13686dfd08463401a6c5f24e023e'
+          test "$ACTUAL" = "$EXPECTED" || { echo "Source blob SHA mismatch: $ACTUAL"; exit 1; }
+          python3 - <<'PY'
+          import struct
+          from pathlib import Path
+          p=Path('art/section3_ceremony_reception_master.png')
+          with p.open('rb') as f:
+              header=f.read(26)
+          assert header[:8] == b'\x89PNG\r\n\x1a\n', 'Not a PNG'
+          assert struct.unpack('>II',header[16:24]) == (1086,1448), 'Wrong art dimensions'
+          assert p.stat().st_size == 3031235, 'Unexpected artwork size'
+          print('Verified original Section 3 PNG and exact Git blob bytes')
+          PY
+      - name: Commit verified image to this V4 branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add art/section3_ceremony_reception_master.png
+          if git diff --cached --quiet; then
+            echo "Original image already present; no commit required"
+            exit 0
+          fi
+          git commit -m 'art(section3): vendor verified original master into V4 repository'
+          git push origin HEAD:feat/hires-garden-preview-20261101
