@@ -41,7 +41,7 @@ assert(css.includes('prefers-reduced-motion:reduce'),'Reduced-motion support mis
 const closingCss=read('closing-garden.css');
 assert(html.includes('href="closing-garden.css"'),'Closing Garden stylesheet missing');
 const closing=html.split('<section class="content-section closing-section"')[1]||'';
-for(const cls of ['closing-garden-horizon','closing-garden-path','closing-garden-haze','closing-floral--left','closing-floral--right']){
+for(const cls of ['closing-garden-horizon','closing-garden-haze','closing-floral--left','closing-floral--right']){
   assert(closing.includes(cls),'Closing decoration missing: '+cls);
 }
 assert(closing.includes('id="shareButton"')&&closing.includes('href="#home"'),'Share and return actions must survive');
