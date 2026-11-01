@@ -83,6 +83,14 @@ Both events remain customizable via `WEDDING_EVENTS` in `app.js`. Unconfirmed lo
 
 Preview: `http://localhost:4173/index.html?heroPreview=1#details`.
 
+## Option A follow-up — guest-triggered butterfly replay
+
+Section 1 now includes a **small resting butterfly** built with the existing original transparent wing/body PNGs (`20_...`, `21_...`, `22_...`). A visible **TAP FOR MAGIC** hint and labeled native button allow guests to trigger a single ~1.65-second flight across the upper garden sky, which then resets for replay. **It never flies automatically** and there is no loop between taps. Repeated taps while the flight is active are ignored. The scene master, gateway, flowers, floor, hero wording and Scroll to Explore button do not move.
+
+The interaction is in `scene-motion.js` / `scene-motion.css` only. Guests using **Reduce Motion** receive a brief static gold highlight rather than flapping or flight, and the full button can be used by keyboard or touch. This deliberately avoids an always-on butterfly cycle or new assets.
+
+Source guards and a real Chromium mobile test cover resting/one-shot flight, touch target, quick retriggers, reduced-motion behavior and the already validated garden scrolling. Note that these are visual and interaction enhancements; no change to actual wedding data or information hierarchy is intended.
+
 ## Option A — Cinematic animation overlays (Sections 1–3)
 
 This iteration adds restrained motion **without splitting the three original garden illustrations into dozens of pieces**. All approved PNG/WebP masters stay completely static, and guests still scroll freely from one scene to the next.
