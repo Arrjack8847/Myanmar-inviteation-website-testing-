@@ -10,7 +10,7 @@
     if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') return null;
     const host = parsed.hostname.toLowerCase().replace(/^\[|\]$/g, '');
     // Local, LAN and reserved addresses are not public guest links.
-    const ipv4=host.match(/^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$/);
+    const ipv4=host.match(/^([0-9]{1,3})[.]([0-9]{1,3})[.]([0-9]{1,3})[.]([0-9]{1,3})$/);
     const localIPv4=ipv4 && (
       [0,10,127].includes(Number(ipv4[1])) ||
       (Number(ipv4[1])===192 && Number(ipv4[2])===168) ||
