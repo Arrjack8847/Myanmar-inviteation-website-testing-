@@ -251,6 +251,12 @@ if (previewParams.get('artReview') === '1') {
 const counterKeys = ['days', 'hours', 'minutes', 'seconds'];
 const countdownStatus = document.getElementById('countdownStatus');
 const countdownDisplay = document.querySelector('.countdown-grid');
+const customWeddingDate = typeof CUSTOMER.couple?.weddingDateISO === 'string' &&
+  CUSTOMER.couple.weddingDateISO.trim().length > 0;
+const countdownFootnote = document.querySelector('.countdown-footnote');
+if (countdownFootnote && customWeddingDate) {
+  countdownFootnote.textContent = 'Wedding countdown · based on the configured event date and time';
+}
 function updateCountdown() {
   const deadline = Date.parse(DEMO.weddingDateISO);
   const valid = Number.isFinite(deadline);
@@ -277,8 +283,8 @@ function updateCountdown() {
     countdownDisplay.setAttribute('aria-label', !valid
       ? 'Wedding date not yet set'
       : delta === 0
-        ? 'The sample wedding date has arrived'
-        : 'Time remaining until the sample wedding date');
+        ? 'The wedding date has arrived'
+        : 'Time remaining until the wedding date');
   }
 }
 updateCountdown();
