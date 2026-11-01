@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="story.css" />
   <link rel="stylesheet" href="hero-quality.css" />
   <link rel="stylesheet" href="flow-quality.css" />
+  <link rel="stylesheet" href="event-reading.css" />
 </head>
 <body class="not-opened">
   <div class="demo-bar" aria-label="Prototype notice"><span class="demo-indicator"></span> LOCAL DESIGN DEMO <span class="demo-separator">·</span> SAMPLE DETAILS</div>
@@ -124,31 +125,52 @@
             <img class="ceremony-master-art" src="art/section3_ceremony_reception_master.png" width="1086" height="1448" loading="lazy" decoding="async" alt="" />
           </picture>
 
-          <div class="celebration-events" aria-label="Wedding ceremony and reception information">
-            <article class="celebration-event" data-event="ceremony" aria-labelledby="ceremonyTitle">
+          <!-- A visual summary on the original hand-painted frames. The entire
+               actionable event information is presented in readable cards below. -->
+          <div class="celebration-events" aria-hidden="true">
+            <article class="celebration-event" data-event="ceremony">
               <div class="celebration-event-inner">
-                <h3 id="ceremonyTitle">Wedding <em>Ceremony</em></h3>
+                <h3>Wedding <em>Ceremony</em></h3>
                 <p class="celebration-event-myanmar" lang="my">မင်္ဂလာအခမ်းအနား</p>
                 <time class="celebration-event-date" data-event-field="date">20 JUNE 2027</time>
                 <p class="celebration-event-time" data-event-field="time">4:30 PM · MYANMAR TIME</p>
-                <p class="celebration-venue" data-event-field="venue">Venue to be confirmed</p>
-                <p class="celebration-address" data-event-field="address">Yangon, Myanmar — sample city only</p>
-                <a class="celebration-directions" data-event-link hidden target="_blank" rel="noopener noreferrer" aria-label="Open directions to the wedding ceremony venue">GET DIRECTIONS <span aria-hidden="true">↗</span></a>
-                <p class="celebration-directions-pending" data-event-pending>Directions available once the venue is confirmed</p>
               </div>
             </article>
-
-            <article class="celebration-event" data-event="reception" aria-labelledby="receptionTitle">
+            <article class="celebration-event" data-event="reception">
               <div class="celebration-event-inner">
-                <h3 id="receptionTitle">Wedding <em>Reception</em></h3>
+                <h3>Wedding <em>Reception</em></h3>
                 <p class="celebration-event-myanmar" lang="my">မင်္ဂလာဧည့်ခံပွဲ</p>
                 <time class="celebration-event-date" data-event-field="date">Date to be confirmed</time>
                 <p class="celebration-event-time" data-event-field="time">Time to be confirmed</p>
-                <p class="celebration-venue" data-event-field="venue">Reception venue to be confirmed</p>
-                <p class="celebration-address" data-event-field="address">Venue and address to be added</p>
-                <a class="celebration-directions" data-event-link hidden target="_blank" rel="noopener noreferrer" aria-label="Open directions to the reception venue">GET DIRECTIONS <span aria-hidden="true">↗</span></a>
-                <p class="celebration-directions-pending" data-event-pending>Directions available once the venue is confirmed</p>
               </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="event-reading-section" aria-labelledby="eventReadingTitle">
+          <p class="event-reading-eyebrow">THE CELEBRATION</p>
+          <h3 id="eventReadingTitle" class="event-reading-title">Ceremony &amp; <em>Reception</em> Details</h3>
+          <p class="event-reading-caption">All the details for our special day</p>
+          <div class="event-reading-grid">
+            <article class="event-reading-card" data-event="ceremony" aria-labelledby="ceremonyTitle">
+              <p class="event-reading-type" lang="my">မင်္ဂလာအခမ်းအနား</p>
+              <h4 id="ceremonyTitle">Wedding Ceremony</h4>
+              <time class="event-reading-date" data-event-field="date">20 JUNE 2027</time>
+              <p class="event-reading-time" data-event-field="time">4:30 PM · MYANMAR TIME</p>
+              <p class="event-reading-venue" data-event-field="venue">Venue to be confirmed</p>
+              <p class="event-reading-address" data-event-field="address">Yangon, Myanmar — sample city only</p>
+              <a class="event-reading-directions" data-event-link hidden target="_blank" rel="noopener noreferrer" aria-label="Open directions to the wedding ceremony venue">GET DIRECTIONS <span aria-hidden="true">↗</span></a>
+              <p class="event-reading-pending" data-event-pending>Directions will appear once the venue is confirmed</p>
+            </article>
+            <article class="event-reading-card" data-event="reception" aria-labelledby="receptionTitle">
+              <p class="event-reading-type" lang="my">မင်္ဂလာဧည့်ခံပွဲ</p>
+              <h4 id="receptionTitle">Wedding Reception</h4>
+              <time class="event-reading-date" data-event-field="date">Date to be confirmed</time>
+              <p class="event-reading-time" data-event-field="time">Time to be confirmed</p>
+              <p class="event-reading-venue" data-event-field="venue">Reception venue to be confirmed</p>
+              <p class="event-reading-address" data-event-field="address">Venue and address to be added</p>
+              <a class="event-reading-directions" data-event-link hidden target="_blank" rel="noopener noreferrer" aria-label="Open directions to the reception venue">GET DIRECTIONS <span aria-hidden="true">↗</span></a>
+              <p class="event-reading-pending" data-event-pending>Directions will appear once the venue is confirmed</p>
             </article>
           </div>
         </div>
