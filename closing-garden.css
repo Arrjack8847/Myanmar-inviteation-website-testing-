@@ -1,6 +1,6 @@
 /* Phase 6 — Closing Garden (reuses approved illustrated scenery).
  * Both skins use the LOWER GARDEN of their own original ceremony painting;
- * only its path, horizon and flowers are displayed, not the event plaques.
+ * zoom-crop the very bottom path, sunset horizon and flowers, not the panels.
  * A dusk glaze creates the evening atmosphere. No new unverified artwork.
  */
 #closing.closing-section {
@@ -27,9 +27,9 @@
   pointer-events:none;
 }
 /* The actual Section 3 painted garden's lower slice is clipped naturally
- * by CSS background-position and a viewport-relative container. It never
- * stretches vertically and keeps original horizontal scene alignment.
- * Middle plaques lie above the visible cropped region. */
+ * by CSS background-position and a viewport-relative container. The image
+ * is proportionally zoomed 2.05x so the upper ceremony panel stays cropped
+ * OUT. The lower painted garden becomes a new close-up view for the finale. */
 #closing .closing-garden-horizon {
   position:absolute;
   z-index:0;
@@ -40,7 +40,10 @@
   pointer-events:none;
   background-image:url("art/section3_ceremony_reception_master.webp");
   background-position:center bottom;
-  background-size:100% auto;
+  /* Zoom into the lower ~300px of the approved painting, excluding
+     its ceremony text frames. This is proportional artwork cropping,
+     not stretching or repeating the ornate event panels. */
+  background-size:205% auto;
   background-repeat:no-repeat;
   opacity:.93;
   filter:brightness(.79) saturate(.72) sepia(.14);
