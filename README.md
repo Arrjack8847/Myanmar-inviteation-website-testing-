@@ -35,7 +35,8 @@ second skin is not a separate, newly hand-illustrated environment.
 ```powershell
 git clone https://github.com/Arrjack8847/Myanmar-inviteation-website-testing-.git
 cd Myanmar-inviteation-website-testing-
-git switch feat/hires-garden-preview-20261101
+git switch main
+git pull --ff-only origin main
 node tests/smoke.cjs
 node tests/skin-system.cjs
 node tests/hero-interaction.cjs
@@ -65,5 +66,7 @@ site/deployment separate and do not publish an invitation until the couple
 approves names, dates, wording and venue links. Run mobile browser QA and
 inspect a real iPhone/Android as well. Automatic GitHub-to-Vercel deployment updates require a GitHub Login Connection
 in the Vercel account. The public static demo was uploaded independently.
+Its production deployment is a V4 demo, not a customer deployment; arrange
+commercially permitted hosting and a separate URL for each paying couple.
 
 `README_HISTORY.md` contains earlier prototype implementation notes.
