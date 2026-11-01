@@ -26,6 +26,15 @@ for(const n of [0,1,2]) {
 }
 assert(section.includes('data-story-intro'),'Editable story introduction must survive');
 assert(section.includes('id="countdownTitle"'),'Countdown must still exist');
+assert(html.includes('href="countdown-garden.css"'),'Missing connected countdown stylesheet');
+const countdownCSS=read('countdown-garden.css');
+assert(countdownCSS.includes('.story-illustrated-frame .countdown-panel'),'Countdown is not styled as part of the illustrated frame');
+assert(countdownCSS.includes('html[data-skin="moonlit-amethyst"]'),'Moonlit countdown palette missing');
+assert(countdownCSS.includes('prefers-reduced-motion:reduce'),'Countdown motion preference not respected');
+assert(section.includes('class="story-ornament countdown-ornament"'),'Skin-swappable countdown divider missing');
+for(const id of ['countdownTitle','days','hours','minutes','seconds']){
+  assert(section.includes('id="'+id+'"'),'Existing live countdown element lost: '+id);
+}
 assert(css.includes('html[data-skin="moonlit-amethyst"] .story-illustrated-frame'),
  'Do not expose golden-only artwork in unapproved Moonlit skin');
 assert(css.includes('prefers-reduced-motion:reduce'),'Reduced-motion support missing');
