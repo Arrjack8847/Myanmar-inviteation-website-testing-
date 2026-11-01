@@ -93,8 +93,8 @@ assert(eventsSection.includes('data-event="reception"'), 'Reception card missing
 assert.equal((eventsSection.match(/data-event-link hidden/g) || []).length, 2, 'Directions should start hidden');
 assert.equal((eventsSection.match(/data-event-pending/g) || []).length, 2, 'Missing unconfirmed-venue notices');
 assert.equal((eventsSection.match(/data-event-field="venue"/g) || []).length, 2, 'Venue editing fields missing');
-assert.equal((eventsSection.match(/data-event-field="date"/g) || []).length, 2, 'Date editing fields missing');
-assert.equal((eventsSection.match(/data-event-field="time"/g) || []).length, 2, 'Time editing fields missing');
+assert.equal((eventsSection.match(/data-event-field="date"/g) || []).length, 4, 'Event date must be live in both art summaries and readable detail cards');
+assert.equal((eventsSection.match(/data-event-field="time"/g) || []).length, 4, 'Event time must be live in both art summaries and readable detail cards');
 assert(!eventsSection.includes('href="https://www.google.com/maps/search/?api=1&amp;query=Yangon'), 'Generic Yangon directions must not be offered');
 assert(js.includes('const WEDDING_EVENTS = {'), 'Central event configuration missing');
 assert(js.includes('function renderWeddingEvents()'), 'Event rendering missing');
@@ -102,6 +102,16 @@ assert(js.includes('function approvedMapUrl(rawUrl)'), 'Map URL validation missi
 assert(js.includes('event.venueConfirmed ? approvedMapUrl(event.mapUrl)'), 'Directions must require venue confirmation');
 assert(js.includes('renderWeddingEvents();'), 'Event rendering not called');
 assert(read('events.css').includes('.celebration-events'), 'Event card styling missing');
+assert(html.includes('href="event-reading.css"'), 'Accessible event reading stylesheet must be loaded');
+assert.equal((eventsSection.match(/class="event-reading-card"/g)||[]).length,2, 'Every event needs a readable details card');
+assert(eventsSection.includes('class="celebration-events" aria-hidden="true"'), 'Artwork summaries must not duplicate the spoken event details');
+assert.equal((eventsSection.match(/data-event-field="address"/g)||[]).length,2,'Both events need real readable addresses');
+assert(eventsSection.includes('id="ceremonyTitle"')&&eventsSection.includes('id="receptionTitle"'), 'Event cards need unique accessible headings');
+const readingCss=read('event-reading.css');
+assert(readingCss.includes('.event-reading-grid'), 'Readable event-card layout is missing');
+assert(readingCss.includes('min-height:44px'), 'Directions must be comfortably tappable');
+assert(readingCss.includes('font:normal clamp(14px'), 'Event addresses must remain readable at small widths');
+assert(!/scroll-snap-type|ScrollTrigger/.test(readingCss), 'Event reading must remain static and scroll naturally');
 
 /* Section 3: exact, verified original illustration is now in THIS repository.
    Keep its complete two-panel frame and live event wording unchanged. */
