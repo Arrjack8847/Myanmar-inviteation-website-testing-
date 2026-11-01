@@ -4,6 +4,18 @@ An original Myanmar-inspired, mobile-first invitation website built with
 plain **HTML, CSS and JavaScript**. This repository contains a **demo** with
 sample names and dates, not a finalized customer's event.
 
+## Public design demo
+
+- [Open Golden Autumn Heritage](https://golden-autumn-heritage-demo.vercel.app)
+- [Compare Golden Autumn and Moonlit Amethyst](https://golden-autumn-heritage-demo.vercel.app/skins-gallery.html)
+- [Public Chromium mobile QA run](https://github.com/Arrjack8847/Myanmar-inviteation-website-testing-/actions/runs/41308183787)
+
+The public demo is a **standalone Vercel static upload**, not yet linked
+for automatic GitHub-to-Vercel updates. It includes the optimized WebP masters
+and motion sprites; the full GitHub repository additionally contains the
+large PNG fallbacks. For customer deployments, use the complete source and
+verify your real devices rather than treating the demo as a finalized client site.
+
 ## Live features
 - Tap-to-open envelope with a fluttering butterfly and one-time wind gust
 - Responsive painted gateway with editable, automatically fitted names
@@ -51,7 +63,7 @@ See `CLIENT_RELEASE_CHECKLIST.md` before publishing.
 Sample details and imagery are for demonstration only. Keep the customer's
 site/deployment separate and do not publish an invitation until the couple
 approves names, dates, wording and venue links. Run mobile browser QA and
-inspect a real iPhone/Android as well. A Vercel deployment requires the
-repository's GitHub connection in the destination Vercel account.
+inspect a real iPhone/Android as well. Automatic GitHub-to-Vercel deployment updates require a GitHub Login Connection
+in the Vercel account. The public static demo was uploaded independently.
 
 `README_HISTORY.md` contains earlier prototype implementation notes.
