@@ -13,6 +13,7 @@ placeholders. Never deliver that content as if it were a real wedding.
 - [ ] Verify 320px/390px/430px screens and the 2 scene joins
 - [ ] Check opening button, butterfly, reduced-motion and page swipe
 - [ ] Check real physical iPhone Safari and Android Chrome
+- [ ] Confirm customer hosting plan permits commercial use and has an agreed hosting period
 - [ ] Confirm each client has their own deployment/data separation
 - [ ] Remove demo-only notices only after information is final
 - [ ] Update each customer's preview title, social sharing image and URL
