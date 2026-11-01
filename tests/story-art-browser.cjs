@@ -35,8 +35,7 @@ async function run(skin,width){
     const art=await page.evaluate(async ()=>{
       const body=document.querySelector('.story-illustrated-body');
       const frame=document.querySelector('.story-illustrated-frame');
-      const top=document.querySelector('.story-illustrated-cap--top');
-      const bottom=document.querySelector('.story-illustrated-cap--bottom');
+      const frameStyle=getComputedStyle(frame);
       const artFile='4ba5ed04-e01d-4bed-a71e-42f2bdf5f8a5.png';
       const response=await fetch(artFile);
       if(!response.ok)throw Error('Section 4 PNG unavailable: '+response.status);
@@ -46,11 +45,10 @@ async function run(skin,width){
       const imageWidth=frame.getBoundingClientRect().width;
       return {
         frameWidth:imageWidth,
-        topHeight:top.getBoundingClientRect().height,
-        bottomHeight:bottom.getBoundingClientRect().height,
-        topDisplay:getComputedStyle(top).display,
-        bottomDisplay:getComputedStyle(bottom).display,
-        topBg:getComputedStyle(top).backgroundImage,
+        topBorder:parseFloat(frameStyle.borderTopWidth),
+        bottomBorder:parseFloat(frameStyle.borderBottomWidth),
+        artSource:frameStyle.borderImageSource,
+        repeat:frameStyle.borderImageRepeat,
         parchmentHeight:body.getBoundingClientRect().height,
         contentHeight:body.scrollHeight,
         overflow:Math.max(0,document.documentElement.scrollWidth-window.innerWidth),
@@ -68,12 +66,12 @@ async function run(skin,width){
     assert(art.paperWidth>160,'Story text became too narrow');
     assert(art.chapterHeight>320,'Story content did not expand for long paragraphs');
     if(skin==='golden-autumn'){
-      assert(art.topBg.includes('4ba5ed04'),'Golden artwork must load');
-      assert(Math.abs(art.topHeight-art.frameWidth*350/1024)<3,'Upper art cap was stretched');
-      assert(Math.abs(art.bottomHeight-art.frameWidth*576/1024)<3,'Lower art cap was stretched');
+      assert(art.artSource.includes('4ba5ed04'),'Golden artwork must load');
+      assert(art.repeat.includes('round'),'Floral sides must repeat rather than stretch');
+      assert(Math.abs(art.topBorder-art.frameWidth*350/1024)<3,'Upper art cap has incorrect proportions');
+      assert(Math.abs(art.bottomBorder-art.frameWidth*576/1024)<3,'Lower art cap has incorrect proportions');
     }else{
-      assert.equal(art.topDisplay,'none','Golden art should not leak into Moonlit skin');
-      assert.equal(art.bottomDisplay,'none','Golden art should not leak into Moonlit skin');
+      assert.equal(art.artSource,'none','Golden art should not leak into Moonlit skin');
     }
     if(width===390) {
       await page.locator('.story-illustrated-frame').screenshot({
