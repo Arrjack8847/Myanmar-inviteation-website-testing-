@@ -1,0 +1,40 @@
+name: Public demo browser verification
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/public-demo-qa.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  public-demo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      QA_URL: https://golden-autumn-heritage-demo.vercel.app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check public homepage and skin gallery
+        run: |
+          curl --fail --silent --show-error --location --max-time 25 "$QA_URL/index.html" | grep -q 'Golden Autumn Heritage'
+          curl --fail --silent --show-error --location --max-time 25 "$QA_URL/skins-gallery.html" | grep -q 'Moonlit Amethyst'
+          curl --fail --silent --show-error --location --max-time 25 --output /dev/null "$QA_URL/art/golden_autumn_heritage_master_v4.webp"
+          curl --fail --silent --show-error --location --max-time 25 --output /dev/null "$QA_URL/skins/moonlit-amethyst/gateway.webp"
+      - name: Install Playwright
+        run: npm install --no-save --no-package-lock playwright@1.56.0
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Test real public deployment at three mobile widths
+        run: node tests/browser-flow.cjs
+      - name: Save live screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-demo-live-screenshots
+          path: qa-screenshots/
+          if-no-files-found: ignore
+          retention-days: 7
