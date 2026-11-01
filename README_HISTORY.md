@@ -1,0 +1,212 @@
+# Golden Autumn Heritage — unified garden invitation (V4 preview)
+
+An original, mobile-first Myanmar-inspired digital wedding invitation. This V4 branch intentionally shows **one complete garden illustration** for the first section: an ivory-and-gold gateway, roses, autumn trees, path and sunset all remain perfectly connected.
+
+The master image is `art/golden_autumn_heritage_master_v4.png`. It is displayed as one static image, with **real HTML wedding names and date** on top. There are **no separate moving scenery layers and no scroll/parallax animation** in the first section.
+
+The opening retains a decorative envelope, butterfly with independent wings, a brief wind-and-leaf effect and optional Skip. After opening, the garden stays still and guests simply scroll to the invitation and event information.
+
+## Run the V4 preview locally
+
+Requires Node.js 18+. No npm install or build is required.
+
+```powershell
+git clone https://github.com/Arrjack8847/Myanmar-inviteation-website-testing-.git
+cd Myanmar-inviteation-website-testing-
+git switch feat/hires-garden-preview-20261101
+node tests/smoke.cjs
+node server.js
+```
+
+Open these URLs:
+
+- `http://localhost:4173` — full invitation and opening
+- `http://localhost:4173/art-review.html` — switch 320/390/430-pixel phone widths and show artwork with or without live text
+- `http://localhost:4173/index.html?heroPreview=1` — jump directly to the hero with text, skipping the opening
+
+For an existing cloned repository, use `git fetch origin` followed by `git switch feat/hires-garden-preview-20261101` and `git pull --ff-only origin feat/hires-garden-preview-20261101`.
+
+## Section 1 — Production-quality improvement pass (current focus)
+
+All work from here is limited to the initial **envelope/butterfly opening** and the **Golden Autumn Gateway hero**. Sections 2–6 are not part of the current development scope.
+
+The approved 853×1844 garden master remains a **single, complete illustration**. The new `hero-quality.css` file is loaded last. After reviewing the actual phone screenshot, we corrected the first attempt: `object-fit:contain` produced obvious peach side bars. The phone layout now uses `object-fit:cover` with a deliberate vertical crop (without image distortion), positions wedding names in the arch, removes the unwanted keyboard-focus box around the noninteractive names, and handles short screens without parallax or scroll snapping. The original master file is unchanged.
+
+Opening improvements:
+- The envelope/butterfly is a native HTML button, accessible to mouse, touch, and keyboard users.
+- The opening overlay is labeled as a modal; background controls stay inert while it is active.
+- Open, Skip, Escape, Tab, Shift+Tab, and reduced-motion opening paths are supported; focus moves to the couple's names when opened.
+- Hero image dimensions are declared to reduce avoidable layout shift, and the scroll cue has an accessible focus state.
+
+Run tests:
+
+```powershell
+node tests/smoke.cjs
+node tests/hero-interaction.cjs
+node server.js
+```
+
+View `http://localhost:4173/art-review.html` to compare actual **320×568**, **390×844**, **430×932** virtual phone sizes, with or without the invitation text.
+
+The acceptance criteria for calling Section 1 production-ready are defined in `HERO_QA.md`. Source checks and isolated JavaScript behavior simulations have passed, but real browser screenshots, iOS/Android accessibility checks, Lighthouse measurements, and master-image optimization remain **unverified**. Do not treat this as a final 10/10 release until those gates pass.
+
+## Section 2 — formal family invitation
+
+The second section now uses your newly uploaded **one-piece illustrated invitation master** `art/section2_family_invitation_master.png` (1086 × 1448 PNG). The stone path along its top is intended to continue Section 1; its burgundy flowers, gold frame and sunset are all painted as ONE matching picture. Burmese-first and English invitation wording, two family blocks, and the wedding date stay accessible, editable HTML.
+
+**Responsive edge handling:** The ornate image is presented with CSS `border-image` nine-slicing: the top arch, all four corners, and bottom scenery remain intact, while only the spacious parchment center adjusts for longer family names or Burmese text. We do not stretch the whole illustration vertically, crop away the frame, or add separate decorative PNG overlays. This is one master source, not nineteen independent artwork layers. The precise Section 1→2 join still needs real-phone review. Section 3's dedicated transition illustration is not yet integrated.
+
+To personalize the demo, change these values in `app.js`:
+
+```js
+const DEMO = {
+  firstName: 'Thiri',
+  secondName: 'Min',
+  firstFamily: "Parents' names to be added",
+  secondFamily: "Parents' names to be added",
+  weddingDateISO: '2027-06-20T16:30:00+06:30',
+  displayDate: '20 JUNE 2027',
+};
+```
+
+The parent fields deliberately show placeholders rather than invented family names. Replace them with **confirmed** names before publishing a customer's invitation. Review and customize the Burmese wording with the couple for the appropriate ceremony and formality.
+
+Open `http://localhost:4173/index.html?heroPreview=1#invitation` to skip the cover and jump straight to Section 2.
+
+## Section 3 — ceremony and reception master artwork
+
+Section 3 now displays a **single, complete original image**, with its two ivory-and-gold frames and surrounding autumn garden painted together. The existing HTML ceremony and reception details overlay the two empty panels. The flowers, carvings, lanterns, stone path and sunset are not reassembled from separate assets.
+
+**Local source now verified:** `art/section3_ceremony_reception_master.png` is in this repository. It is a byte-for-byte copy of the approved 1086×1448 original uploaded to `Arrjack8847/testing-version-2`. Git blob SHA: `fca0d987ac2e13686dfd08463401a6c5f24e023e`; size 3,031,235 bytes. V4 now uses its **local** asset path at runtime, so an outage or deletion in the separate repository cannot break the ceremony illustration. The verified copy was installed by `.github/workflows/vendor-section3-art.yml`.
+
+Both events remain customizable via `WEDDING_EVENTS` in `app.js`. Unconfirmed locations show a pending notice and never offer invented directions. Actual long Burmese/venue text and visual joins at 320/390/430px must still be reviewed on a phone. Styling and responsive panel overlays are in `events-art.css`.
+
+Preview: `http://localhost:4173/index.html?heroPreview=1#details`.
+
+## Option A follow-up — guest-triggered butterfly replay
+
+Section 1 now includes a **small resting butterfly** built with the existing original transparent wing/body PNGs (`20_...`, `21_...`, `22_...`). A visible **TAP FOR MAGIC** hint and labeled native button allow guests to trigger a single ~1.65-second flight across the upper garden sky, which then resets for replay. **It never flies automatically** and there is no loop between taps. Repeated taps while the flight is active are ignored. The scene master, gateway, flowers, floor, hero wording and Scroll to Explore button do not move.
+
+The interaction is in `scene-motion.js` / `scene-motion.css` only. Guests using **Reduce Motion** receive a brief static gold highlight rather than flapping or flight, and the full button can be used by keyboard or touch. This deliberately avoids an always-on butterfly cycle or new assets.
+
+Source guards and a real Chromium mobile test cover resting/one-shot flight, touch target, quick retriggers, reduced-motion behavior and the already validated garden scrolling. Note that these are visual and interaction enhancements; no change to actual wedding data or information hierarchy is intended.
+
+## Option A — Cinematic animation overlays (Sections 1–3)
+
+This iteration adds restrained motion **without splitting the three original garden illustrations into dozens of pieces**. All approved PNG/WebP masters stay completely static, and guests still scroll freely from one scene to the next.
+
+- **Section 1:** the original butterfly/envelope and one-time leaf gust remain; a short warm gold highlight passes once across the HTML wedding-name presentation after the opening completes. There is **no continuous background movement**.
+- **Section 2:** the invitation heading, family names and body wording reveal once as they enter the viewport. A small accessible **Reveal a blessing** control opens and closes Burmese and English blessing text. The paper and flowers never move.
+- **Section 3:** the live headings and readable ceremony/reception cards gently enter once. Each of the two **painted event frames is now a large touch-friendly link** to its corresponding full information card. The original gold artwork remains in one piece.
+
+Implementation: `scene-motion.css` and `scene-motion.js` load after the existing styles and `app.js`. They use CSS `opacity`/`transform`, `IntersectionObserver` and native HTML anchors/buttons—no external animation packages or page scroll snapping. Reveals are **one-time**, not tied to repeated scroll position changes. If JavaScript, IntersectionObserver or animation support is unavailable, the ordinary wedding information remains visible. `prefers-reduced-motion:reduce` disables motion and preserves controls.
+
+The wedding data stays in the established `DEMO`, `WEDDING_EVENTS` and event rendering flows. Calendar downloads and ambient looping butterflies are deliberately **not included** in this phase; those require additional product decisions and testing.
+
+Run `node tests/smoke.cjs`, `node tests/hero-interaction.cjs`, and the GitHub Actions Playwright mobile QA. The browser suite verifies text reveals, blessing toggle, ceremony-frame navigation, reduced-motion accessibility, unbroken artwork/scrolling and responsive phone layouts.
+
+## Readable ceremony and reception information — mobile accessibility update
+
+The approved Section 3 garden illustration stays **one unchanged painted master** (with WebP/PNG compatibility). On a 320px phone, each gilt event panel is only about 114px high: earlier iterations squeezed venue names, addresses and unconfirmed-direction messages to approximately 9–11px and overlaid the bottom carvings.
+
+Section 3 now displays **only the two concise event summaries** (event name, Burmese heading, date, time) in those painted panels. These decorative summaries have `aria-hidden="true"`. Directly below the illustration, two generously spaced, responsive **live HTML event detail cards** display the complete dates, times, venues, addresses and confirmed directions at readable font sizes. All fields still use the same `WEDDING_EVENTS` configuration through `renderWeddingEvents()`; there are no fake or clickable map directions until `venueConfirmed` and the allowed HTTPS map URL have been set.
+
+The new `event-reading.css` is loaded **last** to preserve the mobile layout and original artwork. The cards are part of the normal document flow, not inner-scroll overlays. The design shows one card per row on phones and two columns on wider screens. Browser QA confirms the addresses are at least 14px, venues at least 16px, both cards display, decorative summaries fit their frames and the page remains easy to swipe. Screenshots are captured at `readable-event-details-320x568.png`, `readable-event-details-390x844.png`, and `readable-event-details-430x932.png`.
+
+**Trade-off:** Section 3 now extends beyond a single phone screen to keep event information readable. The important details are not hidden behind a tap or clipped off inside gold artwork.
+
+## Mobile QA and simplified scrolling styles (next pass)
+
+To reduce cascading-layout bugs, the old `screen-fit.css` is **no longer loaded**. It remains in the repository as a historical backup only. The final live stylesheets now load `hero-quality.css` followed by `flow-quality.css`. The scroll anchor uses only one 34px offset for the fixed demo bar, avoiding unintended extra top space.
+
+Open `http://localhost:4173/flow-review.html` to inspect the **actual website** at 320 × 568, 390 × 844 or 430 × 932, jump between the three painted scenes, and run automatic page-geometry checks. The page reports the measured space/overlap at both joins, any horizontal overflow, whether the whole document scrolls, and whether the invitation still has an unwanted nested scrollbar. It requires no npm packages.
+
+The browser review page is a **local diagnostic**; passing geometry checks does not establish that the independently painted illustrations are pixel-perfect at the joins.
+
+The automated Chromium workflow also captures `seam-garden-family-<width>x<height>.png` and `seam-family-events-<width>x<height>.png` in its screenshot artifact, showing the real join rather than only the top of the section. Matching physical artwork edges perfectly still requires an approved revision to the original paintings; CSS is deliberately limited to subtle, static edge fading.
+ Continue inspecting actual phone screenshots before publishing.
+
+## Continuous scrolling — Sections 1, 2 and 3 (latest repair)
+
+The November 1 mobile screenshots exposed a major layout regression: Section 2 was fixed to `100svh`, leaving a **large empty peach band** before Section 3. Scroll gestures could also get captured by nested parchment/event scroll containers.
+
+The corrective **`flow-quality.css`** stylesheet is loaded **last**, after `hero-quality.css` (the obsolete `screen-fit.css` is no longer linked). It restores natural vertical document flow.
+
+- **Section 1** remains a single-viewport gateway scene. Its complete static painting and live HTML names remain unchanged. The visible scroll cue stays above the transition.
+- **Section 2** now grows to fit its actual bilingual family-invitation content. No fixed section height, no filler band, no extra inner scroll. The approved one-piece nine-slice gold floral artwork is unchanged.
+- **Section 3** begins immediately after Section 2, sized at the artwork's native 1086:1448 aspect ratio. Its two event panels remain editable live HTML; the complete illustration is unchanged.
+- On browsers supporting CSS masking, **responsive 14–26px feathered overlaps** soften the Section 1 → 2 and Section 2 → 3 handoffs without parallax. This helps but does **not** guarantee pixel-perfect seams between separately painted images. On browsers without mask support, the sections still join directly with no empty spacer.
+- Normal **touch swipes scroll the whole page**, with no scroll snapping, parallax, fixed-height image sections or nested scrolling traps.
+
+**Trade-off:** Section 2 is no longer guaranteed to fit in exactly one screen on short phones. Showing all real names, Burmese wording and dates without clipping is more important. The website scrolls naturally like a long invitation.
+
+The top banner still identifies the site as a local demo with sample details. The redundant long section disclaimers remain in accessible markup but no longer take up extra visual strips between the illustrations.
+
+To test:
+```powershell
+git pull --ff-only origin feat/hires-garden-preview-20261101
+node tests/smoke.cjs
+node tests/hero-interaction.cjs
+node server.js
+```
+
+Preview: `http://localhost:4173/index.html?heroPreview=1#home`. Swipe from the garden path through the family invitation into the ceremony without being stopped by empty colored space. Review at 320×568, 390×844, and 430×932.
+
+## Section 4 — Love Story & Countdown
+
+Section 4 is a static ivory stationery story paired with a live four-part countdown; there is **no scroll-triggered scenery animation**.
+
+- Three original story chapters, with placeholder prompts (no fabricated relationship history)
+- Burmese and English headings, antique-gold decorative frames, accessible live text
+- One `LOVE_STORY` object in `app.js` controls the introduction, chapter titles and chapter paragraphs
+- The countdown uses `DEMO.weddingDateISO` and displays days, hours, minutes and seconds in Myanmar-time sample configuration
+- Invalid wedding dates display `--` and a pending status; elapsed dates display zero and a day-arrived message
+- The sample dates and all story details **must be replaced with confirmed couple information**
+
+Example personalization in `app.js`:
+
+```js
+const LOVE_STORY = {
+  introduction: 'The moments that make your story uniquely yours.',
+  chapters: [
+    { title: 'The Beginning', text: 'Add how the couple met.' },
+    { title: 'Our Cherished Moments', text: 'Share a memory.' },
+    { title: 'A New Chapter', text: 'Add a personal message.' }
+  ]
+};
+```
+
+The styled content and responsive countdown are in `story.css`. Preview Section 4 directly at:
+
+`http://localhost:4173/index.html?heroPreview=1#countdown`
+
+## Faster mobile artwork loading — verified original-source optimization
+
+The three complete garden illustrations previously totalled **9,115,641 bytes** of PNG files (8.69 MiB). Three visually equivalent high-quality WebP copies (quality 94, method 6) now total **1,751,712 bytes** (1.67 MiB), a **80.8% reduction** in illustration transfer size.
+
+- Section 1: 3,054,729 → 574,742 bytes
+- Section 2: 3,029,677 → 592,776 bytes
+- Section 3: 3,031,235 → 584,194 bytes
+
+The browser uses `<picture>` with a `source type="image/webp"` for Sections 1 and 3, and CSS `image-set()` for the Section 2 illustrated border. The original approved PNGs are **never deleted or modified** and remain the compatibility fallback. All wedding wording is still editable HTML, and the environment remains one static illustration per section.
+
+The artwork build is reproducible with `python scripts/optimize_artwork.py` (Pillow 11.3.0). The script guards the original source Git hashes and dimensions; `.github/workflows/build-optimized-art.yml` generates/commits the optimized images when instructed. Node smoke tests validate the optimized image signatures and file sizes; Playwright checks that mobile Chromium selects the WebP sources.
+
+This improves image transfer; it does not by itself establish a full Lighthouse score, pixel-perfect painted joins, or final iOS Safari approval.
+
+## Assets
+
+- `art/golden_autumn_heritage_master_v4.png` — sole garden image on the first section
+- `art/section2_family_invitation_master.png` — approved Section 2 illustration, protected by safe-edge scaling
+- `20_butterfly_body.png`, `21_butterfly_left_wing.png`, `22_butterfly_right_wing.png` — opening butterfly
+- `23_...` to `28_...` — leaves for brief opening gust
+- `29_...` to `30_...` — invitation card and seal
+- `31_...` to `32_...` — ornaments for lower sections
+
+Earlier individual garden and gateway assets remain in the repository as unused backups, not active scenery. See `V4_ART_DIRECTION.md`.
+
+## Sample details and status
+
+Names **Thiri & Min**, date **20 June 2027**, and Yangon event information are **fictional placeholders**. Change couple names/date in the `DEMO` object and event details in `WEDDING_EVENTS` in `app.js`.
+
+This remains a local, un-deployed prototype: no RSVP database, payment system or public domain. The original scene images are relatively large; image compression, painted-edge refinement and real-device QA are recommended before production.

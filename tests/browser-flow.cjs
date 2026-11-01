@@ -298,6 +298,53 @@ async function testSize(size) {
       }finally{await alt.close();}
     }
 
+    // Ensure the customer setup file actually customizes the whole invitation.
+    // Intercept only this one public sample config; no real client data used.
+    if(size.width===390){
+      const client=await context.newPage();
+      await client.route('**/wedding-config.js',route=>route.fulfill({
+        status:200,contentType:'application/javascript',
+        body:`window.WEDDING_CUSTOMIZATION = {
+          skin:'moonlit-amethyst',
+          couple:{firstName:'Customer First',secondName:'Customer Second',
+            firstFamily:'Approved First Family',secondFamily:'Approved Second Family',
+            weddingDateISO:'2028-02-10T17:00:00+06:30',displayDate:'10 FEBRUARY 2028'},
+          story:{introduction:'A confirmed sample introduction',
+            chapters:[{title:'First meeting',text:'A confirmed sample chapter'}]},
+          events:{
+            ceremony:{venue:'Confirmed Test Venue',address:'Test Street',
+              venueConfirmed:true,mapUrl:'https://maps.google.com/?q=Test+Venue'},
+            reception:{venue:'Pending Test Venue',venueConfirmed:false,
+              mapUrl:'https://example.com/unsafe-map'}
+          }
+        };`
+      }));
+      try{
+        await client.goto(url+'/index.html?heroPreview=1',{waitUntil:'load'});
+        await client.waitForFunction(()=>document.body.classList.contains('has-opened'));
+        const customized=await client.evaluate(()=>({
+          names:[...document.querySelectorAll('#heroTitle [data-name]')].map(x=>x.textContent),
+          family:document.querySelector('[data-family="first"]')?.textContent,
+          date:document.querySelector('#home [data-date-text]')?.textContent,
+          story:document.querySelector('[data-story-intro]')?.textContent,
+          venue:document.querySelector('.event-reading-card[data-event="ceremony"] [data-event-field="venue"]')?.textContent,
+          link:document.querySelector('.event-reading-card[data-event="ceremony"] [data-event-link]')?.getAttribute('href'),
+          linkHidden:document.querySelector('.event-reading-card[data-event="ceremony"] [data-event-link]')?.hidden,
+          otherHidden:document.querySelector('.event-reading-card[data-event="reception"] [data-event-link]')?.hidden,
+          skin:document.documentElement.dataset.skin
+        }));
+        assert.deepEqual(customized.names,['Customer First','Customer Second']);
+        assert.equal(customized.family,'Approved First Family');
+        assert.equal(customized.date,'10 FEBRUARY 2028');
+        assert.equal(customized.story,'A confirmed sample introduction');
+        assert.equal(customized.venue,'Confirmed Test Venue');
+        assert(customized.link?.startsWith('https://maps.google.com'));
+        assert.equal(customized.linkHidden,false);
+        assert.equal(customized.otherHidden,true);
+        assert.equal(customized.skin,'moonlit-amethyst');
+      }finally{await client.close();}
+    }
+
     // Verify that real customer data longer than the placeholders expands the
     // readable cards instead of squeezing fonts, clipping text, or creating a
     // horizontal scroll trap. This occurs AFTER all screenshot captures.
