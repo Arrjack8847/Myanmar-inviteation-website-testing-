@@ -63,7 +63,10 @@ async function run(skin,width){
         countdownScrollWidth:document.querySelector('.countdown-panel').scrollWidth,
         gridColumns:getComputedStyle(document.querySelector('.countdown-grid')).gridTemplateColumns.split(' ').length,
         countdownBorder:getComputedStyle(document.querySelector('.countdown-panel')).borderTopWidth,
-        countdownValues:[...document.querySelectorAll('.countdown-box strong')].map(el=>el.textContent.trim())
+        countdownValues:[...document.querySelectorAll('.countdown-box strong')].map(el=>el.textContent.trim()),
+        bottomPadding:parseFloat(getComputedStyle(document.querySelector('.story-countdown-section')).paddingBottom),
+        demoNoteClipped:getComputedStyle(document.querySelector('.story-disclaimer')).clipPath,
+        closingFade:getComputedStyle(document.querySelector('#closing'),'::before').backgroundImage
       };
     });
     assert.equal(art.dataCount,3,'All 3 editable story chapters must remain');
@@ -78,6 +81,9 @@ async function run(skin,width){
     assert.equal(art.gridColumns,4,'Count down needs four legible columns');
     assert(art.countdownValues.every(v=>v!=='--'&&v.length>0),'Live countdown values failed to render');
     assert.equal(art.countdownBorder,'0px','Do not reintroduce the disconnected rectangular countdown card');
+    assert(art.bottomPadding<=1,'Empty Section 5 footer band must be removed');
+    assert(art.demoNoteClipped.includes('50%'),'Demo disclaimer must remain screen-reader accessible without a visual spacer');
+    assert(art.closingFade.includes('linear-gradient'),'Closing must soften the garden-to-dusk edge');
     if(skin==='golden-autumn'){
       assert(art.artSource.includes('4ba5ed04'),'Golden artwork must load');
       assert(art.repeat.includes('round'),'Floral sides must repeat rather than stretch');
