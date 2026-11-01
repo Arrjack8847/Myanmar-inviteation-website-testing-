@@ -100,7 +100,13 @@ async function testSize(size) {
 
     await page.screenshot({path:path.join(output,`gateway-${size.width}x${size.height}.png`)});
     // A swipe over the invitation must advance the document itself.
-    await page.locator('#invitation').scrollIntoViewIfNeeded();
+    // Place the pointer on the invitation, then wheel. This specifically
+    // catches nested scrolling panes that consume swipes instead of moving
+    // the overall page.
+    await page.evaluate(()=>{
+      const el=document.getElementById('invitation');
+      window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY+30,behavior:'instant'});
+    });
     await page.evaluate(()=>window.scrollBy({top:-110,behavior:'instant'}));
     await page.waitForTimeout(280);
     const before=await page.evaluate(()=>window.scrollY);
@@ -111,10 +117,22 @@ async function testSize(size) {
     await page.waitForTimeout(900);
     const after=await page.evaluate(()=>window.scrollY);
     assert(after>before+30,`Document scroll blocked over the parchment: ${before} → ${after}`);
-    await page.locator('#invitation').scrollIntoViewIfNeeded();
-    await page.screenshot({path:path.join(output,`invitation-${size.width}x${size.height}.png`)});
-    await page.locator('#details').scrollIntoViewIfNeeded();
-    await page.screenshot({path:path.join(output,`events-${size.width}x${size.height}.png`)});
+    // Align each section to the viewport TOP for reproducible screenshots.
+    // scrollIntoViewIfNeeded() only ensured partial visibility and sometimes
+    // captured half of the previous illustrated section in the screenshot.
+    for(const id of ['invitation','details']){
+      await page.evaluate(id=>{
+        const node=document.getElementById(id);
+        const top=node.getBoundingClientRect().top+window.scrollY-34;
+        window.scrollTo({top,behavior:'instant'});
+      },id);
+      await page.waitForTimeout(220);
+      await page.screenshot({path:path.join(output,`${id==='invitation'?'invitation':'events'}-${size.width}x${size.height}.png`)});
+    }
+    if(size.width===390) {
+      await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+      await page.screenshot({path:path.join(output,'full-page-390.png'),fullPage:true});
+    }
     console.log('PASS',size.width+'x'+size.height,JSON.stringify({...metrics,scrollDelta:Math.round(after-before)}));
   }finally{await context.close();}
 }
