@@ -1,0 +1,174 @@
+/* Section 4: expandable illustrated love-story frame.
+ * Artwork is the uploaded 1024x1536 PNG. Its top/bottom ornamental caps
+ * are displayed at their original aspect ratio, not vertically stretched.
+ * The plain parchment middle grows to fit customer-approved story content.
+ * This phase does not change the approved Section 3 painting or countdown.
+ */
+.story-countdown-section {
+  padding:0 0 clamp(70px,10vw,120px);
+  background:linear-gradient(to bottom,#f5e2c8 0%,#efdbc4 67%,#dfc5b2);
+}
+.story-illustrated-frame {
+  --story-art:url("4ba5ed04-e01d-4bed-a71e-42f2bdf5f8a5.png");
+  width:min(100%,660px);
+  max-width:100%;
+  margin:0 auto;
+  position:relative;
+  isolation:isolate;
+  text-align:center;
+  filter:drop-shadow(0 12px 18px #62402a19);
+}
+.story-illustrated-cap {
+  display:block;
+  width:100%;
+  position:relative;
+  background-image:var(--story-art);
+  background-size:100% auto;
+  background-repeat:no-repeat;
+  pointer-events:none;
+}
+/* Original image pixels 0-350: sunset path, flowers, crest, arch top. */
+.story-illustrated-cap--top {
+  aspect-ratio:1024 / 350;
+  background-position:center top;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 5%,#000 100%);
+  mask-image:linear-gradient(to bottom,transparent 0,#000 5%,#000 100%);
+}
+/* Original pixels 1116-1536: lower filigree and garden path. */
+.story-illustrated-cap--bottom {
+  aspect-ratio:1024 / 420;
+  background-position:center bottom;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0,#000 91%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 0,#000 91%,transparent 100%);
+}
+.story-illustrated-body {
+  position:relative;
+  box-sizing:border-box;
+  min-width:0;
+  width:100%;
+  padding:clamp(9px,2.5vw,17px) 9% clamp(10px,3vw,24px);
+  color:#663f49;
+  background:
+    radial-gradient(ellipse 90% 40% at 50% 0%,#fff8e8 0%,transparent 100%),
+    linear-gradient(90deg,#e6bb8e 0%,#fae5c7 7%,#fff0d6 16%,#fff0d6 84%,#fae5c7 93%,#e6bb8e);
+}
+/* Narrow continuous carved rails connect the caps; no bitmap flower is stretched. */
+.story-illustrated-body::before,
+.story-illustrated-body::after {
+  content:"";position:absolute;top:0;bottom:0;width:3px;
+  pointer-events:none;z-index:1;
+  background:linear-gradient(to right,#a97436,#f9d99d,#b88543);
+  box-shadow:0 0 4px #a76d3555;
+}
+.story-illustrated-body::before{left:6.15%;}
+.story-illustrated-body::after{right:6.15%;}
+.story-illustrated-frame .story-intro {
+  position:relative;
+  width:100%;
+  max-width:500px;
+  margin:0 auto clamp(13px,3vw,26px);
+  padding:0;
+}
+.story-illustrated-frame .story-intro .section-heading {
+  font-size:clamp(30px,7vw,52px);
+  letter-spacing:-.03em;
+}
+.story-illustrated-frame .story-intro-burmese {
+  margin:8px 0 0;
+  font-size:clamp(13px,3.5vw,18px);
+  line-height:1.85;
+}
+.story-illustrated-frame .story-ornament {
+  width:min(165px,56%);
+  margin:7px auto;
+}
+.story-illustrated-frame .story-paper,
+.story-illustrated-frame .story-paper-inner {
+  box-sizing:border-box;
+  width:100%;
+  max-width:none;
+  min-height:0;
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  background:none;
+  box-shadow:none;
+}
+.story-illustrated-frame .story-paper::before,
+.story-illustrated-frame .story-paper-inner::before,
+.story-illustrated-frame .story-corner {display:none;}
+.story-illustrated-frame .story-lede {
+  margin:0 auto 18px;
+  max-width:440px;
+  font-size:clamp(14px,3.6vw,17px);
+  line-height:1.65;
+  overflow-wrap:anywhere;
+}
+.story-illustrated-frame .story-caption {
+  margin:9px auto 24px;
+  letter-spacing:.17em;
+}
+.story-illustrated-frame .story-chapters {
+  width:100%;
+  max-width:480px;
+}
+.story-illustrated-frame .story-chapter-content {
+  min-width:0;
+  overflow-wrap:anywhere;
+}
+.story-illustrated-frame .story-chapter h3 {
+  font-size:clamp(22px,5.5vw,30px);
+  overflow-wrap:anywhere;
+}
+.story-illustrated-frame .story-chapter-content > p:last-child {
+  font-size:clamp(14px,3.5vw,16px);
+  line-height:1.72;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+.story-illustrated-frame .story-endnote {margin-bottom:0;}
+.story-countdown-section .countdown-panel {
+  width:min(calc(100% - 28px),660px);
+  margin-top:clamp(40px,7vw,68px);
+}
+.story-countdown-section .story-disclaimer {
+  width:min(calc(100% - 28px),600px);
+}
+/* This original artwork is Golden Autumn only. Until its own illustrated
+ * story art is approved, Moonlit keeps an accessible, naturally growing
+ * lavender paper instead of showing mismatched golden roses. */
+html[data-skin="moonlit-amethyst"] .story-illustrated-cap {display:none;}
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame {
+  width:min(calc(100% - 26px),660px);
+  margin-top:clamp(35px,6vw,60px);
+  filter:none;
+}
+html[data-skin="moonlit-amethyst"] .story-illustrated-body {
+  padding:clamp(35px,7vw,60px) clamp(20px,6vw,50px);
+  border:1px solid #a394b8;
+  border-radius:16px;
+  background:linear-gradient(150deg,#f8f3fb,#eee8f5 55%,#f5ebf5);
+  box-shadow:0 12px 35px #3c335323;
+}
+html[data-skin="moonlit-amethyst"] .story-illustrated-body::before,
+html[data-skin="moonlit-amethyst"] .story-illustrated-body::after {display:none;}
+html[data-skin="moonlit-amethyst"] .story-countdown-section {background:linear-gradient(#e8dcea,#eee4ef,#d8cce6);}
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame .story-intro .section-heading,
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame .story-chapter h3 {color:#504265;}
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame .story-lede,
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame .story-chapter-content > p:last-child {color:#62566f;}
+html[data-skin="moonlit-amethyst"] .story-countdown-section .countdown-panel {
+  background:linear-gradient(145deg,#f8f3fb,#eee6f1);
+  border-color:#aea0c4;
+}
+@media (max-width:350px){
+  .story-illustrated-body {padding-left:8%;padding-right:8%;}
+  .story-illustrated-frame .story-chapter {gap:10px;}
+  .story-illustrated-frame .story-chapter h3 {font-size:21px;}
+}
+@media (prefers-reduced-motion:reduce) {
+  .story-illustrated-frame,.story-illustrated-frame * {
+    animation:none!important;transition:none!important;
+  }
+}
