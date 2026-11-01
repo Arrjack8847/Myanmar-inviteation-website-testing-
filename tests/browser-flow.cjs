@@ -173,6 +173,73 @@ async function testSize(size) {
     assert(metrics.eventCardOverflow.every(px=>px<=2),'Readable event cards have horizontal text overflow');
     assert.deepEqual(errors,[],'Uncaught JS errors: '+errors.join('; '));
 
+    // Section 4: the user-uploaded painting must be a responsive border,
+    // not an inflexible image that crops customer text or frame ornaments.
+    const storyArt=await page.evaluate(()=>{
+      const paper=document.querySelector('#countdown .story-paper');
+      const inner=paper.querySelector('.story-paper-inner');
+      const decoration=getComputedStyle(paper,'::before');
+      const note=paper.querySelector('.story-endnote');
+      const r=paper.getBoundingClientRect(),n=note.getBoundingClientRect();
+      return {
+        background:decoration.borderImageSource,
+        slices:decoration.borderImageSlice,
+        frameHeight:r.height,
+        overflow:getComputedStyle(paper).overflow,
+        endingInside: n.bottom < r.bottom-20,
+        horizontalOverflow:document.documentElement.scrollWidth-innerWidth,
+        markupInside:paper.contains(document.getElementById('storyTitle')),
+        readable:parseFloat(getComputedStyle(inner).fontSize)>0,
+      };
+    });
+    assert(storyArt.background.includes('4ba5ed04-e01d-4bed-a71e-42f2bdf5f8a5.png'),
+      'Section 4 uploaded artwork is not applied: '+JSON.stringify(storyArt));
+    assert(storyArt.slices.includes('225')&&storyArt.slices.includes('320'),
+      'Section 4 gold ornament edge slices changed: '+JSON.stringify(storyArt));
+    assert(storyArt.markupInside&&storyArt.endingInside&&storyArt.readable,
+      'Section 4 readable HTML escaped the painted parchment: '+JSON.stringify(storyArt));
+    assert(storyArt.horizontalOverflow<=2,
+      'Section 4 creates horizontal phone overflow: '+JSON.stringify(storyArt));
+
+    // Client personalization must expand the original frame, not cause a
+    // scroll trap, letter overlap or stretched/cropped complete illustration.
+    const expandedStory=await page.evaluate(()=>{
+      const paper=document.querySelector('#countdown .story-paper');
+      const chapters=[...paper.querySelectorAll('[data-story-text]')];
+      const previous=chapters.map(x=>x.textContent);
+      const initialHeight=paper.getBoundingClientRect().height;
+      const extended='We invite you to join the celebration of our families. '+
+        'This longer customer-approved paragraph explains an important memory, '+
+        'our shared experiences, and the next chapter of our lives. ';
+      chapters.forEach((el,i)=>{el.textContent=extended.repeat(i+6)+' မင်္ဂလာအခမ်းအနားသို့ ဖိတ်ကြားအပ်ပါသည်။';});
+      const height=paper.getBoundingClientRect().height;
+      const pageOverflow=document.documentElement.scrollWidth-innerWidth;
+      const textOverflow=chapters.map(el=>el.scrollWidth-el.clientWidth);
+      const endNote=paper.querySelector('.story-endnote').getBoundingClientRect();
+      const rect=paper.getBoundingClientRect();
+      chapters.forEach((el,i)=>{el.textContent=previous[i];});
+      return {initialHeight,height,pageOverflow,textOverflow,endingInside:endNote.bottom<=rect.bottom-18};
+    });
+    assert(expandedStory.height>expandedStory.initialHeight+200,
+      'Long customer stories must grow the parchment: '+JSON.stringify(expandedStory));
+    assert(expandedStory.pageOverflow<=2&&expandedStory.textOverflow.every(n=>n<=2)&&expandedStory.endingInside,
+      'Long customer story clipped or overflowed: '+JSON.stringify(expandedStory));
+
+    // Preserve screenshots of both edges and the complete original frame.
+    await page.evaluate(()=>{
+      const e=document.getElementById('countdown');
+      window.scrollTo({top:e.getBoundingClientRect().top+scrollY-10,behavior:'instant'});
+    });
+    await page.waitForTimeout(200);
+    await page.screenshot({path:path.join(output,`story-art-${size.width}x${size.height}.png`)});
+    await page.evaluate(()=>{
+      const e=document.getElementById('countdown');
+      window.scrollTo({top:e.getBoundingClientRect().top+scrollY-innerHeight*.52,behavior:'instant'});
+    });
+    await page.waitForTimeout(200);
+    await page.screenshot({path:path.join(output,`seam-events-story-${size.width}x${size.height}.png`)});
+    await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+
     await page.screenshot({path:path.join(output,`gateway-${size.width}x${size.height}.png`)});
     // Visual sign-off artifacts: center the viewport on each IMAGE JOIN,
     // not only on the beginning of a section. This lets reviewers evaluate
@@ -293,6 +360,23 @@ async function testSize(size) {
         assert(variant.loaded && variant.horizontal<=2);
         assert.equal(variant.ambientCount,6);
         assert(variant.name.includes('MOONLIT AMETHYST'));
+        const moonlitStory=await alt.evaluate(()=>{
+          const frame=document.querySelector('#countdown .story-paper');
+          return {
+            source:getComputedStyle(frame,'::before').borderImageSource,
+            nightGrade:getComputedStyle(frame,'::before').filter,
+            overflow:document.documentElement.scrollWidth-innerWidth,
+          };
+        });
+        assert(moonlitStory.source.includes('4ba5ed04-e01d-4bed-a71e-42f2bdf5f8a5.png'));
+        assert(moonlitStory.nightGrade!=='none','Moonlit garden frame lacks its provisional night grade');
+        assert(moonlitStory.overflow<=2,'Moonlit story frame overflows the phone');
+        await alt.evaluate(()=>{
+          const e=document.getElementById('countdown');
+          window.scrollTo({top:e.getBoundingClientRect().top+scrollY-10,behavior:'instant'});
+        });
+        await alt.waitForTimeout(200);
+        await alt.screenshot({path:path.join(output,'moonlit-story-art-390.png')});
         assert.deepEqual(altErrors,[],'Second skin JS errors');
         await alt.screenshot({path:path.join(output,'moonlit-amethyst-390.png')});
       }finally{await alt.close();}

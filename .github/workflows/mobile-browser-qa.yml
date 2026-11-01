@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - feat/hires-garden-preview-20261101
+      - feat/love-story-garden-art-v5
   workflow_dispatch:
 
 jobs:
@@ -27,6 +28,9 @@ jobs:
 
       - name: Validate interchangeable artwork skins
         run: node tests/skin-system.cjs
+
+      - name: Check Section 4 painted border and editable story
+        run: node tests/story-art.cjs
 
       - name: Keyboard and opening interaction checks
         run: node tests/hero-interaction.cjs
