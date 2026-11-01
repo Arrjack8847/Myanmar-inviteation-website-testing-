@@ -235,6 +235,18 @@ assert(!/scroll-snap-type\s*:|ScrollTrigger|animation\s*:\s*parallax/.test(motio
 assert(!motionJs.includes('window.scrollTo('), 'Motion must not force the guest scroll position');
 assert(motionCss.includes('garden-name-shine'), 'One-time Section 1 highlight is missing');
 assert(motionJs.includes('blessing.hidden = isOpen'), 'Blessing toggle cannot be closed');
+assert(html.includes('id="heroButterfly"'), 'Replayable butterfly button missing from the garden');
+assert(html.includes('aria-label="Watch the butterfly take a short flight"'), 'Butterfly needs accessible name');
+for(const img of ['21_butterfly_left_wing.png','22_butterfly_right_wing.png','20_butterfly_body.png']){
+  assert(html.includes('src="'+img+'"'), 'Original butterfly overlay asset missing: '+img);
+}
+assert(motionJs.includes("getElementById('heroButterfly')"), 'Butterfly event binding missing');
+assert(motionJs.includes("classList.contains('is-flying')"), 'Double-tap flight guard missing');
+assert(motionJs.includes("prefers-reduced-motion: reduce"), 'Butterfly motion must check accessibility preference');
+assert(motionCss.includes('hero-butterfly-flight 1.65s'), 'Short butterfly flight missing');
+assert(motionCss.includes('touch-action:manipulation'), 'Butterfly button must not disable pan gestures');
+assert(!motionCss.includes('hero-butterfly-flight 1.65s ease infinite'), 'Butterfly must never fly continuously');
+
 new Function(motionJs); // parse separately; the simulated opening harness only imports app.js.
 
 console.log('PASS: Section 1 opening, natural phone scrolling, no artwork gap and preserved editable wedding details.');
