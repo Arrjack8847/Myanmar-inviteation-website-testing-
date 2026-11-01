@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - feat/hires-garden-preview-20261101
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
