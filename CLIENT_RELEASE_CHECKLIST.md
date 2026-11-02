@@ -9,6 +9,10 @@ placeholders. Never deliver that content as if it were a real wedding.
 - [ ] Ceremony and reception venue/address checked
 - [ ] Venue-confirmed map URLs point to the correct locations
 - [ ] Story wording and photos used with permission
+- [ ] Bride and groom portraits approved, optimized, and uploaded to `photos/`
+- [ ] Gallery photos (up to 8) have meaningful captions and accessible descriptions
+- [ ] No prototype photo placeholders remain before the customer's guest release
+- [ ] Gallery lightbox, Escape and previous/next controls checked on real phones
 - [ ] Correct skin selected in `wedding-config.js`
 - [ ] Verify 320px/390px/430px screens and the 2 scene joins
 - [ ] Check opening button, butterfly, reduced-motion and page swipe
