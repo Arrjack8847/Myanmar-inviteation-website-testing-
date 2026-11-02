@@ -1,0 +1,281 @@
+/* Bride & Groom — photo gallery within the original expandable story frame.
+ * No new painted scenery or additional section boundary. Photos are content,
+ * never backgrounds, so real couples may swap pictures without changing art.
+ */
+.couple-gallery-section {
+  box-sizing:border-box;
+  width:100%;
+  min-width:0;
+  margin:clamp(33px,8vw,56px) auto clamp(22px,5vw,38px);
+  padding:clamp(22px,5vw,34px) 0 clamp(18px,4vw,30px);
+  position:relative;
+  text-align:center;
+  border-top:1px solid #c9a579;
+  border-bottom:1px solid #c9a579;
+  color:#68464e;
+}
+.couple-gallery-section [hidden],.gallery-lightbox [hidden]{display:none!important;}
+.couple-gallery-section::before,
+.couple-gallery-section::after {
+  content:"✦";position:absolute;left:50%;transform:translateX(-50%);
+  padding:0 11px;background:#f9e8ce;color:#a77947;font-size:15px;line-height:1;
+}
+.couple-gallery-section::before{top:-8px;}
+.couple-gallery-section::after{bottom:-8px;}
+.couple-gallery-section .gallery-eyebrow {
+  margin:0 0 8px;
+  color:#956748;
+  font:700 clamp(9px,2.4vw,11px)/1.5 var(--body);
+  letter-spacing:.19em;
+}
+.couple-gallery-section h2 {
+  margin:0 auto 10px;
+  color:#61424b;
+  font:normal clamp(28px,7vw,42px)/1.14 var(--display);
+  overflow-wrap:anywhere;
+}
+.couple-gallery-section h2 em {color:#a47a4d;}
+.couple-gallery-section .gallery-subtitle{
+  margin:0 auto clamp(17px,4vw,27px);
+  color:#835c52;
+  font:normal clamp(13px,3.3vw,16px)/1.65 var(--body);
+}
+.couple-portrait-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(9px,3vw,22px);
+  width:100%;
+  margin:0 auto;
+}
+.couple-portrait-card{min-width:0;margin:0;}
+.couple-portrait-frame {
+  position:relative;
+  box-sizing:border-box;
+  width:100%;
+  aspect-ratio:3/4;
+  overflow:hidden;
+  border:4px solid #efdab5;
+  border-radius:48% 48% 5px 5px / 28% 28% 5px 5px;
+  outline:1px solid #ae8050;
+  outline-offset:2px;
+  box-shadow:0 5px 17px #5e382826;
+  background:linear-gradient(145deg,#e9c999,#f7e4c5 50%,#e4c197);
+}
+.couple-portrait-image{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 27%;
+  display:block;
+}
+.couple-portrait-placeholder{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:6px;
+  padding:8px 6px;
+  background:radial-gradient(ellipse at 50% 35%,#fff6e5,#edce9e);
+  color:#946a50;
+}
+.couple-portrait-placeholder::before{
+  content:"❦";
+  font:normal clamp(26px,7vw,48px)/1 var(--display);
+  color:#b58d61;
+}
+.couple-portrait-placeholder span{
+  font:500 clamp(9px,2.2vw,12px)/1.55 var(--body);
+  max-width:115px;
+  overflow-wrap:anywhere;
+}
+.couple-portrait-card .portrait-role{
+  margin:clamp(12px,3vw,18px) auto 3px;
+  font:700 clamp(9px,2.4vw,11px)/1.3 var(--body);
+  letter-spacing:.17em;
+  color:#98704e;
+}
+.couple-portrait-card h3{
+  margin:0;
+  font:normal clamp(18px,5vw,28px)/1.3 var(--display);
+  color:#61434b;
+  overflow-wrap:anywhere;
+}
+.couple-portrait-card .portrait-caption{
+  margin:5px auto 0;
+  max-width:100%;
+  font:normal clamp(11px,3vw,14px)/1.55 var(--body);
+  color:#805e59;
+  overflow-wrap:anywhere;
+}
+.couple-gallery-heading{
+  margin:clamp(30px,7vw,45px) 0 12px;
+  color:#6b4750;
+  font:normal clamp(22px,5.5vw,32px)/1.2 var(--display);
+}
+.couple-gallery-grid{
+  width:100%;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(7px,2vw,13px);
+}
+.couple-gallery-tile{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  width:100%;
+  margin:0;
+}
+.couple-gallery-photo-button{
+  display:block;
+  width:100%;
+  padding:0;
+  margin:0;
+  position:relative;
+  overflow:hidden;
+  aspect-ratio:4/5;
+  cursor:zoom-in;
+  border:2px solid #d2ad7e;
+  border-radius:8px;
+  background:#f1dcb8;
+  box-shadow:0 4px 12px #5b36201e;
+}
+.couple-gallery-photo-button img{
+  display:block;
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center;
+  transition:transform .35s ease;
+}
+@media(hover:hover) {
+  .couple-gallery-photo-button:hover img {transform:scale(1.045);}
+}
+.couple-gallery-photo-button:focus-visible,
+.gallery-lightbox button:focus-visible{
+  outline:3px solid #78502f;
+  outline-offset:4px;
+}
+.couple-gallery-photo-button::after {
+  content:"+";position:absolute;right:7px;bottom:7px;
+  width:25px;height:25px;display:grid;place-items:center;
+  border-radius:50%;background:#fff7e7db;color:#5a3a40;
+  font:700 18px/1 var(--body);
+  pointer-events:none;
+}
+.couple-gallery-tile figcaption{
+  font:normal clamp(11px,2.8vw,13px)/1.5 var(--body);
+  color:#71524c;
+  margin:7px 0 0;
+  overflow-wrap:anywhere;
+}
+.couple-gallery-placeholder {
+  box-sizing:border-box;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  min-width:0;
+  aspect-ratio:4/5;
+  padding:9px;
+  border:1px dashed #af815c;
+  border-radius:8px;
+  color:#8e6754;
+  background:radial-gradient(circle at 50% 38%,#fff7e5,#f1d9b4);
+}
+.couple-gallery-placeholder::before{
+  content:"✧";font:normal 32px/1 var(--display);color:#b28c58;
+  margin-bottom:7px;
+}
+.couple-gallery-placeholder span{
+  font:500 clamp(10px,2.7vw,13px)/1.6 var(--body);
+  overflow-wrap:anywhere;
+}
+.couple-gallery-note{
+  margin:12px auto 0;
+  font:italic clamp(11px,2.9vw,13px)/1.6 var(--body);
+  color:#79584d;
+}
+.gallery-lightbox{
+  box-sizing:border-box;
+  width:min(calc(100% - 22px),680px);
+  max-height:calc(100dvh - 32px);
+  padding:clamp(13px,3vw,22px);
+  overflow:auto;
+  border:1px solid #d7af83;
+  border-radius:12px;
+  color:#583d47;
+  background:#f8eddc;
+  box-shadow:0 25px 80px #241a1ccc;
+}
+.gallery-lightbox::backdrop{background:#1f1523de;backdrop-filter:blur(5px);}
+.gallery-lightbox-close{
+  position:absolute;right:9px;top:9px;z-index:2;
+  display:grid;place-items:center;width:44px;height:44px;
+  border:1px solid #a67951;border-radius:50%;
+  font-size:23px;cursor:pointer;
+  color:#684752;background:#fff6e9e8;
+}
+.gallery-lightbox-image{
+  display:block;
+  max-height:calc(100dvh - 175px);
+  max-width:100%;
+  width:auto;height:auto;
+  margin:0 auto;
+  object-fit:contain;
+  border-radius:5px;
+}
+.gallery-lightbox-caption{
+  margin:13px 0 0;text-align:center;
+  font:normal clamp(14px,3.5vw,18px)/1.55 var(--display);
+  overflow-wrap:anywhere;
+}
+.gallery-lightbox-nav{
+  display:flex;justify-content:center;gap:18px;margin:13px auto 0;
+}
+.gallery-lightbox-nav button{
+  min-width:50px;min-height:44px;
+  border:1px solid #a7805b;border-radius:25px;
+  background:#fff7e9;color:#6c4d4d;
+  font-size:22px;cursor:pointer;
+}
+html[data-skin="moonlit-amethyst"] .couple-gallery-section{
+  color:#62546e;border-color:#baa2c4;
+}
+html[data-skin="moonlit-amethyst"] .couple-gallery-section::before,
+html[data-skin="moonlit-amethyst"] .couple-gallery-section::after{
+  background:#f1eaf5;color:#9177a2;
+}
+html[data-skin="moonlit-amethyst"] .couple-gallery-section h2,
+html[data-skin="moonlit-amethyst"] .couple-portrait-card h3,
+html[data-skin="moonlit-amethyst"] .couple-gallery-heading{color:#514363;}
+html[data-skin="moonlit-amethyst"] .couple-gallery-section h2 em,
+html[data-skin="moonlit-amethyst"] .couple-gallery-section .gallery-eyebrow,
+html[data-skin="moonlit-amethyst"] .couple-portrait-card .portrait-role{color:#806b97;}
+html[data-skin="moonlit-amethyst"] .couple-portrait-frame{
+  border-color:#d4c6e5;outline-color:#927fab;
+  background:#ded3e9;
+}
+html[data-skin="moonlit-amethyst"] .couple-portrait-placeholder,
+html[data-skin="moonlit-amethyst"] .couple-gallery-placeholder{
+  background:radial-gradient(ellipse at 50% 35%,#faf4ff,#ddd1e8);
+  border-color:#a690b8;color:#786584;
+}
+html[data-skin="moonlit-amethyst"] .couple-portrait-placeholder::before,
+html[data-skin="moonlit-amethyst"] .couple-gallery-placeholder::before{color:#9b80af;}
+html[data-skin="moonlit-amethyst"] .couple-gallery-photo-button{
+  border-color:#bba6cc;background:#eae0f1;
+}
+html[data-skin="moonlit-amethyst"] .couple-gallery-section .gallery-subtitle,
+html[data-skin="moonlit-amethyst"] .couple-portrait-card .portrait-caption,
+html[data-skin="moonlit-amethyst"] .couple-gallery-tile figcaption,
+html[data-skin="moonlit-amethyst"] .couple-gallery-note{color:#74657f;}
+html[data-skin="moonlit-amethyst"] .gallery-lightbox{
+  border-color:#b69cc9;background:#f3edfa;
+}
+@media(max-width:350px){
+  .couple-gallery-section{margin-top:26px;}
+  .couple-portrait-grid{gap:8px;}
+  .couple-portrait-frame{border-width:3px;}
+  .couple-gallery-section h2{font-size:27px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .couple-gallery-photo-button img{transition:none!important;}
+}
