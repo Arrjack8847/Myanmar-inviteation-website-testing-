@@ -22,5 +22,25 @@ window.WEDDING_CUSTOMIZATION = {
       // venueConfirmed: true, mapUrl: 'https://maps.google.com/...'
     },
     reception: {}
+  },
+  gallery: {
+    // The first couple name in couple.firstName belongs to the bride;
+    // couple.secondName belongs to the groom. Override names here if needed.
+    bride: {
+      // name: 'Approved bride name',
+      // photo: 'photos/bride.webp',
+      // caption: 'Optional caption'
+    },
+    groom: {
+      // name: 'Approved groom name',
+      // photo: 'photos/groom.webp',
+      // caption: 'Optional caption'
+    },
+    // The photo gallery accepts up to eight approved local images.
+    // Upload them to photos/ before enabling them here.
+    photos: [
+      // { src: 'photos/moment-01.webp', alt: 'Couple standing in the garden',
+      //   caption: 'A cherished moment' }
+    ]
   }
 };
