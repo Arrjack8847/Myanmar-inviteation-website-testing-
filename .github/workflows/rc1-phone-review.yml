@@ -1,4 +1,4 @@
-name: RC1 phone review package
+name: RC2 phone review package
 
 on:
   push:
@@ -34,10 +34,10 @@ jobs:
       - name: Package dependency-free phone review folder
         run: node scripts/package-phone-review.cjs
 
-      - name: Upload portable RC1 preview
+      - name: Upload portable RC2 preview
         uses: actions/upload-artifact@v4
         with:
-          name: golden-autumn-rc1-phone-preview
-          path: dist/rc1-phone-review/
+          name: golden-autumn-rc2-phone-preview
+          path: dist/rc2-phone-review/
           if-no-files-found: error
           retention-days: 14
