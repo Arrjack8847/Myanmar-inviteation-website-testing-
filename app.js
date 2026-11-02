@@ -83,6 +83,8 @@ function renderBrideAndGroom() {
     if (photo && person.photo) {
       const frame = photo.closest('.couple-portrait');
       photo.alt = 'Portrait of ' + person.name;
+      // Hidden lazy images never load: fetch eagerly, reveal only once ready.
+      photo.loading = 'eager';
       photo.onload = () => { photo.hidden = false; frame?.classList.add('has-photo'); };
       photo.onerror = () => { photo.hidden = true; frame?.classList.remove('has-photo'); };
       photo.src = person.photo;
