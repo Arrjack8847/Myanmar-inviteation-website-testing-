@@ -1,0 +1,205 @@
+/* Section 4: expandable original illustrated love-story frame.
+ * Source PNG: 1024x1536. The ornamental TOP (350 px) and BOTTOM (576 px)
+ * remain in their original proportions, while the middle parchment grows.
+ *
+ * border-image-repeat: stretch round
+ *  - horizontal center of top/bottom caps scales with phone width;
+ *  - floral SIDE strips tile vertically instead of elongating the flowers;
+ *  - only the unlettered parchment CENTER is stretched to fit real text.
+ * The existing approved source PNG remains untouched.
+ */
+.story-countdown-section {
+  padding:0 0 clamp(70px,10vw,120px);
+  background:linear-gradient(to bottom,#f5e2c8 0%,#efdbc4 67%,#dfc5b2);
+}
+.story-illustrated-frame {
+  width:min(100%,660px);
+  max-width:100%;
+  margin:0 auto;
+  position:relative;
+  box-sizing:border-box;
+  min-width:0;
+  isolation:isolate;
+  text-align:center;
+  border-style:solid;
+  border-color:transparent;
+  /* Derived from 350/1024, 95/1024, 576/1024 at phone widths. */
+  border-top-width:clamp(109px,34.18vw,226px);
+  border-right-width:clamp(30px,9.277vw,61px);
+  border-bottom-width:clamp(180px,56.25vw,372px);
+  border-left-width:clamp(30px,9.277vw,61px);
+  border-image-source:url("4ba5ed04-e01d-4bed-a71e-42f2bdf5f8a5.png");
+  border-image-slice:350 95 576 95 fill;
+  border-image-width:1;
+  border-image-repeat:stretch round;
+  filter:drop-shadow(0 12px 18px #62402a19);
+}
+/* The art begins at the end of the readable venue cards. Fade only the very
+ * edge pixels into the shared ivory color; no vertical spacer or crop. */
+.story-illustrated-frame::before,
+.story-illustrated-frame::after {
+  content:"";
+  display:block;
+  position:absolute;
+  left:calc(-1 * clamp(30px,9.277vw,61px));
+  right:calc(-1 * clamp(30px,9.277vw,61px));
+  pointer-events:none;
+  z-index:2;
+}
+.story-illustrated-frame::before {
+  top:calc(-1 * clamp(109px,34.18vw,226px));
+  height:clamp(14px,4vw,25px);
+  background:linear-gradient(to bottom,#f5e2c8,transparent);
+}
+.story-illustrated-frame::after {
+  bottom:calc(-1 * clamp(180px,56.25vw,372px));
+  height:clamp(20px,6vw,40px);
+  background:linear-gradient(to bottom,transparent,#efdbc4);
+}
+.story-illustrated-body {
+  position:relative;
+  min-width:0;
+  box-sizing:border-box;
+  width:100%;
+  padding:0 3% 0;
+  color:#663f49;
+  background:transparent;
+}
+.story-illustrated-frame .story-intro {
+  position:relative;
+  width:100%;
+  max-width:500px;
+  margin:0 auto clamp(13px,3vw,26px);
+  padding:0;
+}
+.story-illustrated-frame .story-intro .section-heading {
+  font-size:clamp(27px,7vw,48px);
+  letter-spacing:-.03em;
+}
+.story-illustrated-frame .story-intro-burmese {
+  margin:8px 0 0;
+  font-size:clamp(13px,3.5vw,18px);
+  line-height:1.85;
+}
+.story-illustrated-frame .story-ornament {
+  width:min(165px,56%);
+  margin:7px auto;
+}
+.story-illustrated-frame .story-paper,
+.story-illustrated-frame .story-paper-inner {
+  box-sizing:border-box;
+  width:100%;
+  max-width:none;
+  min-height:0;
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  background:none;
+  box-shadow:none;
+}
+.story-illustrated-frame .story-paper::before,
+.story-illustrated-frame .story-paper-inner::before,
+.story-illustrated-frame .story-corner {display:none;}
+.story-illustrated-frame .story-lede {
+  margin:0 auto 18px;
+  max-width:440px;
+  font-size:clamp(14px,3.6vw,17px);
+  line-height:1.65;
+  overflow-wrap:anywhere;
+}
+.story-illustrated-frame .story-caption {
+  margin:9px auto 24px;
+  letter-spacing:.17em;
+}
+.story-illustrated-frame .story-chapters {
+  width:100%;
+  max-width:480px;
+}
+.story-illustrated-frame .story-chapter {
+  grid-template-columns:35px minmax(0,1fr);
+  gap:12px;
+}
+.story-illustrated-frame .story-chapter-content {
+  min-width:0;
+  overflow-wrap:anywhere;
+}
+.story-illustrated-frame .story-chapter h3 {
+  font-size:clamp(21px,5.5vw,30px);
+  overflow-wrap:anywhere;
+}
+.story-illustrated-frame .story-chapter-content > p:last-child {
+  font-size:clamp(14px,3.5vw,16px);
+  line-height:1.72;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+.story-illustrated-frame .story-endnote {margin-bottom:0;}
+.story-countdown-section .countdown-panel {
+  width:min(calc(100% - 28px),660px);
+  margin-top:clamp(40px,7vw,68px);
+}
+.story-countdown-section .story-disclaimer {
+  width:min(calc(100% - 28px),600px);
+}
+/* Extend the SAME approved ceremony garden behind the final venue cards
+ * before meeting the storybook's path. This is artwork overlap, not extra
+ * page height or a duplicate event panel.
+ */
+html[data-skin="golden-autumn"] .details-section .event-reading-section {
+  padding-bottom:clamp(74px,18vw,112px);
+}
+html[data-skin="golden-autumn"] .details-section .event-reading-section::after {
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:clamp(74px,18vw,112px);
+  pointer-events:none;
+  z-index:0;
+  background:
+    linear-gradient(to bottom,#f5e2c8 0%,rgba(245,226,200,0) 96%),
+    url("art/section3_ceremony_reception_master.webp") center bottom / 100% auto no-repeat;
+  /* Bridge only the flowers at the left and right. The central cobblestone
+     should not be repeated twice before the next illustrated chapter. */
+  -webkit-mask-image:linear-gradient(to right,#000 0%,#000 15%,transparent 35%,transparent 65%,#000 85%,#000 100%);
+  mask-image:linear-gradient(to right,#000 0%,#000 15%,transparent 35%,transparent 65%,#000 85%,#000 100%);
+}
+html[data-skin="golden-autumn"] .details-section .event-reading-section > * {
+  position:relative;
+  z-index:1;
+}
+/* Moonlit needs its own coordinated painting. Until approved, retain an
+ * accessible lavender parchment; never display Golden's autumn roses. */
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame {
+  width:min(calc(100% - 26px),660px);
+  margin-top:clamp(35px,6vw,60px);
+  padding:clamp(35px,7vw,60px) clamp(20px,6vw,50px);
+  border:1px solid #a394b8;
+  border-radius:16px;
+  border-image:none;
+  background:linear-gradient(150deg,#f8f3fb,#eee8f5 55%,#f5ebf5);
+  box-shadow:0 12px 35px #3c335523;
+  filter:none;
+}
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame::before,
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame::after {display:none;}
+html[data-skin="moonlit-amethyst"] .story-countdown-section {
+  background:linear-gradient(#e8dcea,#eee4ef,#d8cce6);
+}
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame .story-intro .section-heading,
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame .story-chapter h3 {color:#504265;}
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame .story-lede,
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame .story-chapter-content > p:last-child {color:#62566f;}
+html[data-skin="moonlit-amethyst"] .story-countdown-section .countdown-panel {
+  background:linear-gradient(145deg,#f8f3fb,#eee6f1);
+  border-color:#aea0c4;
+}
+@media(max-width:350px){
+  .story-illustrated-frame .story-chapter {gap:9px;}
+  .story-illustrated-frame .story-chapter h3 {font-size:21px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .story-illustrated-frame,.story-illustrated-frame * {
+    animation:none!important;transition:none!important;
+  }
+}

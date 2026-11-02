@@ -1,0 +1,224 @@
+/* Bride & Groom — portrait garden interlude.
+ * Sits AFTER the family invitation and BEFORE the ceremony scene.
+ * Reuses existing approved floral PNGs and does not alter either master
+ * painting. All actual portrait photos remain customer-supplied only.
+ */
+.garden-flow > .couple-section {
+  box-sizing:border-box;
+  position:relative;
+  display:block;
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:clamp(28px,8vw,62px) 0 clamp(32px,9vw,64px);
+  overflow:hidden;
+  isolation:isolate;
+  background:
+    radial-gradient(ellipse 83% 16% at 50% 6%,#fff0cb91,transparent 100%),
+    linear-gradient(180deg,#dcaa85 0%,#f2d6af 24%,#f7e5c9 74%,#d6a17c 100%);
+  text-align:center;
+  color:#66464a;
+}
+.couple-section::before,
+.couple-section::after {
+  content:"";
+  position:absolute;
+  z-index:0;
+  bottom:0;
+  width:clamp(90px,35vw,245px);
+  height:clamp(175px,72vw,390px);
+  background-repeat:no-repeat;
+  background-size:contain;
+  background-position:center bottom;
+  opacity:.63;
+  pointer-events:none;
+  transform-origin:center bottom;
+}
+.couple-section::before {
+  left:max(-66px,calc(50% - 384px));
+  background-image:url("16_bouquet_bottom_left.png");
+  animation:couple-floral-left 12s ease-in-out infinite alternate;
+}
+.couple-section::after {
+  right:max(-66px,calc(50% - 384px));
+  background-image:url("17_bouquet_bottom_right.png");
+  animation:couple-floral-right 13s ease-in-out infinite alternate;
+}
+@keyframes couple-floral-left {to{transform:rotate(1.6deg)}}
+@keyframes couple-floral-right {to{transform:rotate(-1.6deg)}}
+.couple-section-inner {
+  position:relative;
+  z-index:2;
+  width:min(100% - 36px,560px);
+  max-width:100%;
+  margin:0 auto;
+  padding:clamp(20px,4.5vw,35px) clamp(12px,3.7vw,30px) clamp(26px,6vw,42px);
+  box-sizing:border-box;
+  background:
+    linear-gradient(90deg,#d5aa7e66 0%,transparent 9%,transparent 91%,#d5aa7e66 100%),
+    radial-gradient(ellipse at top,#fff4dfcf,#f9e8cfb8 58%,#f4ddbbac);
+  border:1px solid #bf925d82;
+  border-radius:160px 160px 30px 30px / 40px 40px 30px 30px;
+  box-shadow:0 15px 38px #57352f1c,inset 0 0 0 5px #fff7e85e;
+}
+.couple-eyebrow {
+  color:#806048;
+  font:700 clamp(10px,2.9vw,12px)/1.7 var(--body, sans-serif);
+  letter-spacing:.19em;
+  margin:0 auto 9px;
+}
+.couple-title {
+  color:#674049;
+  font:normal clamp(32px,8.4vw,48px)/1.15 var(--display,Georgia,serif);
+  margin:0 auto;
+  text-wrap:balance;
+}
+.couple-title em {font-weight:400;color:#98713d;}
+.couple-title-myanmar {
+  font-size:clamp(13px,3.4vw,16px);
+  line-height:2;
+  color:#856151;
+  margin:6px auto 20px;
+}
+.couple-intro {
+  font:normal clamp(14px,3.6vw,16px)/1.75 var(--body,sans-serif);
+  color:#76534c;
+  max-width:385px;
+  margin:0 auto clamp(18px,5.5vw,32px);
+}
+.couple-people {display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(20px,5vw,34px);}
+.couple-person {min-width:0;width:100%;margin:0 auto;max-width:365px;}
+.couple-portrait-wrap {
+  position:relative;
+  box-sizing:border-box;
+  width:clamp(184px,52vw,236px);
+  max-width:100%;
+  margin:0 auto clamp(11px,3vw,15px);
+  padding:7px;
+  aspect-ratio:4/5;
+  border:2px solid #b58c55;
+  border-radius:48% 48% 43% 43% / 39% 39% 27% 27%;
+  background:#f4d8ad;
+  box-shadow:0 0 0 3px #fff6dfc9,0 7px 23px #63402924;
+}
+.couple-portrait {
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  border-radius:47% 47% 43% 43% / 38% 38% 27% 27%;
+  background:
+    radial-gradient(ellipse at 50% 22%,#fff7e6d9,transparent 48%),
+    linear-gradient(158deg,#ddaf84,#fae8cd 48%,#c48d72);
+}
+.couple-portrait::after {
+  content:"";position:absolute;inset:5px;border:1px solid #fff4d87a;
+  border-radius:inherit;pointer-events:none;
+}
+.couple-portrait-letter {
+  color:#845647;
+  font:italic normal clamp(88px,28vw,132px)/1 var(--display,Georgia,serif);
+  text-shadow:0 2px 2px #fff0d4;
+  transform:translateY(8%);
+}
+.couple-portrait.has-photo .couple-portrait-letter{display:none;}
+.couple-portrait-photo {
+  position:absolute;
+  display:block;
+  width:100%;
+  height:100%;
+  inset:0;
+  object-fit:cover;
+  object-position:center 23%;
+}
+.couple-portrait-photo[hidden]{display:none!important;}
+.couple-person-role {
+  color:#906d4e;
+  font:700 11px/1.6 var(--body,sans-serif);
+  letter-spacing:.22em;
+  margin:0 auto 4px;
+}
+.couple-person-role-myanmar {
+  color:#835d50;
+  margin:0 auto 3px;
+  font-size:clamp(13px,3.5vw,17px);
+  line-height:1.9;
+}
+.couple-person-name {
+  margin:0 auto clamp(6px,2vw,9px);
+  color:#623c47;
+  font:normal clamp(27px,7.7vw,40px)/1.24 var(--display,Georgia,serif);
+  overflow-wrap:anywhere;
+  text-wrap:balance;
+}
+.couple-person-bio {
+  font:normal clamp(14px,3.7vw,16px)/1.72 var(--body,sans-serif);
+  color:#76544d;
+  margin:0 auto;
+  max-width:295px;
+  overflow-wrap:anywhere;
+  white-space:normal;
+}
+.couple-join {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin:0 auto;
+  color:#a0784c;
+  pointer-events:none;
+}
+.couple-join img {display:block;width:clamp(104px,29vw,140px);height:auto;object-fit:contain;}
+.couple-join span {font:italic clamp(24px,7vw,34px)/1.1 var(--display,Georgia,serif);}
+.couple-endnote{
+  font:italic clamp(14px,4vw,17px)/1.5 var(--display,Georgia,serif);
+  color:#84594b;
+  margin:clamp(23px,5.5vw,32px) auto 0;
+}
+html[data-skin="moonlit-amethyst"] .garden-flow > .couple-section {
+  color:#594966;
+  background:
+    radial-gradient(ellipse 80% 18% at 50% 6%,#e3d6f0a6,transparent 100%),
+    linear-gradient(180deg,#d7c4de,#f0e6f5 25%,#f1e8f6 72%,#a798bc);
+}
+html[data-skin="moonlit-amethyst"] .couple-section::before,
+html[data-skin="moonlit-amethyst"] .couple-section::after {
+  background-image:url("skins/moonlit-amethyst/floral.png");
+  opacity:.42;
+}
+html[data-skin="moonlit-amethyst"] .couple-section::after {transform:scaleX(-1);}
+html[data-skin="moonlit-amethyst"] .couple-section-inner {
+  border-color:#ab91bd;
+  background:radial-gradient(ellipse at top,#fffafeed,#eee6f5c7 74%,#ded1ecc7);
+  box-shadow:0 15px 38px #49365221,inset 0 0 0 5px #fffaff7a;
+}
+html[data-skin="moonlit-amethyst"] .couple-title,
+html[data-skin="moonlit-amethyst"] .couple-person-name {color:#58436c;}
+html[data-skin="moonlit-amethyst"] .couple-title em,
+html[data-skin="moonlit-amethyst"] .couple-join {color:#80659a;}
+html[data-skin="moonlit-amethyst"] .couple-eyebrow,
+html[data-skin="moonlit-amethyst"] .couple-title-myanmar,
+html[data-skin="moonlit-amethyst"] .couple-intro,
+html[data-skin="moonlit-amethyst"] .couple-person-role,
+html[data-skin="moonlit-amethyst"] .couple-person-role-myanmar,
+html[data-skin="moonlit-amethyst"] .couple-person-bio,
+html[data-skin="moonlit-amethyst"] .couple-endnote {color:#705d7b;}
+html[data-skin="moonlit-amethyst"] .couple-portrait-wrap {border-color:#9e82b3;background:#d2c2e2;box-shadow:0 0 0 3px #fff9ffb8,0 8px 22px #4333512b;}
+html[data-skin="moonlit-amethyst"] .couple-portrait {
+  background:radial-gradient(ellipse at 50% 20%,#fff9ffd6,transparent 50%),linear-gradient(155deg,#b7a1d0,#eee3f6 55%,#9c84b8);
+}
+html[data-skin="moonlit-amethyst"] .couple-portrait-letter {color:#765d90;text-shadow:0 2px 2px #fff7ff;}
+/* Prevent the old 2→3 overlap from cropping this intervening section.
+ * The top and bottom are color-matched to adjacent artwork families, not
+ * exact custom-painted master-to-master joins. */
+.garden-flow > .couple-section + .details-section {margin-top:0;}
+@media(max-width:350px){
+  .couple-section-inner {width:calc(100% - 22px);padding-left:12px;padding-right:12px;}
+  .couple-portrait-wrap {width:184px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .couple-section::before,.couple-section::after {animation:none!important;}
+}

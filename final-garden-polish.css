@@ -1,0 +1,74 @@
+/* Final visual polish — verified 2026-11 mobile screenshots.
+ * Preserve original paintings and the edge-bridge logic: only enhance the
+ * accessible HTML venue cards which appear between painted Sections 3 and 4.
+ * Paper and text use warm garden tones with clearer contrast at 320px.
+ */
+.details-section .event-reading-section {
+  background:
+    radial-gradient(ellipse 78% 19% at 50% 0%,#f5d1a4a8,transparent 100%),
+    linear-gradient(180deg,#f1d9b9 0%,#fae8d0 45%,#f3dfc3 100%);
+}
+.details-section .event-reading-section::before {
+  height:2px;
+  background:linear-gradient(90deg,transparent,#a46b43 43%,#cfaa6c 50%,#a46b43 57%,transparent);
+}
+.details-section .event-reading-eyebrow {color:#755045;}
+.details-section .event-reading-title {color:#563741;}
+.details-section .event-reading-title em {color:#80583d;}
+.details-section .event-reading-caption {color:#74534a;}
+.details-section .event-reading-card {
+  border-color:#b88a56;
+  outline-color:#d6b285;
+  outline-offset:-7px;
+  background:
+    radial-gradient(ellipse 95% 35% at 50% 0%,#fffaf1 0%,transparent 100%),
+    linear-gradient(155deg,#fff2dc 0%,#f5e2c3 100%);
+  box-shadow:0 12px 30px #69442e21,0 2px 5px #6e4a3e16;
+}
+.details-section .event-reading-type {color:#785345;}
+.details-section .event-reading-card h4 {color:#603d46;}
+.details-section .event-reading-date {color:#74503c;}
+.details-section .event-reading-time {color:#71534c;}
+.details-section .event-reading-venue {color:#5c3f43;}
+.details-section .event-reading-address {color:#6b4e48;}
+.details-section .event-reading-pending {color:#75554b;}
+/* The cards remain interactive HTML. Strong focus rings and 44px tap targets
+ * are critical when directions become available for a real couple. */
+.details-section .event-reading-directions {background:#643c47;color:#fff7e7;border-color:#a27b5a;}
+.details-section .event-reading-directions:focus-visible {outline:3px solid #774d33;outline-offset:4px;}
+/* Moonlit is a skin, not Golden artwork recolored on top. Keep the cards
+ * consistent with the same Moonlit scenery and readable violet ink. */
+html[data-skin="moonlit-amethyst"] .details-section .event-reading-section {
+  background:
+    radial-gradient(ellipse 80% 19% at 50% 0%,#cdbbdc88,transparent 100%),
+    linear-gradient(180deg,#e7d8eb 0%,#f4edf7 47%,#e5d8ed 100%);
+}
+html[data-skin="moonlit-amethyst"] .details-section .event-reading-section::before {
+  background:linear-gradient(90deg,transparent,#80658e 43%,#bba5cc 50%,#80658e 57%,transparent);
+}
+html[data-skin="moonlit-amethyst"] .details-section .event-reading-card {
+  border-color:#9981ab;outline-color:#c8b4d6;
+  background:radial-gradient(ellipse 95% 35% at 50% 0%,#fffafd 0%,transparent 100%),linear-gradient(150deg,#f9f3fb,#ebe2f2);
+  box-shadow:0 12px 28px #46375320;
+}
+html[data-skin="moonlit-amethyst"] .details-section .event-reading-eyebrow,
+html[data-skin="moonlit-amethyst"] .details-section .event-reading-title em,
+html[data-skin="moonlit-amethyst"] .details-section .event-reading-type {color:#705273;}
+html[data-skin="moonlit-amethyst"] .details-section .event-reading-title,
+html[data-skin="moonlit-amethyst"] .details-section .event-reading-card h4 {color:#503d61;}
+html[data-skin="moonlit-amethyst"] .details-section .event-reading-caption,
+html[data-skin="moonlit-amethyst"] .details-section .event-reading-time,
+html[data-skin="moonlit-amethyst"] .details-section .event-reading-address,
+html[data-skin="moonlit-amethyst"] .details-section .event-reading-pending {color:#68536e;}
+html[data-skin="moonlit-amethyst"] .details-section .event-reading-date {color:#634b6c;}
+html[data-skin="moonlit-amethyst"] .details-section .event-reading-venue {color:#51405b;}
+html[data-skin="moonlit-amethyst"] .details-section .event-reading-directions {background:#554269;color:#fff6ff;border-color:#9480ac;}
+/* Text reflows naturally for longer Burmese family/venue data. No fixed card
+ * height, scrolling pane, masked content, or extra decoration over the copy. */
+.details-section .event-reading-card,
+.details-section .event-reading-card > * {
+  max-width:100%;
+}
+@media (prefers-reduced-motion:reduce){
+  .details-section .event-reading-card {transition:none!important;animation:none!important;}
+}

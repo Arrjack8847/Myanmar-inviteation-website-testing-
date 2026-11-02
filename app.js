@@ -48,6 +48,50 @@ if (Array.isArray(CUSTOMER.story?.chapters)) {
   }
 }
 
+// The bride uses the invitation's firstName and the groom uses secondName.
+// These are explicit template roles: names and gender are NOT inferred.
+const PEOPLE = {
+  bride: {
+    name: DEMO.firstName,
+    bio: 'A personal introduction to the bride can be added here.'
+  },
+  groom: {
+    name: DEMO.secondName,
+    bio: 'A personal introduction to the groom can be added here.'
+  }
+};
+for (const role of ['bride','groom']) {
+  const incoming = CUSTOMER.people?.[role];
+  if (incoming && typeof incoming.bio === 'string') PEOPLE[role].bio = incoming.bio;
+  // Only explicitly uploaded, same-site portrait paths are accepted.
+  // External URLs/data URLs are intentionally not supported for privacy.
+  if (incoming && typeof incoming.photo === 'string' &&
+      new RegExp('^photos/[A-Za-z0-9_-]+(?:/[A-Za-z0-9_-]+)*[.](?:png|jpe?g|webp|avif)$','i').test(incoming.photo)) {
+    PEOPLE[role].photo = incoming.photo;
+  }
+}
+function renderBrideAndGroom() {
+  for (const role of ['bride','groom']) {
+    const person = PEOPLE[role];
+    const heading = document.querySelector('[data-person-name="' + role + '"]');
+    const initial = document.querySelector('[data-person-initial="' + role + '"]');
+    const description = document.querySelector('[data-person-bio="' + role + '"]');
+    const photo = document.querySelector('[data-person-photo="' + role + '"]');
+    if (heading) heading.textContent = person.name;
+    if (initial) initial.textContent = person.name.trim().charAt(0).toUpperCase() || '♡';
+    if (description) description.textContent = person.bio;
+    if (photo && person.photo) {
+      const frame = photo.closest('.couple-portrait');
+      photo.alt = 'Portrait of ' + person.name;
+      // Hidden lazy images never load: fetch eagerly, reveal only once ready.
+      photo.loading = 'eager';
+      photo.onload = () => { photo.hidden = false; frame?.classList.add('has-photo'); };
+      photo.onerror = () => { photo.hidden = true; frame?.classList.remove('has-photo'); };
+      photo.src = person.photo;
+    }
+  }
+}
+
 function renderLoveStory() {
   const intro = document.querySelector('[data-story-intro]');
   if (intro) intro.textContent = LOVE_STORY.introduction;
@@ -153,6 +197,7 @@ for (const item of document.querySelectorAll('[data-name="second"]')) item.textC
 for (const item of document.querySelectorAll('[data-family="first"]')) item.textContent = DEMO.firstFamily;
 for (const item of document.querySelectorAll('[data-family="second"]')) item.textContent = DEMO.secondFamily;
 for (const item of document.querySelectorAll('[data-date-text]')) item.textContent = DEMO.displayDate;
+renderBrideAndGroom();
 renderLoveStory();
 renderWeddingEvents();
 
@@ -251,6 +296,12 @@ if (previewParams.get('artReview') === '1') {
 const counterKeys = ['days', 'hours', 'minutes', 'seconds'];
 const countdownStatus = document.getElementById('countdownStatus');
 const countdownDisplay = document.querySelector('.countdown-grid');
+const customWeddingDate = typeof CUSTOMER.couple?.weddingDateISO === 'string' &&
+  CUSTOMER.couple.weddingDateISO.trim().length > 0;
+const countdownFootnote = document.querySelector('.countdown-footnote');
+if (countdownFootnote && customWeddingDate) {
+  countdownFootnote.textContent = 'Wedding countdown · based on the configured event date and time';
+}
 function updateCountdown() {
   const deadline = Date.parse(DEMO.weddingDateISO);
   const valid = Number.isFinite(deadline);
@@ -277,8 +328,8 @@ function updateCountdown() {
     countdownDisplay.setAttribute('aria-label', !valid
       ? 'Wedding date not yet set'
       : delta === 0
-        ? 'The sample wedding date has arrived'
-        : 'Time remaining until the sample wedding date');
+        ? 'The wedding date has arrived'
+        : 'Time remaining until the wedding date');
   }
 }
 updateCountdown();
@@ -293,15 +344,27 @@ function showToast(message) {
   toastTimeout = setTimeout(() => toast.classList.remove('is-visible'), 3000);
 }
 document.getElementById('shareButton').addEventListener('click', async () => {
-  const link = window.location.href.split('#')[0];
+  const link = window.INVITATION_SHARE?.build(window.location.href,window.INVITATION_SKINS?.packs);
+  if (!link) {
+    showToast('This is a local preview. Publish the invitation before sharing a guest link.');
+    return;
+  }
   try {
-    if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(link);
-    else {
-      const input = document.createElement('textarea'); input.value = link; document.body.appendChild(input); input.select();
-      if (!document.execCommand('copy')) throw new Error('Clipboard unavailable'); input.remove();
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(link);
+    } else {
+      const input = document.createElement('textarea');
+      input.value = link;
+      document.body.appendChild(input);
+      try {
+        input.select();
+        if (!document.execCommand('copy')) throw new Error('Clipboard unavailable');
+      } finally {
+        input.remove();
+      }
     }
-    showToast('Preview link copied. Use the same address while your local server runs.');
+    showToast('Invitation link copied.');
   } catch {
-    showToast('Copy the URL from your browser address bar.');
+    showToast('Copy the invitation URL from your browser address bar.');
   }
 });
