@@ -91,7 +91,7 @@
 .couple-portrait-wrap {
   position:relative;
   box-sizing:border-box;
-  width:clamp(165px,52vw,236px);
+  width:clamp(184px,52vw,236px);
   max-width:100%;
   margin:0 auto clamp(11px,3vw,15px);
   padding:7px;
@@ -217,7 +217,7 @@ html[data-skin="moonlit-amethyst"] .couple-portrait-letter {color:#765d90;text-s
 .garden-flow > .couple-section + .details-section {margin-top:0;}
 @media(max-width:350px){
   .couple-section-inner {width:calc(100% - 22px);padding-left:12px;padding-right:12px;}
-  .couple-portrait-wrap {width:168px;}
+  .couple-portrait-wrap {width:184px;}
 }
 @media(prefers-reduced-motion:reduce){
   .couple-section::before,.couple-section::after {animation:none!important;}
