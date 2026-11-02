@@ -8,7 +8,7 @@ const path=require('node:path');
 const crypto=require('node:crypto');
 
 const root=path.resolve(__dirname,'..');
-const output=path.join(root,'dist','rc1-phone-review');
+const output=path.join(root,'dist','gallery-phone-review');
 const keepAtRoot=name=>
   /\.(html|css|js)$/i.test(name) ||
   /^([0-2][0-9]|3[0-2])_.*\.png$/.test(name) ||
@@ -16,7 +16,8 @@ const keepAtRoot=name=>
   name==='vercel.json' ||
   name==='server.js' ||
   name==='RELEASE_CANDIDATE.md' ||
-  name==='FINAL_VISUAL_QA.md';
+  name==='FINAL_VISUAL_QA.md' ||
+  name==='GALLERY_PHONE_TESTING.md';
 const artwork=/^(golden_autumn_heritage_master_v4|section2_family_invitation_master|section3_ceremony_reception_master)\.(png|webp)$/i;
 function crawl(dir,rel=''){
   const files=[];
@@ -32,7 +33,7 @@ function crawl(dir,rel=''){
     if(rel===''&&keepAtRoot(item.name))files.push(relative);
     if(rel==='art'&&artwork.test(item.name))files.push(relative);
     if(rel==='assets'&&item.name.endsWith('.svg'))files.push(relative);
-    if(rel==='photos'&&/\.(png|webp|jpe?g|avif)$/i.test(item.name))files.push(relative);
+    if(rel==='photos'&&(/\.(png|webp|jpe?g|avif)$/i.test(item.name)||item.name==='README.md'))files.push(relative);
     if(rel==='skins/moonlit-amethyst'&&/\.(png|webp)$/i.test(item.name))files.push(relative);
   }
   return files;
@@ -48,7 +49,7 @@ for(const mandatory of [
   'skins/moonlit-amethyst/gateway.webp',
   'skins/moonlit-amethyst/events.webp',
   'story-art-v5.css','countdown-garden.css','closing-garden.css','story-closing-bridge.css',
-  'server.js','couple-gallery.js','couple-gallery.css'
+  'server.js','couple-gallery.js','couple-gallery.css','GALLERY_PHONE_TESTING.md'
 ]){
   if(!relativeFiles.includes(mandatory))throw new Error('Mandatory RC file missing: '+mandatory);
 }
@@ -100,7 +101,7 @@ fs.writeFileSync(path.join(output,'START_PHONE_PREVIEW.txt'),[
  'Gallery documentation is in the repository under photos/README.md.',
  'The local share button intentionally refuses to copy an unusable LAN URL.',
  'DO NOT publish as a customer invitation until real event details are confirmed.',
- 'Further guidance: RELEASE_CANDIDATE.md',
+ 'Read GALLERY_PHONE_TESTING.md for the full photo and real-phone walkthrough.',
  ''
 ].join('\n'));
 console.log('PASS GALLERY phone package:',manifest.length,'files',metadata.totalBytes,'bytes; commit:',metadata.commit);
