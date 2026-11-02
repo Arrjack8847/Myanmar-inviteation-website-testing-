@@ -48,6 +48,48 @@ if (Array.isArray(CUSTOMER.story?.chapters)) {
   }
 }
 
+// The bride uses the invitation's firstName and the groom uses secondName.
+// These are explicit template roles: names and gender are NOT inferred.
+const PEOPLE = {
+  bride: {
+    name: DEMO.firstName,
+    bio: 'A personal introduction to the bride can be added here.'
+  },
+  groom: {
+    name: DEMO.secondName,
+    bio: 'A personal introduction to the groom can be added here.'
+  }
+};
+for (const role of ['bride','groom']) {
+  const incoming = CUSTOMER.people?.[role];
+  if (incoming && typeof incoming.bio === 'string') PEOPLE[role].bio = incoming.bio;
+  // Only explicitly uploaded, same-site portrait paths are accepted.
+  // External URLs/data URLs are intentionally not supported for privacy.
+  if (incoming && typeof incoming.photo === 'string' &&
+      /^photos/[a-zA-Z0-9_-]+(?:/[a-zA-Z0-9_-]+)*\.(?:png|jpe?g|webp|avif)$/i.test(incoming.photo)) {
+    PEOPLE[role].photo = incoming.photo;
+  }
+}
+function renderBrideAndGroom() {
+  for (const role of ['bride','groom']) {
+    const person = PEOPLE[role];
+    const heading = document.querySelector('[data-person-name="' + role + '"]');
+    const initial = document.querySelector('[data-person-initial="' + role + '"]');
+    const description = document.querySelector('[data-person-bio="' + role + '"]');
+    const photo = document.querySelector('[data-person-photo="' + role + '"]');
+    if (heading) heading.textContent = person.name;
+    if (initial) initial.textContent = person.name.trim().charAt(0).toUpperCase() || '♡';
+    if (description) description.textContent = person.bio;
+    if (photo && person.photo) {
+      const frame = photo.closest('.couple-portrait');
+      photo.alt = 'Portrait of ' + person.name;
+      photo.onload = () => { photo.hidden = false; frame?.classList.add('has-photo'); };
+      photo.onerror = () => { photo.hidden = true; frame?.classList.remove('has-photo'); };
+      photo.src = person.photo;
+    }
+  }
+}
+
 function renderLoveStory() {
   const intro = document.querySelector('[data-story-intro]');
   if (intro) intro.textContent = LOVE_STORY.introduction;
@@ -153,6 +195,7 @@ for (const item of document.querySelectorAll('[data-name="second"]')) item.textC
 for (const item of document.querySelectorAll('[data-family="first"]')) item.textContent = DEMO.firstFamily;
 for (const item of document.querySelectorAll('[data-family="second"]')) item.textContent = DEMO.secondFamily;
 for (const item of document.querySelectorAll('[data-date-text]')) item.textContent = DEMO.displayDate;
+renderBrideAndGroom();
 renderLoveStory();
 renderWeddingEvents();
 
