@@ -442,7 +442,13 @@ async function testSize(size) {
       assert(touchAction.includes('pan-y'),'Tapping event artwork must not disable finger scrolling');
       await link.click();
       await page.waitForFunction(id=>location.hash==='#'+id,event+'Details',{timeout:2800});
-      await page.waitForTimeout(550);
+      // Native smooth scrolling takes longer when the invitation includes
+      // the new portrait interlude. Wait for the actual target position
+      // instead of assuming every phone completes scrolling in 550ms.
+      await page.waitForFunction(id=>{
+        const y=document.getElementById(id)?.getBoundingClientRect().top;
+        return typeof y==='number'&&y>-130&&y<175;
+      },event+'Details',{timeout:4500});
       const placement=await page.locator('#'+event+'Details').evaluate(el=>el.getBoundingClientRect().top);
       assert(placement>-130&&placement<175,
         'Tapping the painted '+event+' frame should reach readable details: '+placement);
