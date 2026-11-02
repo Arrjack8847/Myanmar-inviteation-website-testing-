@@ -32,6 +32,9 @@
     const img=section.querySelector('[data-gallery-portrait="'+role+'"]');
     const placeholder=section.querySelector('[data-gallery-placeholder="'+role+'"]');
     if(img && safePhotoPath(details.photo)){
+      // Hidden lazy-loaded images may never request their source.
+      // Portraits are only two small assets, so resolve them eagerly first.
+      img.loading='eager';
       img.alt='Portrait of '+name;
       img.addEventListener('load',()=>{
         img.hidden=false;
