@@ -13,7 +13,7 @@
   // photos to third-party CDNs and prevents protocol/traversal injection.
   function safePhotoPath(path){
     return typeof path==='string' && path.length<220 &&
-      /^photos\/[a-z0-9_/-]+\.(webp|png|jpe?g|avif)$/i.test(path) &&
+      /^photos\/[a-z0-9_-]+\.(webp|png|jpe?g|avif)$/i.test(path) &&
       !path.includes('..') && !path.includes('//') && !path.includes('/./');
   }
   const stringOr=(value,fallback)=>typeof value==='string'&&value.trim()?value.trim():fallback;
