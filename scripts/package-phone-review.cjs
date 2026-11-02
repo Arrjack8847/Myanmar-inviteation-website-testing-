@@ -23,7 +23,7 @@ function crawl(dir,rel=''){
     if(item.isSymbolicLink())throw new Error('Symlink forbidden: '+item.name);
     const relative=path.posix.join(rel,item.name);
     if(item.isDirectory()){
-      if(rel==='' && ['art','assets','skins'].includes(item.name))files.push(...crawl(path.join(dir,item.name),relative));
+      if(rel==='' && ['art','assets','skins','photos'].includes(item.name))files.push(...crawl(path.join(dir,item.name),relative));
       else if(rel==='skins'&&item.name==='moonlit-amethyst')files.push(...crawl(path.join(dir,item.name),relative));
       continue;
     }
@@ -31,6 +31,7 @@ function crawl(dir,rel=''){
     if(rel===''&&keepAtRoot(item.name))files.push(relative);
     if(rel==='art'&&artwork.test(item.name))files.push(relative);
     if(rel==='assets'&&item.name.endsWith('.svg'))files.push(relative);
+    if(rel==='photos'&&/\.(png|webp|jpe?g|avif)$/i.test(item.name))files.push(relative);
     if(rel==='skins/moonlit-amethyst'&&/\.(png|webp)$/i.test(item.name))files.push(relative);
   }
   return files;
