@@ -35,9 +35,9 @@ async function serverReady() {
 }
 
 function measure() {
-  const ids=['home','invitation','details'];
+  const ids=['home','invitation','couple','details'];
   const elements=ids.map(id=>document.getElementById(id));
-  const [home,invitation,details]=elements;
+  const [home,invitation,couple,details]=elements;
   if(elements.some(x=>!x))throw new Error('A required illustration section is missing');
   const top=x=>x.getBoundingClientRect().top+window.scrollY;
   const bottom=x=>x.getBoundingClientRect().bottom+window.scrollY;
@@ -52,7 +52,8 @@ function measure() {
   const allImgs=[master,scene];
   return {
     gap12:Math.round(top(invitation)-bottom(home)),
-    gap23:Math.round(top(details)-bottom(invitation)),
+    gap2Couple:Math.round(top(couple)-bottom(invitation)),
+    gapCouple3:Math.round(top(details)-bottom(couple)),
     horizontalOverflow:Math.max(0,document.documentElement.scrollWidth-window.innerWidth),
     totalHeight:document.documentElement.scrollHeight,
     viewportHeight:window.innerHeight,
@@ -148,7 +149,8 @@ async function testSize(size) {
     await page.waitForTimeout(250);
     const metrics=await page.evaluate(measure);
     assert(Math.abs(metrics.gap12)<=42,'Garden → invitation gap too large: '+metrics.gap12+'px');
-    assert(Math.abs(metrics.gap23)<=42,'Invitation → events gap too large: '+metrics.gap23+'px');
+    assert(Math.abs(metrics.gap2Couple)<=42,'Family → Bride & Groom gap too large: '+metrics.gap2Couple+'px');
+    assert(Math.abs(metrics.gapCouple3)<=42,'Bride & Groom → events gap too large: '+metrics.gapCouple3+'px');
     assert(metrics.horizontalOverflow<=2,'Horizontal page overflow: '+metrics.horizontalOverflow+'px');
     assert(metrics.totalHeight>metrics.viewportHeight*1.8,'Page no longer scrolls as a long invitation');
     assert(metrics.paperOverflow!=='auto'&&metrics.paperOverflow!=='scroll','Nested invitation scrollbar traps touch swipes');
@@ -158,7 +160,7 @@ async function testSize(size) {
     assert(metrics.art2Set,'Section 2 illustration was not applied');
     assert(metrics.art2Webp,'CSS did not select optimized Section 2 border art');
     assert(metrics.art2MaskActive,'Responsive garden → invitation seam mask is missing');
-    assert(metrics.art3MaskActive,'Responsive invitation → events seam mask is missing');
+    assert(metrics.art3MaskActive,'Responsive Bride & Groom → events seam mask is missing');
     assert(metrics.art3Loaded,'Section 3 original illustration failed to load');
     assert(metrics.art3Webp,'Browser did not choose optimized Section 3 WebP');
     assert(metrics.art3Local,'Section 3 must use its local verified source, not another repository');
