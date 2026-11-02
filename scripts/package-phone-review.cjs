@@ -15,7 +15,8 @@ const keepAtRoot=name=>
   name==='4ba5ed04-e01d-4bed-a71e-42f2bdf5f8a5.png' ||
   name==='vercel.json' ||
   name==='RELEASE_CANDIDATE.md' ||
-  name==='FINAL_VISUAL_QA.md';
+  name==='FINAL_VISUAL_QA.md' ||
+  name==='COUPLE_SECTION.md';
 const artwork=/^(golden_autumn_heritage_master_v4|section2_family_invitation_master|section3_ceremony_reception_master)\.(png|webp)$/i;
 function crawl(dir,rel=''){
   const files=[];
@@ -91,7 +92,7 @@ fs.writeFileSync(path.join(output,'START_PHONE_PREVIEW.txt'),[
  '  /index.html?skin=golden-autumn',
  '  /index.html?skin=moonlit-amethyst',
  '',
- 'TEST: open animation, all six sections, edge joins, Myanmar/English',
+ 'TEST: open animation, all seven sections, edge joins, Myanmar/English',
  'long text, event cards, countdown, copying links, scrolling and controls.',
  'The local share button intentionally refuses to copy an unusable LAN URL.',
  'DO NOT publish as a customer invitation until real event details are confirmed.',
