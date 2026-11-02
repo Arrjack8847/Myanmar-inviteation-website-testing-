@@ -66,7 +66,7 @@ for (const role of ['bride','groom']) {
   // Only explicitly uploaded, same-site portrait paths are accepted.
   // External URLs/data URLs are intentionally not supported for privacy.
   if (incoming && typeof incoming.photo === 'string' &&
-      new RegExp('^photos/[A-Za-z0-9_-]+(?:/[A-Za-z0-9_-]+)*[.](?:png|jpe?g|webp|avif)) {
+      new RegExp('^photos/[A-Za-z0-9_-]+(?:/[A-Za-z0-9_-]+)*[.](?:png|jpe?g|webp|avif)$','i').test(incoming.photo)) {
     PEOPLE[role].photo = incoming.photo;
   }
 }
