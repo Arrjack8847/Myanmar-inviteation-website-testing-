@@ -1,0 +1,169 @@
+/* Section 5 — The Garden Countdown.
+ * One continuous illustrated object: timer inside Section 4's expandable
+ * parchment, ABOVE its original painted lower gold crest and cobblestones.
+ * No additional PNG master, artificial vertical spacer, or new scenery join.
+ * Count values and customer date remain live HTML managed by app.js.
+ */
+.story-illustrated-frame .countdown-panel {
+  box-sizing:border-box;
+  width:100%;
+  max-width:none;
+  margin:clamp(29px,7vw,48px) auto 0;
+  padding:clamp(8px,2vw,15px) 0 clamp(8px,3vw,20px);
+  min-height:0;
+  border:0;
+  border-radius:0;
+  outline:0;
+  background:transparent;
+  box-shadow:none;
+  color:#69444c;
+  isolation:isolate;
+}
+/* Suppress the synthetic corner stars from the old detached countdown box:
+ * the ornamental divider and original gold frame now provide decoration. */
+.story-illustrated-frame .countdown-panel::before,
+.story-illustrated-frame .countdown-panel::after {
+  content:none;
+}
+.story-illustrated-frame .countdown-ornament {
+  display:block;
+  object-fit:contain;
+  width:min(166px,63%);
+  height:23px;
+  margin:0 auto clamp(17px,4vw,27px);
+  opacity:.87;
+}
+.story-illustrated-frame .countdown-panel .eyebrow {
+  font-size:clamp(9px,2.3vw,11px);
+  letter-spacing:.17em;
+  color:#987053;
+  margin:0 0 12px;
+}
+.story-illustrated-frame .countdown-panel .section-heading {
+  font-size:clamp(24px,6vw,39px);
+  line-height:1.13;
+  color:#68434b;
+  letter-spacing:-.035em;
+  margin:0 auto;
+  max-width:410px;
+}
+.story-illustrated-frame .countdown-panel .section-heading em {
+  color:#a37b4f;
+}
+.story-illustrated-frame .countdown-panel .countdown-intro {
+  font:italic clamp(14px,3.7vw,17px)/1.5 var(--display);
+  margin:clamp(12px,3vw,18px) auto 6px;
+  color:#866052;
+}
+.story-illustrated-frame .countdown-panel .countdown-date {
+  margin:0 auto clamp(19px,4.5vw,27px);
+  font-size:clamp(11px,2.8vw,14px);
+  letter-spacing:.09em;
+  line-height:1.6;
+  color:#956d56;
+}
+.story-illustrated-frame .countdown-panel .countdown-grid {
+  box-sizing:border-box;
+  display:grid;
+  width:100%;
+  max-width:465px;
+  margin:0 auto;
+  gap:clamp(4px,1.5vw,10px);
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+.story-illustrated-frame .countdown-panel .countdown-box {
+  box-sizing:border-box;
+  min-width:0;
+  min-height:78px;
+  padding:clamp(12px,3.5vw,20px) 2px clamp(11px,3vw,17px);
+  border:1px solid #b88c5f;
+  border-bottom:3px solid #be9b6d;
+  border-radius:16px 16px 7px 7px;
+  background:
+    radial-gradient(ellipse at 50% 2%,#fffdf1dd 0%,transparent 72%),
+    linear-gradient(160deg,#fff5e4ad,#ebd3b6aa);
+  box-shadow:0 4px 10px #62402a14,inset 0 0 0 2px #fff5df8a;
+}
+.story-illustrated-frame .countdown-panel .countdown-box strong {
+  display:block;
+  color:#70464e;
+  font:normal clamp(21px,5.3vw,38px)/1.17 var(--display);
+  font-variant-numeric:tabular-nums;
+  overflow-wrap:anywhere;
+}
+.story-illustrated-frame .countdown-panel .countdown-box span {
+  display:block;
+  color:#987153;
+  font:700 clamp(7px,1.9vw,10px)/1.5 var(--body);
+  letter-spacing:clamp(.02em,.10vw,.11em);
+  margin-top:clamp(7px,1.8vw,10px);
+}
+.story-illustrated-frame .countdown-panel .countdown-footnote {
+  max-width:100%;
+  margin:clamp(16px,3.3vw,23px) auto 0;
+  color:#987e70;
+  font:normal clamp(10px,2.5vw,12px)/1.5 var(--body);
+  overflow-wrap:anywhere;
+}
+/* Same placement/mechanics on Moonlit; only the artwork palette changes.
+ * The ornament is swapped by skin-loader through .story-ornament. */
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame .countdown-panel .section-heading {
+  color:#51425f;
+}
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame .countdown-panel .section-heading em,
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame .countdown-date {
+  color:#80649e;
+}
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame .countdown-panel .eyebrow,
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame .countdown-intro {
+  color:#806e89;
+}
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame .countdown-box {
+  border-color:#9e89b7;
+  border-bottom-color:#aa95c1;
+  background:radial-gradient(ellipse at 50% 0%,#fffafa 0%,#efe6f5 95%);
+  box-shadow:inset 0 0 0 2px #fff9ffad,0 4px 10px #493e6014;
+}
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame .countdown-box strong {
+  color:#55446a;
+}
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame .countdown-box span,
+html[data-skin="moonlit-amethyst"] .story-illustrated-frame .countdown-footnote {
+  color:#81728d;
+}
+/* Section 5 -> 6 edge treatment (until a bespoke dusk-garden painting
+ * exists). The source artwork ends at its real lower border, followed
+ * immediately by a dusk gradient rather than a visible empty peach strip.
+ * The prototype disclaimer is still readable to assistive technology; the
+ * fixed demo banner already identifies all dates/names as examples. */
+.story-countdown-section {padding-bottom:0;}
+.story-countdown-section .story-disclaimer {
+  position:absolute!important;
+  width:1px!important;height:1px!important;
+  min-width:0!important;min-height:0!important;
+  margin:-1px!important;padding:0!important;border:0!important;
+  overflow:hidden!important;white-space:nowrap!important;
+  clip-path:inset(50%)!important;
+}
+#closing::before {
+  background:
+    radial-gradient(ellipse 66% 40% at 50% 29%,#e7b9833d,transparent 72%),
+    linear-gradient(180deg,#dfc5b2 0%,#ae7b70 18%,#825b61 42%,#482d38 100%);
+}
+html[data-skin="moonlit-amethyst"] #closing::before {
+  background:
+    radial-gradient(ellipse 68% 40% at 50% 30%,#b8a3ca2e,transparent 70%),
+    linear-gradient(180deg,#d8cce6 0%,#92809e 18%,#61516d 42%,#332c45 100%);
+}
+@media(max-width:350px){
+  .story-illustrated-frame .countdown-panel .countdown-box {border-radius:12px 12px 6px 6px;}
+  .story-illustrated-frame .countdown-panel .countdown-box strong {font-size:21px;}
+  .story-illustrated-frame .countdown-panel .countdown-box span {letter-spacing:0;}
+}
+@media(prefers-reduced-motion:reduce){
+  .story-illustrated-frame .countdown-panel,
+  .story-illustrated-frame .countdown-panel * {
+    animation:none!important;
+    transition:none!important;
+  }
+}

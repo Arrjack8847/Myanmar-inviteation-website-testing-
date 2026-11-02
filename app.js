@@ -251,6 +251,12 @@ if (previewParams.get('artReview') === '1') {
 const counterKeys = ['days', 'hours', 'minutes', 'seconds'];
 const countdownStatus = document.getElementById('countdownStatus');
 const countdownDisplay = document.querySelector('.countdown-grid');
+const customWeddingDate = typeof CUSTOMER.couple?.weddingDateISO === 'string' &&
+  CUSTOMER.couple.weddingDateISO.trim().length > 0;
+const countdownFootnote = document.querySelector('.countdown-footnote');
+if (countdownFootnote && customWeddingDate) {
+  countdownFootnote.textContent = 'Wedding countdown · based on the configured event date and time';
+}
 function updateCountdown() {
   const deadline = Date.parse(DEMO.weddingDateISO);
   const valid = Number.isFinite(deadline);
@@ -277,8 +283,8 @@ function updateCountdown() {
     countdownDisplay.setAttribute('aria-label', !valid
       ? 'Wedding date not yet set'
       : delta === 0
-        ? 'The sample wedding date has arrived'
-        : 'Time remaining until the sample wedding date');
+        ? 'The wedding date has arrived'
+        : 'Time remaining until the wedding date');
   }
 }
 updateCountdown();
@@ -293,15 +299,27 @@ function showToast(message) {
   toastTimeout = setTimeout(() => toast.classList.remove('is-visible'), 3000);
 }
 document.getElementById('shareButton').addEventListener('click', async () => {
-  const link = window.location.href.split('#')[0];
+  const link = window.INVITATION_SHARE?.build(window.location.href,window.INVITATION_SKINS?.packs);
+  if (!link) {
+    showToast('This is a local preview. Publish the invitation before sharing a guest link.');
+    return;
+  }
   try {
-    if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(link);
-    else {
-      const input = document.createElement('textarea'); input.value = link; document.body.appendChild(input); input.select();
-      if (!document.execCommand('copy')) throw new Error('Clipboard unavailable'); input.remove();
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(link);
+    } else {
+      const input = document.createElement('textarea');
+      input.value = link;
+      document.body.appendChild(input);
+      try {
+        input.select();
+        if (!document.execCommand('copy')) throw new Error('Clipboard unavailable');
+      } finally {
+        input.remove();
+      }
     }
-    showToast('Preview link copied. Use the same address while your local server runs.');
+    showToast('Invitation link copied.');
   } catch {
-    showToast('Copy the URL from your browser address bar.');
+    showToast('Copy the invitation URL from your browser address bar.');
   }
 });

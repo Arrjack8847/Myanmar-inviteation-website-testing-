@@ -1,0 +1,45 @@
+/* Scene 5 -> 6: exact-edge continuity from the approved storybook PNG.
+ *
+ * The storybook border image is displayed at a 1024:screen-width scale.
+ * Its final scanline is a painted cobblestone path. A horizontally mirrored
+ * or second-scene crop changes the flowers at the seam; instead continue
+ * THIS image from its precise bottom scanline by reflecting it *vertically*.
+ * A short alpha falloff transitions into the existing sunset-to-dusk closing.
+ *
+ * No new illustration, duplicate gold frame, scroll spacer or canvas animation.
+ * No JavaScript. Both source images are preserved byte-for-byte.
+ */
+html[data-skin="golden-autumn"] .story-illustrated-frame::after {
+  display:none; /* Previous beige mask tinted the exact last story pixel. */
+}
+#closing .closing-edge-continuation {
+  position:absolute;
+  z-index:2;
+  top:0;
+  left:50%;
+  width:min(100%,660px);
+  height:clamp(69px,23vw,145px);
+  box-sizing:border-box;
+  pointer-events:none;
+  background:url("4ba5ed04-e01d-4bed-a71e-42f2bdf5f8a5.png") center bottom / 100% auto no-repeat;
+  transform:translateX(-50%) scaleY(-1);
+  transform-origin:50% 50%;
+  /* After the vertical reflection, the first visible row is the exact
+   * last scanline of the preceding painting. Only the lower portion fades. */
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.17) 27%,rgba(0,0,0,.72) 72%,#000 93%,#000 100%);
+  mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.17) 27%,rgba(0,0,0,.72) 72%,#000 93%,#000 100%);
+}
+#closing .closing-garden-horizon {
+  /* Reveal the lower landscape, not a second large patch of bright sky.
+   * Keeps the original image proportional and the ceremony plaques cropped. */
+  background-position:center calc(100% - clamp(24px,8vw,55px));
+}
+/* In Moonlit the story ends with an uninterrupted lavender-paper palette,
+ * and the gradient already joins its own artwork. Do not bring Golden's
+ * cobblestones into a purple skin until a matching painted source exists. */
+html[data-skin="moonlit-amethyst"] #closing .closing-edge-continuation {
+  display:none;
+}
+@media(prefers-reduced-motion:reduce){
+  #closing .closing-edge-continuation {animation:none!important;}
+}

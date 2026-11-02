@@ -1,0 +1,206 @@
+/* Phase 6 — Closing Garden (reuses approved illustrated scenery).
+ * Both skins use the LOWER GARDEN of their own original ceremony painting;
+ * zoom-crop the very bottom path, sunset horizon and flowers, not the panels.
+ * A dusk glaze creates the evening atmosphere. No new unverified artwork.
+ */
+#closing.closing-section {
+  position:relative;
+  width:100%;
+  max-width:none;
+  box-sizing:border-box;
+  min-height:clamp(670px,90svh,850px);
+  padding:clamp(145px,30vw,225px) clamp(20px,6vw,42px) clamp(85px,16vw,120px);
+  overflow:hidden;
+  isolation:isolate;
+  background:#442e39;
+  color:#fff2df;
+}
+/* Original global closing gradient overridden with a garden sunset→twilight. */
+#closing.closing-section::before {
+  position:absolute;
+  inset:0;
+  content:"";
+  z-index:0;
+  background:
+    radial-gradient(ellipse 79% 25% at 50% 18%,#e5af8770,transparent 95%),
+    linear-gradient(180deg,#dfc5b2 0%,#b7897c 13%,#805b60 42%,#482e3b 82%,#342431 100%);
+  pointer-events:none;
+}
+/* The actual Section 3 painted garden's lower slice is clipped naturally
+ * by CSS background-position and a viewport-relative container. The image
+ * is proportionally zoomed 2.30x so the upper ceremony panel stays cropped
+ * OUT. The lower painted garden becomes a new close-up view for the finale. */
+#closing .closing-garden-horizon {
+  position:absolute;
+  z-index:0;
+  top:0;left:50%;
+  transform:translateX(-50%);
+  width:min(100%,660px);
+  height:clamp(190px,58vw,350px);
+  pointer-events:none;
+  background-image:url("art/section3_ceremony_reception_master.webp");
+  background-position:center bottom;
+  /* Zoom into the lower ~300px of the approved painting, excluding
+     its ceremony text frames. This is proportional artwork cropping,
+     not stretching or repeating the ornate event panels. */
+  background-size:230% auto;
+  background-repeat:no-repeat;
+  opacity:.93;
+  filter:brightness(.79) saturate(.72) sepia(.14);
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 12%,#000 52%,transparent 100%);
+  mask-image:linear-gradient(to bottom,transparent 0%,#000 12%,#000 52%,transparent 100%);
+}
+/* The haze makes the garden feel like late evening but does not cover
+ * the original illustrated horizon with an unrelated flat panel. */
+#closing .closing-garden-haze {
+  position:absolute;z-index:1;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse 62% 17% at 50% 19%,#ffdaaa2c,transparent),
+    linear-gradient(180deg,#dfc5b20f 0%,#85586136 29%,#53344375 61%,#3827339c 100%);
+}
+#closing .closing-floral {
+  position:absolute;
+  bottom:-14px;
+  z-index:1;
+  width:clamp(85px,31vw,200px);
+  height:clamp(190px,60vw,380px);
+  background-position:center bottom;
+  background-size:contain;
+  background-repeat:no-repeat;
+  opacity:.46;
+  pointer-events:none;
+  transform-origin:bottom center;
+}
+#closing .closing-floral--left{
+  left:max(-25px,calc(50% - 335px));
+  background-image:url("16_bouquet_bottom_left.png");
+  animation:closing-floral-sway-left 13s ease-in-out infinite alternate;
+}
+#closing .closing-floral--right{
+  right:max(-25px,calc(50% - 335px));
+  background-image:url("17_bouquet_bottom_right.png");
+  animation:closing-floral-sway-right 14s ease-in-out infinite alternate;
+}
+@keyframes closing-floral-sway-left {
+  to {transform:rotate(1.5deg) translateX(2px);}
+}
+@keyframes closing-floral-sway-right {
+  to {transform:rotate(-1.4deg) translateX(-2px);}
+}
+/* Real name/text and interactive controls always stay ABOVE scenic layers. */
+#closing > :not(.closing-garden-horizon):not(.closing-garden-haze):not(.closing-floral):not(.closing-edge-continuation) {
+  position:relative;
+  z-index:3;
+}
+#closing .closing-ornament {
+  font-size:clamp(22px,6vw,30px);
+  color:#edcd99;
+  margin-bottom:clamp(15px,4vw,25px);
+}
+#closing .eyebrow{
+  color:#f7d6ad;
+  font-size:clamp(9px,2.6vw,11px);
+  line-height:1.6;
+  letter-spacing:.17em;
+  text-shadow:0 1px 9px #342632;
+}
+#closing .section-heading {
+  max-width:500px;
+  color:#fff2e0;
+  font-size:clamp(38px,9.5vw,64px);
+  line-height:1.1;
+  text-shadow:0 2px 13px #34212eaa;
+}
+#closing .section-heading em {color:#f4d5a3;}
+#closing .closing-body {
+  max-width:460px;
+  margin:clamp(23px,6vw,36px) auto 26px;
+  color:#fff0dc;
+  font:normal clamp(17px,4.4vw,21px)/1.7 var(--display);
+  text-shadow:0 2px 12px #382837ba;
+}
+#closing .closing-signature {
+  max-width:100%;
+  margin:0 auto;
+  font:italic clamp(26px,7.5vw,39px)/1.45 var(--display);
+  color:#ffe3b4;
+  overflow-wrap:anywhere;
+  text-shadow:0 2px 12px #382837ba;
+}
+#closing .closing-signature span {font-size:inherit;}
+#closing .divider-art {
+  width:min(170px,52%);
+  height:auto;
+  margin:clamp(20px,4vw,28px) auto 8px;
+}
+#closing .share-button {
+  min-height:48px;
+  margin:clamp(21px,5vw,32px) auto 0;
+  position:relative;
+  z-index:4;
+}
+#closing .back-to-top{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  max-width:100%;
+  margin-top:clamp(19px,4vw,28px);
+  padding:10px;
+  border-radius:8px;
+  color:#ffdfb3;
+  font-size:clamp(10px,2.5vw,12px);
+  letter-spacing:.13em;
+  text-decoration:underline;
+  text-underline-offset:5px;
+}
+#closing .back-to-top:focus-visible,
+#closing .share-button:focus-visible{
+  outline:3px solid #fff1cc;
+  outline-offset:4px;
+}
+/* Palette and original source painting swap in parallel; Golden foliage
+ * cannot accidentally appear in the amethyst closing scene. */
+html[data-skin="moonlit-amethyst"] #closing.closing-section{
+  background:#30283d;
+}
+html[data-skin="moonlit-amethyst"] #closing.closing-section::before {
+  background:
+    radial-gradient(ellipse 78% 30% at 50% 18%,#ada0ce62,transparent 90%),
+    linear-gradient(180deg,#d8cce6 0%,#9e8fae 13%,#625671 42%,#3b304e 80%,#2a253a 100%);
+}
+html[data-skin="moonlit-amethyst"] #closing .closing-garden-horizon {
+  background-image:url("skins/moonlit-amethyst/events.webp");
+  filter:brightness(.76) saturate(.83) hue-rotate(5deg);
+}
+html[data-skin="moonlit-amethyst"] #closing .closing-garden-haze {
+  background:
+    radial-gradient(ellipse 63% 22% at 50% 17%,#e2d2fa30,transparent),
+    linear-gradient(180deg,#d8cce60c 0%,#6a547c4a 30%,#3c2e5290 72%,#30283bc2 100%);
+}
+html[data-skin="moonlit-amethyst"] #closing .closing-floral--left,
+html[data-skin="moonlit-amethyst"] #closing .closing-floral--right {
+  background-image:url("skins/moonlit-amethyst/floral.png");
+  opacity:.32;
+}
+html[data-skin="moonlit-amethyst"] #closing .closing-floral--right {transform:scaleX(-1);}
+html[data-skin="moonlit-amethyst"] #closing .section-heading em,
+html[data-skin="moonlit-amethyst"] #closing .closing-signature {
+  color:#ebd8fd;
+}
+html[data-skin="moonlit-amethyst"] #closing .eyebrow,
+html[data-skin="moonlit-amethyst"] #closing .back-to-top {
+  color:#f3defa;
+}
+/* Text stays clear at smallest phone sizes. Side plants cannot intercept
+ * taps or creep into the central message area. */
+@media(max-width:350px){
+  #closing.closing-section{padding-left:15px;padding-right:15px;}
+  #closing .closing-floral{opacity:.25;width:80px;}
+  html[data-skin="moonlit-amethyst"] #closing .closing-floral{opacity:.20;}
+}
+@media(prefers-reduced-motion:reduce){
+  #closing .closing-floral {animation:none!important;}
+}

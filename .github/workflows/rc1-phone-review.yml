@@ -1,0 +1,43 @@
+name: RC1 phone review package
+
+on:
+  push:
+    branches:
+      - feat/section4-connected-story-art-20261102
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  phone-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact review candidate
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verify static assets, skin packs and safe share URLs
+        run: |
+          node tests/smoke.cjs
+          node tests/skin-system.cjs
+          node tests/release-candidate.cjs
+          node tests/story-art.cjs
+
+      - name: Package dependency-free phone review folder
+        run: node scripts/package-phone-review.cjs
+
+      - name: Upload portable RC1 preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-autumn-rc1-phone-preview
+          path: dist/rc1-phone-review/
+          if-no-files-found: error
+          retention-days: 14

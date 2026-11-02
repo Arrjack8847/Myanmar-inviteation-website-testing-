@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - feat/hires-garden-preview-20261101
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -31,6 +33,12 @@ jobs:
       - name: Keyboard and opening interaction checks
         run: node tests/hero-interaction.cjs
 
+      - name: Release-candidate sharing and personalization safeguards
+        run: node tests/release-candidate.cjs
+
+      - name: Section 4 illustrated-story source checks
+        run: node tests/story-art.cjs
+
       - name: Install browser test runner
         run: npm install --no-save --no-package-lock playwright@1.56.0
 
@@ -39,6 +47,12 @@ jobs:
 
       - name: Run real-browser mobile flow checks
         run: node tests/browser-flow.cjs
+
+      - name: Check Section 4 on both skins and long stories
+        run: node tests/story-art-browser.cjs
+
+      - name: Test actual guest customization, directions and share flow
+        run: node tests/release-guest-browser.cjs
 
       - name: Save screenshots (even after a failure)
         if: always()
