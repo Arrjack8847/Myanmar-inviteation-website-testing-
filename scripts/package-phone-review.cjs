@@ -14,6 +14,7 @@ const keepAtRoot=name=>
   /^([0-2][0-9]|3[0-2])_.*\.png$/.test(name) ||
   name==='4ba5ed04-e01d-4bed-a71e-42f2bdf5f8a5.png' ||
   name==='vercel.json' ||
+  name==='server.js' ||
   name==='RELEASE_CANDIDATE.md' ||
   name==='FINAL_VISUAL_QA.md';
 const artwork=/^(golden_autumn_heritage_master_v4|section2_family_invitation_master|section3_ceremony_reception_master)\.(png|webp)$/i;
@@ -46,7 +47,8 @@ for(const mandatory of [
   'art/section3_ceremony_reception_master.webp',
   'skins/moonlit-amethyst/gateway.webp',
   'skins/moonlit-amethyst/events.webp',
-  'story-art-v5.css','countdown-garden.css','closing-garden.css','story-closing-bridge.css'
+  'story-art-v5.css','countdown-garden.css','closing-garden.css','story-closing-bridge.css',
+  'server.js','couple-gallery.js','couple-gallery.css'
 ]){
   if(!relativeFiles.includes(mandatory))throw new Error('Mandatory RC file missing: '+mandatory);
 }
@@ -62,7 +64,7 @@ for(const relative of relativeFiles){
   manifest.push({file:relative,size:b.length,sha256:crypto.createHash('sha256').update(b).digest('hex')});
 }
 const metadata={
-  name:'Golden Autumn Heritage RC1 — phone review only',
+  name:'Golden Autumn Heritage Gallery Preview — phone review only',
   status:'development preview, sample wedding details',
   commit:process.env.GITHUB_SHA||'local-build',
   fileCount:manifest.length,
@@ -71,7 +73,7 @@ const metadata={
 };
 fs.writeFileSync(path.join(output,'RC1_FILE_MANIFEST.json'),JSON.stringify(metadata,null,2));
 fs.writeFileSync(path.join(output,'START_PHONE_PREVIEW.txt'),[
- 'GOLDEN AUTUMN HERITAGE — RC1 PHONE TEST',
+ 'GOLDEN AUTUMN HERITAGE — BRIDE AND GROOM GALLERY PHONE TEST',
  '',
  'This is a sample invitation, not a real customer wedding.',
  'Unzip the complete folder. In PowerShell, cd into this folder and run:',
@@ -90,11 +92,15 @@ fs.writeFileSync(path.join(output,'START_PHONE_PREVIEW.txt'),[
  '  /index.html?skin=golden-autumn',
  '  /index.html?skin=moonlit-amethyst',
  '',
- 'TEST: open animation, all six sections, edge joins, Myanmar/English',
+ 'TEST: opening, bride and groom portraits, gallery lightbox, all six',
+ 'scene sections, edge joins, Myanmar/English',
  'long text, event cards, countdown, copying links, scrolling and controls.',
+ 'The gallery shows ornamental placeholders until approved wedding photos',
+ 'are copied into photos/ and referenced in wedding-config.js.',
+ 'Gallery documentation is in the repository under photos/README.md.',
  'The local share button intentionally refuses to copy an unusable LAN URL.',
  'DO NOT publish as a customer invitation until real event details are confirmed.',
  'Further guidance: RELEASE_CANDIDATE.md',
  ''
 ].join('\n'));
-console.log('PASS RC1 phone package:',manifest.length,'files',metadata.totalBytes,'bytes; commit:',metadata.commit);
+console.log('PASS GALLERY phone package:',manifest.length,'files',metadata.totalBytes,'bytes; commit:',metadata.commit);
