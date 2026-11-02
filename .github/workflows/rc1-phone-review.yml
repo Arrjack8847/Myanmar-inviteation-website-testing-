@@ -1,9 +1,10 @@
-name: RC1 phone review package
+name: Bride Groom Gallery phone review package
 
 on:
   push:
     branches:
       - feat/section4-connected-story-art-20261102
+      - feat/bride-groom-gallery-20261103
   workflow_dispatch:
 
 permissions:
@@ -30,14 +31,15 @@ jobs:
           node tests/skin-system.cjs
           node tests/release-candidate.cjs
           node tests/story-art.cjs
+          node tests/couple-gallery.cjs
 
       - name: Package dependency-free phone review folder
         run: node scripts/package-phone-review.cjs
 
-      - name: Upload portable RC1 preview
+      - name: Upload portable gallery preview
         uses: actions/upload-artifact@v4
         with:
-          name: golden-autumn-rc1-phone-preview
+          name: golden-autumn-gallery-phone-preview
           path: dist/rc1-phone-review/
           if-no-files-found: error
           retention-days: 14
