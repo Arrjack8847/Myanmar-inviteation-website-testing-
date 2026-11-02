@@ -1,4 +1,4 @@
-/** Create a self-contained, dependency-free RC1 phone review bundle.
+/** Create a self-contained, dependency-free RC2 phone review bundle.
  * Uses only committed public demo assets (never .env, .git, CI credentials).
  * Requires Node >=18; tests and server remain source-only in repository.
  */
@@ -8,7 +8,7 @@ const path=require('node:path');
 const crypto=require('node:crypto');
 
 const root=path.resolve(__dirname,'..');
-const output=path.join(root,'dist','rc1-phone-review');
+const output=path.join(root,'dist','rc2-phone-review');
 const keepAtRoot=name=>
   /\.(html|css|js)$/i.test(name) ||
   /^([0-2][0-9]|3[0-2])_.*\.png$/.test(name) ||
@@ -23,7 +23,7 @@ function crawl(dir,rel=''){
     if(item.isSymbolicLink())throw new Error('Symlink forbidden: '+item.name);
     const relative=path.posix.join(rel,item.name);
     if(item.isDirectory()){
-      if(rel==='' && ['art','assets','skins'].includes(item.name))files.push(...crawl(path.join(dir,item.name),relative));
+      if(rel==='' && ['art','assets','skins','photos'].includes(item.name))files.push(...crawl(path.join(dir,item.name),relative));
       else if(rel==='skins'&&item.name==='moonlit-amethyst')files.push(...crawl(path.join(dir,item.name),relative));
       continue;
     }
@@ -32,6 +32,8 @@ function crawl(dir,rel=''){
     if(rel==='art'&&artwork.test(item.name))files.push(relative);
     if(rel==='assets'&&item.name.endsWith('.svg'))files.push(relative);
     if(rel==='skins/moonlit-amethyst'&&/\.(png|webp)$/i.test(item.name))files.push(relative);
+    // Include only explicitly supplied on-site portrait assets, never arbitrary data.
+    if(rel==='photos'&&/\.(png|jpe?g|webp|avif)$/i.test(item.name))files.push(relative);
   }
   return files;
 }
@@ -45,7 +47,7 @@ for(const mandatory of [
   'art/section3_ceremony_reception_master.webp',
   'skins/moonlit-amethyst/gateway.webp',
   'skins/moonlit-amethyst/events.webp',
-  'story-art-v5.css','countdown-garden.css','closing-garden.css','story-closing-bridge.css'
+  'story-art-v5.css','countdown-garden.css','closing-garden.css','story-closing-bridge.css','bride-groom.css'
 ]){
   if(!relativeFiles.includes(mandatory))throw new Error('Mandatory RC file missing: '+mandatory);
 }
@@ -61,16 +63,16 @@ for(const relative of relativeFiles){
   manifest.push({file:relative,size:b.length,sha256:crypto.createHash('sha256').update(b).digest('hex')});
 }
 const metadata={
-  name:'Golden Autumn Heritage RC1 — phone review only',
+  name:'Golden Autumn Heritage RC2 — phone review only',
   status:'development preview, sample wedding details',
   commit:process.env.GITHUB_SHA||'local-build',
   fileCount:manifest.length,
   totalBytes:manifest.reduce((sum,f)=>sum+f.size,0),
   files:manifest
 };
-fs.writeFileSync(path.join(output,'RC1_FILE_MANIFEST.json'),JSON.stringify(metadata,null,2));
+fs.writeFileSync(path.join(output,'RC2_FILE_MANIFEST.json'),JSON.stringify(metadata,null,2));
 fs.writeFileSync(path.join(output,'START_PHONE_PREVIEW.txt'),[
- 'GOLDEN AUTUMN HERITAGE — RC1 PHONE TEST',
+ 'GOLDEN AUTUMN HERITAGE — RC2 PHONE TEST',
  '',
  'This is a sample invitation, not a real customer wedding.',
  'Unzip the complete folder. In PowerShell, cd into this folder and run:',
@@ -96,4 +98,4 @@ fs.writeFileSync(path.join(output,'START_PHONE_PREVIEW.txt'),[
  'Further guidance: RELEASE_CANDIDATE.md',
  ''
 ].join('\n'));
-console.log('PASS RC1 phone package:',manifest.length,'files',metadata.totalBytes,'bytes; commit:',metadata.commit);
+console.log('PASS RC2 phone package:',manifest.length,'files',metadata.totalBytes,'bytes; commit:',metadata.commit);
