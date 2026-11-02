@@ -40,6 +40,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: golden-autumn-gallery-phone-preview
-          path: dist/rc1-phone-review/
+          path: dist/gallery-phone-review/
           if-no-files-found: error
           retention-days: 14
