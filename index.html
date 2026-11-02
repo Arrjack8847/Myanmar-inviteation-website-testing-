@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="closing-garden.css" />
   <link rel="stylesheet" href="story-closing-bridge.css" />
   <link rel="stylesheet" href="final-garden-polish.css" />
+  <link rel="stylesheet" href="couple-gallery.css" />
 </head>
 <body class="not-opened">
   <div class="demo-bar" aria-label="Prototype notice"><span class="demo-indicator"></span> LOCAL DESIGN DEMO <span class="demo-separator">·</span> SAMPLE DETAILS</div>
@@ -263,6 +264,45 @@
           </div>
         </div>
 
+        <!-- Gallery shares the same expandable garden parchment. No new
+             scenery crop or seam. Real images are optional and customer-owned. -->
+        <section class="couple-gallery-section" id="gallery" aria-labelledby="coupleGalleryTitle">
+          <p class="gallery-eyebrow">TWO HEARTS, ONE JOURNEY</p>
+          <h2 id="coupleGalleryTitle">The Bride <em>&amp;</em> Groom</h2>
+          <p class="gallery-subtitle">A glimpse of the people behind our story</p>
+          <div class="couple-portrait-grid">
+            <article class="couple-portrait-card" aria-label="The bride">
+              <div class="couple-portrait-frame">
+                <img class="couple-portrait-image" data-gallery-portrait="bride"
+                     alt="" hidden loading="lazy" decoding="async" />
+                <div class="couple-portrait-placeholder" data-gallery-placeholder="bride" aria-hidden="true">
+                  <span>BRIDE'S PORTRAIT</span>
+                </div>
+              </div>
+              <p class="portrait-role">THE BRIDE <span lang="my">· သတို့သမီး</span></p>
+              <h3 data-gallery-name="bride">Thiri</h3>
+              <p class="portrait-caption" data-gallery-caption="bride"></p>
+            </article>
+            <article class="couple-portrait-card" aria-label="The groom">
+              <div class="couple-portrait-frame">
+                <img class="couple-portrait-image" data-gallery-portrait="groom"
+                     alt="" hidden loading="lazy" decoding="async" />
+                <div class="couple-portrait-placeholder" data-gallery-placeholder="groom" aria-hidden="true">
+                  <span>GROOM'S PORTRAIT</span>
+                </div>
+              </div>
+              <p class="portrait-role">THE GROOM <span lang="my">· သတို့သား</span></p>
+              <h3 data-gallery-name="groom">Min</h3>
+              <p class="portrait-caption" data-gallery-caption="groom"></p>
+            </article>
+          </div>
+          <h3 class="couple-gallery-heading" id="couplePhotosTitle">Our Photo Gallery</h3>
+          <div class="couple-gallery-grid" id="coupleGalleryGrid" aria-labelledby="couplePhotosTitle"></div>
+          <p class="couple-gallery-note" data-gallery-demo-note hidden>
+            Preview placeholders — add the couple's approved photos before sharing.
+          </p>
+        </section>
+
         <!-- The countdown belongs to the same illustrated garden parchment.
              Placing it before the bottom ornament keeps a single environment
              without introducing a second painted scenery seam. -->
@@ -306,10 +346,20 @@
       </section>
     </div>
   </main>
+  <dialog class="gallery-lightbox" id="galleryLightbox" aria-label="Wedding photo viewer">
+    <button class="gallery-lightbox-close" type="button" data-gallery-close aria-label="Close photo viewer">×</button>
+    <img class="gallery-lightbox-image" id="galleryLightboxImage" alt="" />
+    <p class="gallery-lightbox-caption" id="galleryLightboxCaption"></p>
+    <div class="gallery-lightbox-nav">
+      <button type="button" data-gallery-prev aria-label="Previous photo">‹</button>
+      <button type="button" data-gallery-next aria-label="Next photo">›</button>
+    </div>
+  </dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="wedding-config.js" defer></script>
   <script src="share-link.js" defer></script>
   <script src="app.js" defer></script>
+  <script src="couple-gallery.js" defer></script>
   <script src="skin-packs.js" defer></script>
   <script src="skin-loader.js" defer></script>
   <script src="scene-motion.js" defer></script>
