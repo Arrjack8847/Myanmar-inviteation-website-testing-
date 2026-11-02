@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - feat/hires-garden-preview-20261101
+      - feat/bride-groom-gallery-20261103
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -39,6 +40,9 @@ jobs:
       - name: Section 4 illustrated-story source checks
         run: node tests/story-art.cjs
 
+      - name: Bride and groom gallery source checks
+        run: node tests/couple-gallery.cjs
+
       - name: Install browser test runner
         run: npm install --no-save --no-package-lock playwright@1.56.0
 
@@ -53,6 +57,9 @@ jobs:
 
       - name: Test actual guest customization, directions and share flow
         run: node tests/release-guest-browser.cjs
+
+      - name: Test Bride and Groom Gallery on both mobile skins
+        run: node tests/couple-gallery-browser.cjs
 
       - name: Save screenshots (even after a failure)
         if: always()
